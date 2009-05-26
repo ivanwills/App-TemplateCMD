@@ -288,7 +288,7 @@ sub load_cmd {
 	}
 
 	# construct the command module's file name and require that
-	my $file   = "Template/CMD/Command/$self->{cmds}{$cmd}.pm";
+	my $file   = "App/TemplateCMD/Command/$self->{cmds}{$cmd}.pm";
 	my $module = "App::TemplateCMD::Command::$self->{cmds}{$cmd}";
 	eval { require $file };
 
