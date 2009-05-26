@@ -8,5 +8,14 @@ eval { require Test::Spelling; Test::Spelling->import() };
 
 plan skip_all => "Test::Spelling required for testing POD coverage" if $@;
 
-add_stopwords(qw/YAML NSW Hornsby templatecmd Arg arg var vars XHTML html CGI min Gtk dir fullname ttk funcs isa obj sig sigs/);
+add_stopwords(qw/
+	YAML NSW Hornsby templatecmd Arg arg var vars XHTML html CGI min Gtk dir fullname ttk funcs isa obj sig sigs
+	MathML
+	Param
+	SVG
+	TODO
+	criticise
+	perlcriticrc
+	svg
+/);
 all_pod_files_spelling_ok();

@@ -574,7 +574,7 @@ sub AUTOLOAD {
 	my ($method) = $AUTOLOAD =~ /::([^:]+)$/;
 
 }
-__perl/execption.ttk__
+__perl/exception.ttk__
 [% IF not vars %][% vars = [ 'search' ] %][% END -%]
 [% IF not module %][% module = 'X::Name' %][% END -%]
 package [% module %];
@@ -613,10 +613,10 @@ our $VERSION = 0.0.1;
 our @EXPORT = qw//;
 our @EXPORT_OK = qw//;
 
-use Execption::Class (
+use Exception::Class (
 	[% module %] => {
 		isa			=> '',
-		description	=> 'An execption class',
+		description	=> 'An exception class',
 		fields		=> qw//,
 		alias		=> '',
 	},
@@ -626,7 +626,7 @@ use Execption::Class (
 
  =__END__
 
-__perl/execption/base.ttk__
+__perl/exception/base.ttk__
 [% IF not vars %][% vars = [ 'search' ] %][% END -%]
 [% IF not module %][% module = 'X::Base' %][% END -%]
 package [% module %];
@@ -939,7 +939,7 @@ use Glib::Object::Subclass (
 
 [% INCLUDE perl/pod.ttk return => module -%]
 
-# effectivly serves as new
+# effectively serves as new
 sub INIT_INSTANCE {
 	my $self = shift;
 

@@ -1,0 +1,4 @@
+*.isearch
+.*.sw[po]
+.git
+.cvsignore
