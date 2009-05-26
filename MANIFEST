@@ -32,3 +32,6 @@ t/critic.t
 t/kwalitee.t
 t/perlcriticrc
 t/spelling.t
+Makefile.PL
+LICENSE
+META.yml
