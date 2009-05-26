@@ -7,8 +7,7 @@ WriteMakefile
           'INSTALLDIRS' => 'site',
           'NAME' => 'App::TemplateCMD',
           'EXE_FILES' => [
-                           'bin/templatecmd',
-                           'bin/templatecmd.isearch'
+                           'bin/templatecmd'
                          ],
           'VERSION_FROM' => 'lib/App/TemplateCMD.pm',
           'PREREQ_PM' => {
