@@ -76,7 +76,7 @@ sub commands {
 	my ($self) = @_;
 
 	my @cmds;
-	my $cmd_path = 'Template/CMD/Command';
+	my $cmd_path = 'App/TemplateCMD/Command';
 
 	for my $path (@INC) {
 		my @modules = glob("$path/$cmd_path/*.pm");
