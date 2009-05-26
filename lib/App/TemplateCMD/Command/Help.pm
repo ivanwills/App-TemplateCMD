@@ -80,7 +80,10 @@ sub commands {
 
 	for my $path (@INC) {
 		my @modules = glob("$path/$cmd_path/*.pm");
-		push @cmds, map { s{^ $path / $cmd_path / (.*) [.]pm $}{$1}xms; $_ } @modules;
+		for my $module (@modules) {
+			$module =~ s{^ $path / $cmd_path / (.*) [.]pm $}{$1}xms;
+			push @cmds, $module;
+		}
 	}
 
 	return uniq @cmds;
@@ -100,7 +103,7 @@ Templates
 
 App::TemplateCMD uses Template Toolkit as its templateing engine the individual
 templates can be found in the directories specified by the "$0 config -v"
-command. Templates are also found in the data sections of the module 
+command. Templates are also found in the data sections of the module
 App::TemplateCMD::Templates or and module found under that name space.
 
 When the templates are passed any --args value specified on the command line

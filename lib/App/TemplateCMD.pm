@@ -334,7 +334,7 @@ sub list_templates {
 
 		my $fh;
 		{
-			no strict 'refs';
+			no strict 'refs';            ## no critic
 			$fh = \*{"${module}\::DATA"};
 		}
 
