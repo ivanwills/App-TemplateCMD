@@ -1,107 +1,487 @@
 package App::TemplateCMD;
 
-use warnings;
+# Created on: 2008-03-26 13:47:07
+# Create by:  ivanw
+# $Id$
+# $Revision$, $HeadURL$, $Date$
+# $Revision$, $Source$, $Date$
+
 use strict;
+use warnings;
+use version;
+use Carp;
+use Data::Dumper qw/Dumper/;
+use English qw/ -no_match_vars /;
+use File::Find;
+use Getopt::Long;
+use YAML qw/Dump LoadFile/;
+use Readonly;
+use Template;
+use Template::Provider;
+use Template::Provider::FromDATA;
+use Data::Merger qw/merger/;
+use base qw/Exporter/;
+
+our $VERSION     = version->new('0.0.1');
+our @EXPORT_OK   = qw//;
+our %EXPORT_TAGS = ();
+
+# Set the default name for the configuration file
+# Note when this appears in the home dir a dot '.' is prepended
+Readonly my $CONFIG_NAME => 'template-cmd.yml';
+
+sub new {
+	my $caller = shift;
+	my $class  = ref $caller ? ref $caller : $caller;
+	my %param  = @_;
+	my $self   = \%param;
+
+	bless $self, $class;
+
+	# Find the available commands
+	$self->{cmds} = { map {lc $_ => $_} $self->get_modules('App::TemplateCMD::Command') };
+
+	# read the configuration files
+	$self->config();
+
+	return $self;
+}
+
+sub get_modules {
+	my ($self, $base) = @_;
+	$base =~ s{::}{/}gxms;
+
+	my %modules;
+
+	for my $dir (grep {-d $_} map { "$_/$base/" } @INC) {
+		find(
+			sub {
+				my ($name) = $File::Find::name =~ m{^ $dir ( [\w/]+ ) .pm $}xms;
+				return if !$name;
+
+				$modules{$name}++;
+			},
+			$dir
+		);
+	}
+
+	return keys %modules;
+}
+
+sub process {
+
+	my ($self, @argv) = @_;
+
+	my $cmd = shift @argv;
+
+	if ( !$cmd || !grep { $_ eq $cmd } keys %{$self->{'cmds'}} ) {
+		if ($cmd) {
+			$self->unknown_cmd($cmd);
+		}
+
+		unshift @argv, $cmd;
+		$cmd = 'help';
+	}
+
+	my $module  = $self->load_cmd($cmd);
+	my %default = $module->default($self);
+	my @args    = (
+		'out|o=s',
+		'args|a=s%',
+		'verbose|v!',
+		'path|p=s',
+		$module->args($self),
+	);
+
+	{
+		local @ARGV = @argv;
+		Getopt::Long::Configure('bundling');
+		GetOptions( \%default, @args ) or $module = 'App::TemplateCMD::Command::Help';
+		$default{files} = [ @ARGV ];
+	}
+
+	my $conf = $self->add_args(\%default);
+	my $out;
+
+	# find any modules under App::TemplateCMD::Templates
+	my $default = 'App::TemplateCMD::Templates';
+	my @template_modules;
+
+	for my $module ( $self->get_modules($default) ) {
+		$module =~ s{/}{::}gxms;
+		push @template_modules, $default . '::' . $module;
+	}
+	$self->{template_modules} = [ $default, @template_modules ];
+
+	my $path = $conf->{path};
+	if ( $default{path} ) {
+		$path = "$default{path}:$path";
+	}
+	$path =~ s(~/)($ENV{HOME}/)gxms;
+
+	$self->{providers} = [
+		Template::Provider->new({ INCLUDE_PATH => $path }),
+		Template::Provider::FromDATA->new({ CLASSES => $self->{template_modules} }),
+	];
+
+	$self->{template} = Template->new({
+		LOAD_TEMPLATES => $self->{providers},
+		EVAL_PERL      => 1,
+	});
+
+	if ( $default{'out'} ) {
+		open $out, '>', $default{out} or die "Could not open the output file '$default{out}': $OS_ERROR\n";
+	}
+	else {
+		$out = *STDOUT;
+	}
+
+	print {$out} $module->process($self, %default);
+
+	return;
+}
+
+sub add_args {
+	my ($self, $default) = @_;
+	my @files;
+
+	my $args  = $default->{args}  || {};
+	my $files = $default->{files} || [];
+
+	# add any args not prefixed by -a[rgs]
+	for my $file (@{$files}) {
+		if ($file =~ /=/ ) {
+
+			# merge the argument on to the args hash
+			my ($arg, $value) = split /=/, $file, 2;
+			$default->{args}->{$arg} = $value;
+		}
+		else {
+
+			# store the "real" file
+			push @files, $file;
+		}
+	}
+
+	for my $value (values %{$args}) {
+		$value = $value =~ /^( q[wqr]?(\W) ) .* ( \2 )$/xms? [ eval($value)  ]    ## no critic
+		       : $value =~ /^(    \{       ) .* ( \} )$/xms?   eval($value)       ## no critic
+		       : $value =~ /^(    \[       ) .* ( \] )$/xms?   eval($value)       ## no critic
+		       : $value =~ /^(      ,      )(.*)      $/xms? [ split /,/xms, $2 ]
+		       :                                             $value;
+	}
+
+	# replace the files with the list with out args
+	$default->{files} = \@files;
+
+	# merge the args with the config and save
+	return $self->{config} = $self->conf_join($self->config(), $args);
+}
+
+sub config {
+
+	my ($self, %option) = @_;
+
+	return $self->{'config'} if $self->{'config'};
+
+	my $conf = {
+		path    => '/usr/local/template-cmd/src/:~/.template-cmd/:~/.template-cmd-local:~/template-cmd',
+		aliases => {
+			ls  => 'list',
+			des => 'describe',
+		},
+		contact => {
+			fullname => $ENV{USER},
+			name     => $ENV{USER},
+			email    => "$ENV{USER}@" . ($ENV{HOST} ? $ENV{HOST} : 'localhost'),
+			address  => '123 Timbuc Too',
+		},
+		company => {
+			name     => '',
+			address  => '',
+		},
+	};
+
+	$self->{configs} = [];
+	$self->{config_default} = "$ENV{HOME}/.$CONFIG_NAME";
+
+	if ( -f "/etc/$CONFIG_NAME" ) {
+		my $second = LoadFile("/etc/$CONFIG_NAME");
+		$conf = $self->conf_join($conf, $second);
+		push @{$self->{configs}}, "/etc/$CONFIG_NAME";
+	}
+	if ( $option{'conf'} && -f $option{'conf'} ) {
+		my $second = LoadFile($option{'conf'});
+		$conf = $self->conf_join($conf, $second);
+		push @{$self->{configs}}, $option{'conf'};
+	}
+	elsif ( -f "$ENV{HOME}/.$CONFIG_NAME" ) {
+		my $second = LoadFile("$ENV{HOME}/.$CONFIG_NAME");
+		$conf = $self->conf_join($conf, $second);
+		push @{$self->{configs}}, "$ENV{HOME}/.$CONFIG_NAME";
+	}
+	$conf = $self->conf_join($conf, \%option);
+
+	# set up some internal config options
+	if ($ENV{'TEMPLATE_CMD_PATH'}) {
+		$conf->{'path'} .= $ENV{'TEMPLATE_CMD_PATH'};
+	}
+
+	# set up the aliases
+	if ($conf->{'aliases'}) {
+		for my $alias (keys %{ $conf->{aliases} }) {
+			$self->{'cmds'}{$alias} = ucfirst $conf->{aliases}{$alias};
+		}
+	}
+
+	# set up temporial variables (Note that these are always the values to
+	# use and over ride what ever is set in the configuration files)
+	my ( $sec, $min, $hour, $mday, $mon, $year, $wday, $yday, $isdst ) = localtime;
+	$mon++;
+	$year += 1900;
+
+	$conf->{date} = "$year-" . ( $mon < 10 ? '0' : '' ) . "$mon-" . ( $mday < 10 ? '0' : '' ) . $mday;
+	$conf->{time} = ( $hour < 10 ? '0' : '' ) . "$hour:" . ( $min < 10 ? '0' : '' ) . "$min:" . ( $sec < 10 ? '0' : '' ) . $sec;
+	$conf->{year} = $year;
+	$conf->{user} = $ENV{USER};
+
+	# return and cache the configuration item
+	return $self->{'config'} = $conf;
+}
+
+sub conf_join {
+
+	my ($self, $conf1, $conf2, $t) = @_;
+	my %conf = %{$conf1};
+	warn '-'x10, Dumper $conf1, $conf2 if $t;
+
+	for my $key ( keys %{$conf2} ) {
+		if ( ref $conf2->{$key} eq 'HASH' && ref $conf{$key} eq 'HASH' ) {
+			warn 'merging' if $t;
+			$conf{$key} = $self->conf_join($conf{$key}, $conf2->{$key});
+		}
+		else {
+			warn "replacing: $key" if $t;
+			$conf{$key} = $conf2->{$key};
+		}
+	}
+
+	return \%conf;
+}
+
+sub load_cmd {
+
+	my ($self, $cmd) = @_;
+
+	if (!$cmd) {
+		carp 'No command passed!';
+		return;
+	}
+
+	# check if we have already loaded the command module
+	if ( $self->{'loaded'}{$cmd} ) {
+		return $self->{'loaded'}{$cmd};
+	}
+
+	if (!$self->{cmds}{$cmd}) {
+		$self->unknown_cmd($cmd);
+	}
+
+	# construct the command module's file name and require that
+	my $file   = "Template/CMD/Command/$self->{cmds}{$cmd}.pm";
+	my $module = "App::TemplateCMD::Command::$self->{cmds}{$cmd}";
+	eval { require $file };
+
+	# check if there were any errors
+	if ($EVAL_ERROR) {
+		die "Could not load the command $cmd: $EVAL_ERROR\n$file\n$module\n";
+	}
+
+	# return success
+	return $self->{'loaded'}{$cmd} = $module;
+}
+
+sub list_templates {
+	my ($self) = @_;
+
+	my $path = $self->config->{path};
+	my @path = grep {-d $_} split /:/, $path;
+
+	my @files;
+
+	for my $dir (@path) {
+		next if !-d $dir;
+
+		find(
+			sub {
+				return if -d $_;
+				push @files, { path => $dir, file => $File::Find::name };
+			},
+			$dir
+		);
+	}
+
+	$self->{providers}[0]->_load('__');
+	if ( $self->{providers}[0]->can('cache') ) {
+		push @files, map {{ file => $_ }} keys %{ $self->{providers}[0]->cache->{templates} };
+	}
+
+	for my $module (@{ $self->{template_modules} }) {
+		my $file = $module;
+		$file =~ s{::}{/}gxms;
+		$file .= '.pm';
+		require $file;
+
+		my $fh;
+		{
+			no strict 'refs';
+			$fh = \*{"${module}\::DATA"};
+		}
+
+		LINE:
+		while ( my $line = <$fh> ) {
+			my ($template) = $line =~ /^__(.+)__\r?\n/xms;
+			next LINE if !$template;
+			push @files, { path => $module, file => $template };
+		}
+	}
+
+	return @files;
+}
+
+sub unknown_cmd {
+
+	my ($self, $cmd) = @_;
+
+	my $program = $0;
+	$program =~ s{^.*/}{}xms;
+
+	die <<"DIE";
+There is no command named $cmd
+For help on commands try '$program help'
+DIE
+}
+1;
+
+__END__
 
 =head1 NAME
 
-App::TemplateCMD - The great new App::TemplateCMD!
+App::TemplateCMD - Sets up an interface to passing Template Toolkit templates
 
 =head1 VERSION
 
-Version 0.01
-
-=cut
-
-our $VERSION = '0.01';
-
+This documentation refers to App::TemplateCMD version 0.1.
 
 =head1 SYNOPSIS
 
-Quick summary of what the module does.
+   use App::TemplateCMD;
 
-Perhaps a little code snippet.
+=head1 DESCRIPTION
 
-    use App::TemplateCMD;
+=head1 SUBROUTINES/METHODS
 
-    my $foo = App::TemplateCMD->new();
-    ...
+=head3 C<new ( %args )>
 
-=head1 EXPORT
+Arg: C<search> - type (detail) - description
 
-A list of functions that can be exported.  You can delete this section
-if you don't export anything, such as for a purely object-oriented module.
+Return: App::TemplateCMD -
 
-=head1 FUNCTIONS
+Description:
 
-=head2 function1
+=head3 C<get_modules ( $base )>
 
-=cut
+Arg: C<$base> - string - The base module to search for modules under
 
-sub function1 {
-}
+Return: Array - A list of modules found under $base
 
-=head2 function2
+Description: Finds all modules that start with $base
 
-=cut
+=head3 C<process ( %args )>
 
-sub function2 {
-}
+Arg: C<search> - type (detail) - description
+
+Return: App::TemplateCMD -
+
+Description:
+
+=head3 C<add_args ( %args )>
+
+Arg: C<search> - type (detail) - description
+
+Return: App::TemplateCMD -
+
+Description: Adds command line arguments to the current configuration
+
+=head3 C<config ( %args )>
+
+Arg: C<search> - type (detail) - description
+
+Return: App::TemplateCMD -
+
+Description:
+
+=head3 C<conf_join ( %args )>
+
+Arg: C<search> - type (detail) - description
+
+Return: App::TemplateCMD -
+
+Description:
+
+=head3 C<load_cmd ( %args )>
+
+Arg: C<search> - type (detail) - description
+
+Return: App::TemplateCMD -
+
+Description:
+
+=head3 C<list_templates ( %args )>
+
+Arg: C<search> - type (detail) - description
+
+Return: App::TemplateCMD -
+
+Description:
+
+=head3 C<unknown_cmd ( %args )>
+
+Arg: C<search> - type (detail) - description
+
+Return: App::TemplateCMD -
+
+Description:
+
+=head1 DIAGNOSTICS
+
+=head1 CONFIGURATION AND ENVIRONMENT
+
+=head1 DEPENDENCIES
+
+=head1 INCOMPATIBILITIES
+
+=head1 BUGS AND LIMITATIONS
+
+There are no known bugs in this module.
+
+Please report problems to Ivan Wills (ivan.wills@gmail.com).
+
+Patches are welcome.
 
 =head1 AUTHOR
 
-Ivan Wills, C<< <ivan.wills at gmail.com> >>
+Ivan Wills - (ivan.wills@gmail.com)
 
-=head1 BUGS
+=head1 LICENSE AND COPYRIGHT
 
-Please report any bugs or feature requests to C<bug-app-templatecmd at rt.cpan.org>, or through
-the web interface at L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=App-TemplateCMD>.  I will be notified, and then you'll
-automatically be notified of progress on your bug as I make changes.
+Copyright (c) 2009 Ivan Wills (14 Mullion Close, NSW, Australia 2077).
+All rights reserved.
 
-
-
-
-=head1 SUPPORT
-
-You can find documentation for this module with the perldoc command.
-
-    perldoc App::TemplateCMD
-
-
-You can also look for information at:
-
-=over 4
-
-=item * RT: CPAN's request tracker
-
-L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=App-TemplateCMD>
-
-=item * AnnoCPAN: Annotated CPAN documentation
-
-L<http://annocpan.org/dist/App-TemplateCMD>
-
-=item * CPAN Ratings
-
-L<http://cpanratings.perl.org/d/App-TemplateCMD>
-
-=item * Search CPAN
-
-L<http://search.cpan.org/dist/App-TemplateCMD/>
-
-=back
-
-
-=head1 ACKNOWLEDGEMENTS
-
-
-=head1 COPYRIGHT & LICENSE
-
-Copyright 2009 Ivan Wills, all rights reserved.
-
-This program is free software; you can redistribute it and/or modify it
-under the same terms as Perl itself.
-
+This module is free software; you can redistribute it and/or modify it under
+the same terms as Perl itself. See L<perlartistic>.  This program is
+distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+PARTICULAR PURPOSE.
 
 =cut
-
-1; # End of App::TemplateCMD
