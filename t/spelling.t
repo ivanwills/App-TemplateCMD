@@ -9,7 +9,7 @@ eval { require Test::Spelling; Test::Spelling->import() };
 
 # now check that the spell command is installed
 my $found;
-for my $dir ( split /:/, $ENV{PATH} ) {·
+for my $dir ( split /:/, $ENV{PATH} ) {
 	next if !-d $dir;
 	next if !-x "$dir/spell";
 
