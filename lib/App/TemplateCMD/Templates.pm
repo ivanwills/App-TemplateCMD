@@ -91,7 +91,7 @@ PARTICULAR PURPOSE.
 =cut
 
 __DATA__
-__css.ttk__
+__css.css__
 /********************************************************************\
  *
  * created:		: [% date %]
@@ -102,9 +102,9 @@ __css.ttk__
 \********************************************************************/
 
 /*
-[% INCLUDE licence.ttk %]
+[% INCLUDE licence.txt %]
 */
-__css/file.ttk__
+__css/file.css__
 /********************************************************************\
  *
  * created:		: [% date %]
@@ -115,7 +115,7 @@ __css/file.ttk__
 \********************************************************************/
 
 /*
-[% INCLUDE licence.ttk %]
+[% INCLUDE licence.txt %]
 */
 __db/table.sql__
 [% IF not table %][% table = '<Table>' %][% END -%]
@@ -312,23 +312,23 @@ __javadoc/function.tmpl__
  *
  *
  */
-__js/class.ttk__
+__js/class.js__
 [% IF not class %][% class = 'Class' %][% END -%]
 [% IF not parent %][% parent = 'Object' %][% END -%]
 [% IF not params %][% params = [ 'r1', 'r2' ] %][% END -%]
 [% IF not licence %][% licence = 'gpl' %][% END -%]
 [% IF not functions %][% functions = ['example'] %][% END -%]
-[% INCLUDE js/jdoc/class.ttk %]
+[% INCLUDE js/jdoc/class.js %]
 
 /*
-[% INCLUDE licence.ttk %]
+[% INCLUDE licence.txt %]
 */
 
 [% class %].prototype = new [% parent %]();
 [% class %].prototype.constructor = [% class %];
 [% class %].superclass = [% parent %].prototype;
 
-[% INCLUDE js/jdoc/func.ttk description => 'object creator' %]
+[% INCLUDE js/jdoc/func.js description => 'object creator' %]
 function [% class %]( [% FOREACH param = params %][% param %], [% END %] ) {
 
 	if ( arguments.length > 0 ) this.init( '[% class %]', [% FOREACH param = params %][% param %], [% END %] );
@@ -336,7 +336,7 @@ function [% class %]( [% FOREACH param = params %][% param %], [% END %] ) {
 
 /**
  *	@param	class_name:	The name of the class instanciating this object.
-[% INCLUDE js/jdoc/params.ttk -%]
+[% INCLUDE js/jdoc/params.js -%]
  *
  *	The [% class %] object initialiser
  */
@@ -349,19 +349,19 @@ function [% class %]( [% FOREACH param = params %][% param %], [% END %] ) {
 }
 [% FOREACH method = functions %]
 
-[% INCLUDE js/method.ttk %]
+[% INCLUDE js/method.js %]
 [% END %]
-__js/func.ttk__
-[% INCLUDE js/jdoc/func.ttk %]
+__js/func.js__
+[% INCLUDE js/jdoc/func.js %]
 function [% func %]( [% FOREACH param = params %][% param %], [% END %] ) {
 
 }
-__js/func/object.ttk__
+__js/func/object.js__
 
 [% class %].prototype.[% func %] = function( [% FOREACH param = params %][% param %], [% END %] ) {
 
 }
-__js/jdoc/class.ttk__
+__js/jdoc/class.js__
 /**	@class  [% class %]
  *	@created	[% date %]
  *	@brief
@@ -373,9 +373,9 @@ __js/jdoc/class.ttk__
  *
  *	[% class %] description
  */
-__js/jdoc/func.ttk__
+__js/jdoc/func.js__
 /**
-[% INCLUDE js/jdoc/params.ttk -%]
+[% INCLUDE js/jdoc/params.js -%]
 [% IF returns -%]
  *	@return	[% returns %]:
 [% END -%]
@@ -384,32 +384,32 @@ __js/jdoc/func.ttk__
 [% END -%]
  *	[% description %]
  */
-__js/jdoc/params.ttk__
+__js/jdoc/params.js__
 [% UNLESS params %][% params = ['parameter'] %][% END -%]
 [% FOREACH param = params -%]
  *	@param	[% param %]:
 [% END -%]
-__js/method.ttk__
-[% INCLUDE js/jdoc/func.ttk %]
+__js/method.js__
+[% INCLUDE js/jdoc/func.js %]
 [% class %].prototype.[% method %] = function ( [% FOREACH param = params %][% param %], [% END %] ) {
 
 }
-__licence.ttk__
+__licence.txt__
 
 Copyright (c) [% year %] [% company.name or contact.fullname %] ([% company.address || contact.address %]).
 All rights reserved.
 
 [%- SWITCH licence -%]
 [% CASE 'perl' -%]
-[% INCLUDE licence/perl.ttk -%]
+[% INCLUDE licence/perl.txt -%]
 [% CASE 'gpl'  -%]
-[% INCLUDE licence/gpl.ttk -%]
+[% INCLUDE licence/gpl.txt -%]
 [% CASE 'lgpl' -%]
-[% INCLUDE licence/lgpl.ttk -%]
+[% INCLUDE licence/lgpl.txt -%]
 [% CASE -%]
-[% INCLUDE licence/perl.ttk -%]
+[% INCLUDE licence/perl.txt -%]
 [% END  -%]
-__licence/gpl.ttk__
+__licence/gpl.txt__
 
 This file is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -424,7 +424,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Xoo; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
-__licence/gpl_project.ttk__
+__licence/gpl_project.txt__
 
 This file is part of [% module %].
 
@@ -441,7 +441,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Xoo; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
-__licence/lgpl.ttk__
+__licence/lgpl.txt__
 
 This file is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -456,14 +456,14 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Xoo; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
-__licence/perl.ttk__
+__licence/perl.txt__
 
 This module is free software; you can redistribute it and/or modify it under
 the same terms as Perl itself. See L<perlartistic>.  This program is
 distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
 without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
 PARTICULAR PURPOSE.
-__perl.ttk__
+__perl.pl__
 [% IF not file %][% file     =  out     %][% END -%]
 [% IF not file %][% file     = '<Name>' %][% END -%]
 [% IF not module %][% module = file     %][% END -%]
@@ -541,20 +541,20 @@ sub main {
 
 [% file %] - <One-line description of commands purpose>
 
-[% INCLUDE perl/pod/VERSION.ttk %]
-[% INCLUDE perl/pod/USAGE.ttk %]
-[% INCLUDE perl/pod/DESCRIPTION.ttk %]
-[% INCLUDE perl/pod/METHODS.ttk %]
-[% INCLUDE perl/pod/detailed.ttk %]
+[% INCLUDE perl/pod/VERSION.pl %]
+[% INCLUDE perl/pod/USAGE.pl %]
+[% INCLUDE perl/pod/DESCRIPTION.pl %]
+[% INCLUDE perl/pod/METHODS.pl %]
+[% INCLUDE perl/pod/detailed.pl %]
 =head1 AUTHOR
 
 [% contact.fullname %] - ([% contact.email %])
 
 =head1 LICENSE AND COPYRIGHT
-[% INCLUDE licence.ttk %]
+[% INCLUDE licence.txt %]
 =cut
-__perl/AUTOLOAD.ttk__
-[% INCLUDE perl/pod.ttk sub => 'AUTOLOAD', vars => ' ' -%]
+__perl/AUTOLOAD.pl__
+[% INCLUDE perl/pod.pl sub => 'AUTOLOAD', vars => ' ' -%]
 
 sub AUTOLOAD {
 
@@ -574,7 +574,7 @@ sub AUTOLOAD {
 	my ($method) = $AUTOLOAD =~ /::([^:]+)$/;
 
 }
-__perl/exception.ttk__
+__perl/exception.pl__
 [% IF not vars %][% vars = [ 'search' ] %][% END -%]
 [% IF not module %][% module = 'X::Name' %][% END -%]
 package [% module %];
@@ -583,18 +583,18 @@ package [% module %];
 
 [% module %] - <One-line description of module's purpose>
 
-[% INCLUDE perl/pod/VERSION.ttk %]
-[% INCLUDE perl/pod/SYNOPSIS.ttk %]
-[% INCLUDE perl/pod/DESCRIPTION.ttk %]
-[% INCLUDE perl/pod/METHODS.ttk %]
-[% INCLUDE perl/pod/detailed.ttk %]
+[% INCLUDE perl/pod/VERSION.pl %]
+[% INCLUDE perl/pod/SYNOPSIS.pl %]
+[% INCLUDE perl/pod/DESCRIPTION.pl %]
+[% INCLUDE perl/pod/METHODS.pl %]
+[% INCLUDE perl/pod/detailed.pl %]
 =head1 AUTHOR
 
 [% contact.fullname %] - ([% contact.email %])
 <Author name(s)>  (<contact address>)
 
 =head1 LICENSE AND COPYRIGHT
-[% INCLUDE licence.ttk %]
+[% INCLUDE licence.txt %]
 =cut
 
 # Created on: [% date %] [% time %]
@@ -626,7 +626,7 @@ use Exception::Class (
 
  =__END__
 
-__perl/exception/base.ttk__
+__perl/exception/base.pl__
 [% IF not vars %][% vars = [ 'search' ] %][% END -%]
 [% IF not module %][% module = 'X::Base' %][% END -%]
 package [% module %];
@@ -635,18 +635,18 @@ package [% module %];
 
 [% module %] - <One-line description of module's purpose>
 
-[% INCLUDE perl/pod/VERSION.ttk %]
-[% INCLUDE perl/pod/SYNOPSIS.ttk %]
-[% INCLUDE perl/pod/DESCRIPTION.ttk %]
-[% INCLUDE perl/pod/METHODS.ttk %]
-[% INCLUDE perl/pod/detailed.ttk %]
+[% INCLUDE perl/pod/VERSION.pl %]
+[% INCLUDE perl/pod/SYNOPSIS.pl %]
+[% INCLUDE perl/pod/DESCRIPTION.pl %]
+[% INCLUDE perl/pod/METHODS.pl %]
+[% INCLUDE perl/pod/detailed.pl %]
 =head1 AUTHOR
 
 [% contact.fullname %] - ([% contact.email %])
 <Author name(s)>  (<contact address>)
 
 =head1 LICENSE AND COPYRIGHT
-[% INCLUDE licence.ttk %]
+[% INCLUDE licence.txt %]
 =cut
 
 # Created on: [% date %] [% time %]
@@ -668,7 +668,7 @@ our $VERSION = 0.0.1;
 our @EXPORT = qw//;
 our @EXPORT_OK = qw//;
 
-[% INCLUDE perl/pod.ttk return => mod -%]
+[% INCLUDE perl/pod.pl return => mod -%]
 
 sub new {
 	my $caller = shift;
@@ -685,10 +685,10 @@ sub new {
 1;
 
  =__END__
-__perl/find.ttk__
+__perl/find.pl__
 [% IF not vars %][% vars = [ 'search' ] %][% END -%]
 [% IF not sub %][% sub = 'find_files' %][% END -%]
-[% INCLUDE perl/pod.ttk vars => [ 'dir', vars ]-%]
+[% INCLUDE perl/pod.pl vars => [ 'dir', vars ]-%]
 
 sub [% sub %] {
 	my ( $dir, [% FOREACH var = vars %]$[% var %], [% END %] ) = @_;
@@ -712,7 +712,7 @@ sub [% sub %] {
 	}
 	return ;
 }
-__perl/if.ttk__
+__perl/if.pl__
 if (  ) {
 
 }
@@ -722,7 +722,7 @@ elsif (  ) {
 else {
 
 }
-__perl/package.ttk__
+__perl/package.pl__
 [% IF not vars %][% vars = [ 'search' ] %][% END -%]
 [% IF not module %][% module = 'Module::Name' %][% END -%]
 package [% module %];
@@ -769,21 +769,21 @@ sub new {
 
 [% module %] - <One-line description of module's purpose>
 
-[% INCLUDE perl/pod/VERSION.ttk %]
-[% INCLUDE perl/pod/SYNOPSIS.ttk %]
-[% INCLUDE perl/pod/DESCRIPTION.ttk %]
-[% INCLUDE perl/pod/METHODS.ttk %]
+[% INCLUDE perl/pod/VERSION.pl %]
+[% INCLUDE perl/pod/SYNOPSIS.pl %]
+[% INCLUDE perl/pod/DESCRIPTION.pl %]
+[% INCLUDE perl/pod/METHODS.pl %]
 
-[% INCLUDE perl/pod.ttk return => module, sub => 'new' -%]
+[% INCLUDE perl/pod.pl return => module, sub => 'new' -%]
 
-[% INCLUDE perl/pod/detailed.ttk %]
+[% INCLUDE perl/pod/detailed.pl %]
 =head1 AUTHOR
 
 [% contact.fullname %] - ([% contact.email %])
 <Author name(s)>  (<contact address>)
 
 =head1 LICENSE AND COPYRIGHT
-[% INCLUDE licence.ttk %]
+[% INCLUDE licence.txt %]
 =cut
 __perl/package/dia.pm__
 [% IF not vars %][% vars = [ 'search' ] %][% END -%]
@@ -849,10 +849,10 @@ sub [% matches.0 %] {
 
 [% module %] - <One-line description of module's purpose>
 
-[% INCLUDE perl/pod/VERSION.ttk %]
-[% INCLUDE perl/pod/SYNOPSIS.ttk %]
-[% INCLUDE perl/pod/DESCRIPTION.ttk %]
-[% INCLUDE perl/pod/METHODS.ttk %]
+[% INCLUDE perl/pod/VERSION.pl %]
+[% INCLUDE perl/pod/SYNOPSIS.pl %]
+[% INCLUDE perl/pod/DESCRIPTION.pl %]
+[% INCLUDE perl/pod/METHODS.pl %]
 
 [% FOREACH sig = sigs %]
 [%- matches = sig.match('^,?(\w+)[(](.*)$') -%]
@@ -866,16 +866,16 @@ Description:
 
 [% END %]
 
-[% INCLUDE perl/pod/detailed.ttk %]
+[% INCLUDE perl/pod/detailed.pl %]
 =head1 AUTHOR
 
 [% contact.fullname %] - ([% contact.email %])
 <Author name(s)>  (<contact address>)
 
 =head1 LICENSE AND COPYRIGHT
-[% INCLUDE licence.ttk %]
+[% INCLUDE licence.txt %]
 =cut
-__perl/package/gtk2.ttk__
+__perl/package/gtk2.pl__
 [% IF not vars %][% vars = [ 'search' ] %][% END -%]
 [% IF not module %][% module = 'Module::Name' %][% END -%]
 [% IF not super %][% super = 'Gtk2::Button::' %][% END -%]
@@ -885,18 +885,18 @@ package [% module %];
 
 [% module %] - <One-line description of module's purpose>
 
-[% INCLUDE perl/pod/VERSION.ttk %]
-[% INCLUDE perl/pod/SYNOPSIS.ttk %]
-[% INCLUDE perl/pod/DESCRIPTION.ttk %]
-[% INCLUDE perl/pod/METHODS.ttk %]
-[% INCLUDE perl/pod/detailed.ttk %]
+[% INCLUDE perl/pod/VERSION.pl %]
+[% INCLUDE perl/pod/SYNOPSIS.pl %]
+[% INCLUDE perl/pod/DESCRIPTION.pl %]
+[% INCLUDE perl/pod/METHODS.pl %]
+[% INCLUDE perl/pod/detailed.pl %]
 =head1 AUTHOR
 
 [% contact.fullname %] - ([% contact.email %])
 <Author name(s)>  (<contact address>)
 
 =head1 LICENSE AND COPYRIGHT
-[% INCLUDE licence.ttk %]
+[% INCLUDE licence.pl %]
 =cut
 
 # Created on: [% date %] [% time %]
@@ -937,7 +937,7 @@ use Glib::Object::Subclass (
 	],
 );
 
-[% INCLUDE perl/pod.ttk return => module -%]
+[% INCLUDE perl/pod.pl return => module -%]
 
 # effectively serves as new
 sub INIT_INSTANCE {
@@ -950,7 +950,7 @@ sub INIT_INSTANCE {
 
  =__END__
 
-__perl/pod.ttk__
+__perl/pod.pl__
 [% IF not vars %][% vars = [ 'var1', 'var2' ] %][% END -%]
 =head3 C<[% sub || 'sub' %] ( [% FOREACH var = vars %]$[% var %],[% END %] )>
 [% FOREACH var = vars %]
@@ -962,14 +962,14 @@ Return: [% return %] -
 Description:
 
 =cut
-__perl/pod/DESCRIPTION.ttk__
+__perl/pod/DESCRIPTION.pl__
 
 =head1 DESCRIPTION
 
 A full description of the module and its features.
 
 May include numerous subsections (i.e., =head2, =head3, etc.).
-__perl/pod/METHODS.ttk__
+__perl/pod/METHODS.pl__
 
 =head1 SUBROUTINES/METHODS
 
@@ -984,9 +984,9 @@ Name the section accordingly.
 In an object-oriented module, this section should begin with a sentence (of the
 form "An object of this class represents ...") to give the reader a high-level
 context to help them understand the methods that are subsequently described.
-__perl/pod/NAME.ttk__
+__perl/pod/NAME.pl__
 
-__perl/pod/SYNOPSIS.ttk__
+__perl/pod/SYNOPSIS.pl__
 
 =head1 SYNOPSIS
 
@@ -995,7 +995,7 @@ __perl/pod/SYNOPSIS.ttk__
    # Brief but working code example(s) here showing the most common usage(s)
    # This section will be as far as many users bother reading, so make it as
    # educational and exemplary as possible.
-__perl/pod/USAGE.ttk__
+__perl/pod/USAGE.pl__
 =head1 SYNOPSIS
 
    [% module %] [option]
@@ -1008,11 +1008,11 @@ __perl/pod/USAGE.ttk__
      --help          Prints this help information
      --man           Prints the full documentation for [% module %]
 
-__perl/pod/VERSION.ttk__
+__perl/pod/VERSION.pl__
 =head1 VERSION
 
 This documentation refers to [% module %] version 0.1.
-__perl/pod/detailed.ttk__
+__perl/pod/detailed.pl__
 =head1 DIAGNOSTICS
 
 A list of every error and warning message that the module can generate (even
@@ -1057,32 +1057,32 @@ There are no known bugs in this module.
 Please report problems to [% contact.fullname %] ([% contact.email %]).
 
 Patches are welcome.
-__perl/pod/package.ttk__
+__perl/pod/package.pl__
 [% IF not vars %][% vars = [ 'search' ] %][% END -%]
 [% IF not module %][% module = 'Module::Name' %][% END -%]
 =head1 NAME
 
 [% module %] - <One-line description of module's purpose>
 
-[% INCLUDE perl/pod/VERSION.ttk %]
-[% INCLUDE perl/pod/SYNOPSIS.ttk %]
-[% INCLUDE perl/pod/DESCRIPTION.ttk %]
-[% INCLUDE perl/pod/METHODS.ttk %]
+[% INCLUDE perl/pod/VERSION.pl %]
+[% INCLUDE perl/pod/SYNOPSIS.pl %]
+[% INCLUDE perl/pod/DESCRIPTION.pl %]
+[% INCLUDE perl/pod/METHODS.pl %]
 
 =cut
 
-[% INCLUDE perl/pod.ttk return => module, sub => 'new' -%]
+[% INCLUDE perl/pod.pl return => module, sub => 'new' -%]
 
-[% INCLUDE perl/pod/detailed.ttk %]
+[% INCLUDE perl/pod/detailed.pl %]
 =head1 AUTHOR
 
 [% contact.fullname %] - ([% contact.email %])
 
 =head1 LICENSE AND COPYRIGHT
-[% INCLUDE licence.ttk %]
+[% INCLUDE licence.txt %]
 =cut
 
-__perl/simple.ttk__
+__perl/simple.pl__
 #!/usr/bin/perl -T
 
 use strict;
@@ -1091,19 +1091,19 @@ use warnings;
 
 
  =__DATA__
-__perl/sub.ttk__
+__perl/sub.pl__
 [% IF not vars %][% vars = [ 'var1', 'var2' ] %][% END -%]
 [% IF not sub %][% sub = 'sub' %][% END -%]
-[% INCLUDE perl/pod.ttk -%]
+[% INCLUDE perl/pod.pl -%]
 
 sub [% sub %] {
 	my ( [% FOREACH var = vars %]$[% var %], [% END %] ) = @_;
 
 }
-__perl/sub/class.ttk__
+__perl/sub/class.pl__
 [% IF not vars %][% vars = [ 'var1', 'var2' ] %][% END -%]
 [% IF not sub %][% sub = 'class_method' %][% END -%]
-[% INCLUDE perl/pod.ttk -%]
+[% INCLUDE perl/pod.pl -%]
 
 sub [% sub %] {
 	my $caller = shift;
@@ -1111,10 +1111,10 @@ sub [% sub %] {
 	my ( [% FOREACH var = vars %]$[% var %], [% END %] ) = @_;
 
 }
-__perl/sub/method.ttk__
+__perl/sub/method.pl__
 [% IF not vars %][% vars = [ 'var1', 'var2' ] %][% END -%]
 [% IF not sub %][% sub = 'method' %][% END -%]
-[% INCLUDE perl/pod.ttk -%]
+[% INCLUDE perl/pod.pl -%]
 
 sub [% sub %] {
 	my ( $self, %args ) = @_;
@@ -1124,10 +1124,10 @@ sub [% sub %] {
 	#my $set  = $self->{set};
 
 }
-__perl/sub/object.ttk__
+__perl/sub/object.pl__
 [% IF not vars %][% vars = [ 'var1', 'var2' ] %][% END -%]
 [% IF not sub %][% sub = 'method' %][% END -%]
-[% INCLUDE perl/pod.ttk -%]
+[% INCLUDE perl/pod.pl -%]
 
 sub [% sub %] {
 	my ( $self, %args ) = @_;
@@ -1137,7 +1137,7 @@ sub [% sub %] {
 	#my $set  = $self->{set};
 
 }
-__perl/test.ttk__
+__perl/test.pl__
 [% IF not module %][% module = 'module' %][% END -%]
 [% IF not obj    %][% obj    = 'obj'    %][% END -%]
 [% IF not tests  %][% tests  = 10       %][% END -%]
@@ -1379,7 +1379,7 @@ __perl/timer.pl__
         $previous = $time;
     }
 }
-__php.ttk__
+__php.php__
 #!/usr/bin/php
 <?php
 
@@ -1390,7 +1390,7 @@ __php.ttk__
 
 
 ?>
-__php/class.ttk__
+__php/class.php__
 <?php
 
 /**
