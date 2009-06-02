@@ -337,12 +337,20 @@ sub list_templates {
 			no strict 'refs';            ## no critic
 			$fh = \*{"${module}\::DATA"};
 		}
+		my $lines = 0;
 
 		LINE:
 		while ( my $line = <$fh> ) {
+			$lines++;
 			my ($template) = $line =~ /^__(.+)__\r?\n/xms;
 			next LINE if !$template;
 			push @files, { path => $module, file => $template };
+		}
+
+		# if no lines read check the provider cache
+		if ( !$lines ) {
+			my $cache = $self->{providers}[1]->{cache}{templates};
+			push @files, map {{ file => $_ }} keys %{ $cache };
 		}
 	}
 
