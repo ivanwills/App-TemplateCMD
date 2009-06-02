@@ -18,7 +18,7 @@ use Data::Dumper qw/Dumper/;
 use English qw/ -no_match_vars /;
 use base qw/Exporter/;
 
-our $VERSION     = version->new('0.0.1');
+our $VERSION     = version->new('0.0.2');
 our @EXPORT_OK   = qw//;
 our %EXPORT_TAGS = ();
 #our @EXPORT      = qw//;
@@ -90,8 +90,7 @@ App::TemplateCMD::Command - The base class for command modules
 
 =head1 VERSION
 
-This documentation refers to App::TemplateCMD::Command version 0.1.
-
+This documentation refers to App::TemplateCMD::Command version 0.0.2.
 
 =head1 SYNOPSIS
 
@@ -101,13 +100,7 @@ This documentation refers to App::TemplateCMD::Command version 0.1.
    # This section will be as far as many users bother reading, so make it as
    # educational and exemplary as possible.
 
-
 =head1 DESCRIPTION
-
-A full description of the module and its features.
-
-May include numerous subsections (i.e., =head2, =head3, etc.).
-
 
 =head1 SUBROUTINES/METHODS
 

@@ -19,7 +19,7 @@ use Template::Provider;
 use YAML qw/Load/;
 use base qw/App::TemplateCMD::Command/;
 
-our $VERSION     = version->new('0.0.1');
+our $VERSION     = version->new('0.0.2');
 our @EXPORT_OK   = qw//;
 our %EXPORT_TAGS = ();
 
@@ -88,7 +88,7 @@ App::TemplateCMD::Command::Build - Builds a a tree of files from a build templat
 
 =head1 VERSION
 
-This documentation refers to App::TemplateCMD::Command::Build version 0.1.
+This documentation refers to App::TemplateCMD::Command::Build version 0.0.2.
 
 =head1 SYNOPSIS
 
