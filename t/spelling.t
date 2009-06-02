@@ -21,7 +21,7 @@ plan skip_all => "Test::Spelling required for testing POD spelling" if $@;
 plan skip_all => "spell cmd required for testing POD spelling" if !$found;
 
 add_stopwords(qw/
-	YAML NSW Hornsby templatecmd Arg arg var vars XHTML html CGI min Gtk dir fullname ttk funcs isa obj sig sigs
+	YAML NSW Hornsby templatecmd Arg arg var vars XHTML html CGI min Gtk dir fullname ttk txt pl funcs isa obj sig sigs
 	MathML
 	Param
 	SVG
