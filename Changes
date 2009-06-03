@@ -1,5 +1,9 @@
 Revision history for App-TemplateCMD
 
+0.0.2   2009-06-02
+        Minor fixes to print's matching incomplete template names
+        Some documentation cleanup
+
 0.0.1   2009-05-26
         First version, released on an unsuspecting world.
 
