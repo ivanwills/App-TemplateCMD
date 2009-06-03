@@ -31,7 +31,7 @@ This documentation refers to App::TemplateCMD::Templates version 0.0.2.
 =head1 SYNOPSIS
 
    use Template;
-   use Template::Provider::FromData;
+   use Template::Provider::FromDATA;
    use App::TemplateCMD::Templates;
 
    # Get the template provider
@@ -655,12 +655,9 @@ use strict;
 use warnings;
 use Carp;
 use Data::Dumper qw/Dumper/;
-
 use Scalar::Util;
 use List::Util;
-use List::MoreUtils;
-
-use CGI;
+#use List::MoreUtils;
 use base qw/Exporter/;
 
 our $VERSION = 0.0.1;
@@ -739,7 +736,6 @@ use Carp;
 use Scalar::Util;
 use List::Util;
 #use List::MoreUtils;
-use CGI;
 use Data::Dumper qw/Dumper/;
 use English qw/ -no_match_vars /;
 use base qw/Exporter/;

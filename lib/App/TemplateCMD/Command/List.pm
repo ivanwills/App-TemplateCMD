@@ -10,7 +10,6 @@ use strict;
 use warnings;
 use version;
 use Carp;
-use Scalar::Util;
 use List::MoreUtils qw/uniq/;
 use Data::Dumper qw/Dumper/;
 use English qw/ -no_match_vars /;
