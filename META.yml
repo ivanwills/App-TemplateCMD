@@ -1,6 +1,6 @@
 ---
 name: App-TemplateCMD
-version: 0.0.2
+version: 0.0.3
 author:
   - 'Ivan Wills <ivan.wills@gmail.com>'
 abstract: Sets up an interface to passing Template Toolkit templates
@@ -19,35 +19,35 @@ build_requires:
 provides:
   App::TemplateCMD:
     file: lib/App/TemplateCMD.pm
-    version: 0.0.2
+    version: 0.0.3
   App::TemplateCMD::Command:
     file: lib/App/TemplateCMD/Command.pm
-    version: 0.0.2
+    version: 0.0.3
   App::TemplateCMD::Command::Build:
     file: lib/App/TemplateCMD/Command/Build.pm
-    version: 0.0.2
+    version: 0.0.3
   App::TemplateCMD::Command::Cat:
     file: lib/App/TemplateCMD/Command/Cat.pm
-    version: 0.0.2
+    version: 0.0.3
   App::TemplateCMD::Command::Conf:
     file: lib/App/TemplateCMD/Command/Conf.pm
-    version: 0.0.2
+    version: 0.0.3
   App::TemplateCMD::Command::Describe:
     file: lib/App/TemplateCMD/Command/Describe.pm
-    version: 0.0.2
+    version: 0.0.3
   App::TemplateCMD::Command::Help:
     file: lib/App/TemplateCMD/Command/Help.pm
-    version: 0.0.2
+    version: 0.0.3
   App::TemplateCMD::Command::List:
     file: lib/App/TemplateCMD/Command/List.pm
-    version: 0.0.2
+    version: 0.0.3
   App::TemplateCMD::Command::Print:
     file: lib/App/TemplateCMD/Command/Print.pm
-    version: 0.0.2
+    version: 0.0.3
   App::TemplateCMD::Templates:
     file: lib/App/TemplateCMD/Templates.pm
-    version: 0.0.2
-generated_by: Module::Build version 0.280801
+    version: 0.0.3
+generated_by: Module::Build version 0.33
 meta-spec:
-  url: http://module-build.sourceforge.net/META-spec-v1.2.html
-  version: 1.2
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
