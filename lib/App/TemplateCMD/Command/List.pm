@@ -16,7 +16,7 @@ use English qw/ -no_match_vars /;
 use base qw/App::TemplateCMD::Command/;
 use File::Find;
 
-our $VERSION     = version->new('0.0.2');
+our $VERSION     = version->new('0.0.3');
 our @EXPORT_OK   = qw//;
 our %EXPORT_TAGS = ();
 
@@ -86,7 +86,7 @@ App::TemplateCMD::Command::List - Command to list the available templates.
 
 =head1 VERSION
 
-This documentation refers to App::TemplateCMD::Command::List version 0.0.2.
+This documentation refers to App::TemplateCMD::Command::List version 0.0.3.
 
 =head1 SYNOPSIS
 

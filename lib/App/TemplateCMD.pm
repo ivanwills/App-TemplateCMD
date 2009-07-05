@@ -22,7 +22,7 @@ use Template::Provider::FromDATA;
 use Data::Merger qw/merger/;
 use base qw/Exporter/;
 
-our $VERSION     = version->new('0.0.2');
+our $VERSION     = version->new('0.0.3');
 our @EXPORT_OK   = qw//;
 our %EXPORT_TAGS = ();
 
@@ -379,7 +379,7 @@ App::TemplateCMD - Sets up an interface to passing Template Toolkit templates
 
 =head1 VERSION
 
-This documentation refers to App::TemplateCMD version 0.0.2.
+This documentation refers to App::TemplateCMD version 0.0.3.
 
 =head1 SYNOPSIS
 
@@ -476,6 +476,10 @@ There are no known bugs in this module.
 Please report problems to Ivan Wills (ivan.wills@gmail.com).
 
 Patches are welcome.
+
+Source code can be found on github:
+
+    git://github.com/ivanwills/Catalyst-Plugin-LogDeep.git
 
 =head1 AUTHOR
 

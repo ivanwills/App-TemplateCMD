@@ -29,5 +29,6 @@ add_stopwords(qw/
 	criticise
 	perlcriticrc
 	svg
+	github
 /);
 all_pod_files_spelling_ok();
