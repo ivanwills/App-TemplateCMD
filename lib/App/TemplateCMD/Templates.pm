@@ -718,7 +718,7 @@ elsif (  ) {
 else {
 
 }
-__perl/package.pl__
+__perl/package.pm__
 [% IF not vars %][% vars = [ 'search' ] %][% END -%]
 [% IF not module %][% module = 'Module::Name' %][% END -%]
 package [% module %];
@@ -729,8 +729,12 @@ package [% module %];
 # $Revision$, $HeadURL$, $Date$
 # $Revision$, $Source$, $Date$
 
+[% IF moose -%]
+use Moose;
+[% ELSE -%]
 use strict;
 use warnings;
+[% END -%]
 use version;
 use Carp;
 use Scalar::Util;
@@ -738,13 +742,16 @@ use List::Util;
 #use List::MoreUtils;
 use Data::Dumper qw/Dumper/;
 use English qw/ -no_match_vars /;
+[% IF !moose -%]
 use base qw/Exporter/;
+[%- END %]
 
 our $VERSION     = version->new('0.0.1');
 our @EXPORT_OK   = qw//;
 our %EXPORT_TAGS = ();
 #our @EXPORT      = qw//;
 
+[% IF !moose -%]
 sub new {
 	my $caller = shift;
 	my $class  = ref $caller ? ref $caller : $caller;
@@ -755,6 +762,7 @@ sub new {
 
 	return $self;
 }
+[%- END %]
 
 1;
 
@@ -769,7 +777,9 @@ sub new {
 [% INCLUDE perl/pod/DESCRIPTION.pl %]
 [% INCLUDE perl/pod/METHODS.pl %]
 
+[% IF !moose -%]
 [% INCLUDE perl/pod.pl return => module, sub => 'new' -%]
+[% END %]
 
 [% INCLUDE perl/pod/detailed.pl %]
 =head1 AUTHOR
@@ -1142,7 +1152,8 @@ BEGIN { $ENV{TESTING} = 1 }
 
 use strict;
 use warnings;
-use Test::More tests => [% tests %];
+use Test::More tests => [% tests %] + 1;
+use Test::NoWarnings;
 
 my $module = '[% module %]';
 use_ok( $module );
@@ -1171,7 +1182,8 @@ __perl/test/00-load.t__
 
 use strict;
 use warnings;
-use Test::More tests => 1;
+use Test::More tests => 1 + 1;
+use Test::NoWarnings;
 
 BEGIN {
 	use_ok( '[% module %]' );
@@ -1190,7 +1202,8 @@ $stash->set( file => $file );
 
 use strict;
 use warnings;
-use Test::More tests => 3;
+use Test::More tests => 3 + 1;
+use Test::NoWarnings;
 
 sub not_in_file_ok {
     my ($filename, %regex) = @_;
@@ -1305,6 +1318,13 @@ __perl/test/kwalitee.t__
 
 use strict;
 use warnings;
+
+if ( not $ENV{TEST_AUTHOR} ) {
+	require Test::More;
+	Test::More->import;
+	my $msg = 'Author test.  Set TEST_AUTHOR environment variable to a true value to run.';
+	plan( skip_all => $msg );
+}
 
 eval { require Test::Kwalitee; Test::Kwalitee->import() };
 
