@@ -11,12 +11,14 @@ WriteMakefile
                          ],
           'VERSION_FROM' => 'lib/App/TemplateCMD.pm',
           'PREREQ_PM' => {
-                           'Test::More' => 0,
-                           'Clone' => '0.17',
                            'Class::Date' => '1.1.7',
                            'Template::Provider::FromDATA' => '0.08',
                            'Template' => '2.14',
-                           'Data::Merger' => 0
+                           'Data::Merger' => 0,
+                           'Readonly' => 0,
+                           'Test::More' => 0,
+                           'Clone' => '0.17',
+                           'List::MoreUtils' => 0
                          }
         )
 ;

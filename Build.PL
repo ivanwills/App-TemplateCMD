@@ -14,6 +14,8 @@ my $builder = Module::Build->new(
 		'Class::Date'                  => '1.1.7',
 		'Clone'                        => '0.17',
 		'Data::Merger'                 => 0,
+		'List::MoreUtils'              => 0,
+		'Readonly'                     => 0,
 	},
 	build_requires => {
 		'Test::More' => 0,
