@@ -185,7 +185,7 @@ sub config {
 	return $self->{'config'} if $self->{'config'};
 
 	my $conf = {
-		path    => '/usr/local/template-cmd/src/:~/.template-cmd/:~/.template-cmd-local:~/template-cmd',
+		path    => '~/template-cmd:~/.template-cmd/:~/.template-cmd-local:/usr/local/template-cmd/src/',
 		aliases => {
 			ls  => 'list',
 			des => 'describe',
@@ -244,6 +244,7 @@ sub config {
 	$conf->{time} = ( $hour < 10 ? '0' : '' ) . "$hour:" . ( $min < 10 ? '0' : '' ) . "$min:" . ( $sec < 10 ? '0' : '' ) . $sec;
 	$conf->{year} = $year;
 	$conf->{user} = $ENV{USER};
+	$conf->{path} =~ s/~/$ENV{HOME}/gxms;
 
 	# return and cache the configuration item
 	return $self->{'config'} = $conf;
@@ -315,7 +316,9 @@ sub list_templates {
 		find(
 			sub {
 				return if -d $_;
-				push @files, { path => $dir, file => $File::Find::name };
+				my $file = $File::Find::name;
+				$file =~ s{^$dir/}{}xms;
+				push @files, { path => $dir, file => $file };
 			},
 			$dir
 		);
