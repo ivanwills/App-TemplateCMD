@@ -14,7 +14,6 @@ use List::MoreUtils qw/uniq/;
 use Data::Dumper qw/Dumper/;
 use English qw/ -no_match_vars /;
 use base qw/App::TemplateCMD::Command/;
-use File::Find;
 
 our $VERSION     = version->new('0.0.3');
 our @EXPORT_OK   = qw//;
