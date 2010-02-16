@@ -9,6 +9,7 @@ my $builder = Module::Build->new(
 	dist_version_from => 'lib/App/TemplateCMD.pm',
 	requires          => {
 		'perl'                         => 5.008,
+		'version'                      => 0,
 		'Template'                     => '2.14',
 		'Template::Provider::FromDATA' => '0.08',
 		'Class::Date'                  => '1.1.7',
