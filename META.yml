@@ -1,55 +1,60 @@
 ---
-name: App-TemplateCMD
-version: 0.0.3
+abstract: 'Sets up an interface to passing Template Toolkit templates'
 author:
   - 'Ivan Wills <ivan.wills@gmail.com>'
-abstract: Sets up an interface to passing Template Toolkit templates
+build_requires:
+  Test::More: 0
+  Test::NoWarnings: 0
+configure_requires:
+  Module::Build: 0.36
+generated_by: 'Module::Build version 0.3603'
 license: perl
-resources:
-  license: http://dev.perl.org/licenses/
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
+name: App-TemplateCMD
+provides:
+  App::TemplateCMD:
+    file: lib/App/TemplateCMD.pm
+    version: v0.0.4
+  App::TemplateCMD::Command:
+    file: lib/App/TemplateCMD/Command.pm
+    version: v0.0.4
+  App::TemplateCMD::Command::Build:
+    file: lib/App/TemplateCMD/Command/Build.pm
+    version: v0.0.4
+  App::TemplateCMD::Command::Cat:
+    file: lib/App/TemplateCMD/Command/Cat.pm
+    version: v0.0.4
+  App::TemplateCMD::Command::Conf:
+    file: lib/App/TemplateCMD/Command/Conf.pm
+    version: v0.0.4
+  App::TemplateCMD::Command::Describe:
+    file: lib/App/TemplateCMD/Command/Describe.pm
+    version: v0.0.4
+  App::TemplateCMD::Command::Help:
+    file: lib/App/TemplateCMD/Command/Help.pm
+    version: v0.0.4
+  App::TemplateCMD::Command::List:
+    file: lib/App/TemplateCMD/Command/List.pm
+    version: v0.0.4
+  App::TemplateCMD::Command::Print:
+    file: lib/App/TemplateCMD/Command/Print.pm
+    version: v0.0.4
+  App::TemplateCMD::Templates:
+    file: lib/App/TemplateCMD/Templates.pm
+    version: v0.0.4
 requires:
-  Class::Date: 1.1.7
+  Class::Date: 1.1
   Clone: 0.17
   Data::Merger: 0
   List::MoreUtils: 0
   Readonly: 0
   Template: 2.14
   Template::Provider::FromDATA: 0.08
+  YAML: 0
   perl: 5.008
-build_requires:
-  Test::More: 0
-provides:
-  App::TemplateCMD:
-    file: lib/App/TemplateCMD.pm
-    version: 0.0.3
-  App::TemplateCMD::Command:
-    file: lib/App/TemplateCMD/Command.pm
-    version: 0.0.3
-  App::TemplateCMD::Command::Build:
-    file: lib/App/TemplateCMD/Command/Build.pm
-    version: 0.0.3
-  App::TemplateCMD::Command::Cat:
-    file: lib/App/TemplateCMD/Command/Cat.pm
-    version: 0.0.3
-  App::TemplateCMD::Command::Conf:
-    file: lib/App/TemplateCMD/Command/Conf.pm
-    version: 0.0.3
-  App::TemplateCMD::Command::Describe:
-    file: lib/App/TemplateCMD/Command/Describe.pm
-    version: 0.0.3
-  App::TemplateCMD::Command::Help:
-    file: lib/App/TemplateCMD/Command/Help.pm
-    version: 0.0.3
-  App::TemplateCMD::Command::List:
-    file: lib/App/TemplateCMD/Command/List.pm
-    version: 0.0.3
-  App::TemplateCMD::Command::Print:
-    file: lib/App/TemplateCMD/Command/Print.pm
-    version: 0.0.3
-  App::TemplateCMD::Templates:
-    file: lib/App/TemplateCMD/Templates.pm
-    version: 0.0.3
-generated_by: Module::Build version 0.33
-meta-spec:
-  url: http://module-build.sourceforge.net/META-spec-v1.4.html
-  version: 1.4
+  version: 0
+resources:
+  license: http://dev.perl.org/licenses/
+version: v0.0.4

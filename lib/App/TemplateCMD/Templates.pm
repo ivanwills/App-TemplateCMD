@@ -10,7 +10,7 @@ use strict;
 use warnings;
 use version;
 
-our $VERSION     = version->new('0.0.3');
+our $VERSION     = version->new('0.0.4');
 our @EXPORT_OK   = qw//;
 our %EXPORT_TAGS = ();
 
@@ -26,7 +26,7 @@ App::TemplateCMD::Templates - Default templates for templatecmd to use.
 
 =head1 VERSION
 
-This documentation refers to App::TemplateCMD::Templates version 0.0.3.
+This documentation refers to App::TemplateCMD::Templates version 0.0.4.
 
 =head1 SYNOPSIS
 

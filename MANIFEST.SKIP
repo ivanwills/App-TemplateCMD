@@ -1,4 +1,5 @@
-*.isearch
+.*.isearch
 .*.sw[po]
 .git
 .cvsignore
+^MYMETA.yml$
