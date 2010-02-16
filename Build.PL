@@ -16,9 +16,11 @@ my $builder = Module::Build->new(
 		'Data::Merger'                 => 0,
 		'List::MoreUtils'              => 0,
 		'Readonly'                     => 0,
+		'YAML'                         => 0,
 	},
 	build_requires => {
-		'Test::More' => 0,
+		'Test::More'       => 0,
+		'Test::NoWarnings' => 0,
 	},
 	add_to_cleanup     => [ 'App-TemplateCMD-*' ],
 	create_makefile_pl => 'traditional',
