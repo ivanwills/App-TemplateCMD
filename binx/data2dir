@@ -1,0 +1,155 @@
+#!/usr/bin/perl
+
+# Created on: 2008-03-25 16:07:36
+# Create by:  ivanw
+# $Id$
+# $Revision$, $HeadURL$, $Date$
+# $Revision$, $Source$, $Date$
+
+use strict;
+use warnings;
+use Getopt::Long;
+use Pod::Usage;
+use Data::Dumper qw/Dumper/;
+use English qw/ -no_match_vars /;
+use Path::Class qw/file/;
+
+our $VERSION = 0.001;
+my ($name)   = $PROGRAM_NAME =~ m{^.*/(.*?)$}mxs;
+
+my %option = (
+	dir     => '',
+	verbose => 0,
+	man     => 0,
+	help    => 0,
+	VERSION => 0,
+);
+
+main();
+exit 0;
+
+sub main {
+
+	Getopt::Long::Configure('bundling');
+	GetOptions(
+		\%option,
+		'dir|d=s',
+		'module|m=s',
+		'force|f!',
+		'verbose|v+',
+		'man',
+		'help',
+		'VERSION!',
+	) or pod2usage(2);
+
+	if ( $option{'VERSION'} ) {
+		print "$name Version = $VERSION\n";
+		exit 1;
+	}
+	elsif ( $option{'man'} ) {
+		pod2usage( -verbose => 2 );
+	}
+	elsif ( $option{'help'} || !$option{module} ) {
+		pod2usage( -verbose => 1 );
+	}
+
+	# do stuff here
+	if ($option{dir} && $option{dir} !~ m{/$}) {
+		$option{dir} .= '/';
+	}
+
+	my $file = $option{module};
+	$file =~ s{::}{/}gxms;
+	$file .= '.pm';
+	require $file;
+
+	my $fh;
+	my $data;
+	{
+		no strict 'refs';
+		$fh  = \*{"$option{module}::DATA"};
+	}
+	{
+		local $/;
+		$data = <$fh>;
+	}
+	my @templates = split /^__([^_\n]+)__\n/xms, $data;
+	if (@templates % 2) {
+		shift @templates;
+	}
+	my %templates = @templates;
+
+	for my $template ( sort keys %templates ) {
+		my $file = file( $option{dir} . $template );
+
+		if (!-e $file || $option{force}) {
+			$file->parent->mkpath;
+			my $fh = $file->open('w');
+			$templates{$template} =~ s/^\0__/__/gxms;
+			print {$fh} $templates{$template};
+		}
+	}
+
+	return;
+}
+
+__DATA__
+
+=head1 NAME
+
+lsrel - Not sure
+
+=head1 VERSION
+
+This documentation refers to lsrel version 0.1.
+
+=head1 SYNOPSIS
+
+   lsrel [--verbose] [file] [dir1 [dir2] ...]
+   lsrel [option] --file=file [dir1 [dir2] ...]
+   lsrel [option]
+
+ OPTIONS:
+  -f --file=str      other option
+
+  -v --verbose       Show more detailed option
+     --version       Prints the version information
+     --help          Prints this help information
+     --man           Prints the full documentation for lsrel
+
+=head1 DESCRIPTION
+
+=head1 SUBROUTINES/METHODS
+
+=head1 DIAGNOSTICS
+
+=head1 CONFIGURATION AND ENVIRONMENT
+
+=head1 DEPENDENCIES
+
+=head1 INCOMPATIBILITIES
+
+=head1 BUGS AND LIMITATIONS
+
+There are no known bugs in this module.
+
+Please report problems to Ivan Wills (ivanw@benon.com).
+
+Patches are welcome.
+
+=head1 AUTHOR
+
+Ivan Wills - (ivanw@benon.com)
+
+=head1 LICENSE AND COPYRIGHT
+
+Copyright (c) 2008 Manaccom Corporation Ltd. (8 Camford St, Milton, QLD, 4064).
+All rights reserved.
+
+This module is free software; you can redistribute it and/or modify it under
+the same terms as Perl itself. See L<perlartistic>.  This program is
+distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+PARTICULAR PURPOSE.
+
+=cut
