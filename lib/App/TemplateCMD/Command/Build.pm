@@ -16,6 +16,7 @@ use English qw/ -no_match_vars /;
 use Template;
 use Template::Provider;
 use YAML qw/Load/;
+use Path::Class qw/file/;
 use base qw/App::TemplateCMD::Command/;
 
 our $VERSION     = version->new('0.0.4');
@@ -30,16 +31,14 @@ sub process {
 
 	my $print = $cmd->load_cmd('print');
 	my $out = $print->process( $cmd, %{ $args }, files => [$template] );
-	die $out;
 
 	my $structure = Load($out);
 
-	for my $template (%{ $structure }) {
-		warn $template;
-		my $file = $structure->{$template}{file};
+	for my $template (keys %{ $structure }) {
+		my $file = file $structure->{$template}{file};
 
 		if ( !-e $file || $option{force} ) {
-			$self->create_base_dir($file);
+			$file->parent->mkpath();
 		}
 
 		# process the template
