@@ -245,6 +245,7 @@ sub config {
 	$conf->{year} = $year;
 	$conf->{user} = $ENV{USER};
 	$conf->{path} =~ s/~/$ENV{HOME}/gxms;
+	$conf->{path} =~ s{/:}{:}gxms;
 
 	# return and cache the configuration item
 	return $self->{'config'} = $conf;
@@ -312,6 +313,7 @@ sub list_templates {
 
 	for my $dir (@path) {
 		next if !-d $dir;
+		$dir =~ s{/$}{}xms;
 
 		find(
 			sub {
