@@ -16,7 +16,7 @@ use English qw/ -no_match_vars /;
 use base qw/App::TemplateCMD::Command/;
 use File::Glob;
 
-our $VERSION     = version->new('0.0.4');
+our $VERSION     = version->new('0.1.0');
 our @EXPORT_OK   = qw//;
 our %EXPORT_TAGS = ();
 
@@ -124,7 +124,7 @@ templatecmd in general.
 
 =head1 VERSION
 
-This documentation refers to App::TemplateCMD::Command::Help version 0.0.4.
+This documentation refers to App::TemplateCMD::Command::Help version 0.1.0.
 
 =head1 SYNOPSIS
 
