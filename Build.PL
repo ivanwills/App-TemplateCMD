@@ -26,6 +26,12 @@ my $builder = Module::Build->new(
 	add_to_cleanup     => [ 'App-TemplateCMD-*' ],
 	create_makefile_pl => 'traditional',
 	create_license     => 1,
+	meta_merge => {
+		resources => {
+			repository => 'git://github.com/ivanwills/App-TemplateCMD.git',
+			bugtracker => 'http://rt.cpan.org/NoAuth/Bugs.html?Dist=App-TemplateCMD',
+		},
+	},
 );
 
 $builder->create_build_script();

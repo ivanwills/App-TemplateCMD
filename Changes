@@ -1,5 +1,8 @@
 Revision history for App-TemplateCMD
 
+0.1.0   2010-03-
+        
+
 0.0.4   2010-02-16
         Added missing required modules
         Fixed not correctly finding templates
