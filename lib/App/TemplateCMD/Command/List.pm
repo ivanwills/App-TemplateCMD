@@ -20,52 +20,52 @@ our @EXPORT_OK   = qw//;
 our %EXPORT_TAGS = ();
 
 sub process {
-	my ($self, $cmd, %option) = @_;
-	my $out = '';
+    my ($self, $cmd, %option) = @_;
+    my $out = '';
 
-	my $filter = shift @{$option{files}};
-	my $path   = $cmd->config->{path};
-	my @path   = grep {-d $_} split /:/, $path;
+    my $filter = shift @{$option{files}};
+    my $path   = $cmd->config->{path};
+    my @path   = grep {-d $_} split /:/, $path;
 
-	my @files = $cmd->list_templates();
+    my @files = $cmd->list_templates();
 
-	my @templates = uniq sort map {$_->{file}} @files;
+    my @templates = uniq sort map {$_->{file}} @files;
 
-	if ($filter) {
-		@templates = grep {/$filter/} @templates;
-	}
+    if ($filter) {
+        @templates = grep {/$filter/} @templates;
+    }
 
-	$option{columns} ||= 6;
+    $option{columns} ||= 6;
 
-	my $files_per_col = @templates / $option{columns};
-	$files_per_col = $files_per_col == int $files_per_col ? $files_per_col : int $files_per_col + 1;
-	my @columns;
-	my @max;
+    my $files_per_col = @templates / $option{columns};
+    $files_per_col = $files_per_col == int $files_per_col ? $files_per_col : int $files_per_col + 1;
+    my @columns;
+    my @max;
 
-	for my $row ( 0 .. $files_per_col - 1 ) {
-		for my $col ( 0 .. $option{columns} - 1 ) {
-			next if !$templates[$row * $option{columns} + $col];
-			push @{$columns[$col]}, $templates[$row * $option{columns} + $col];
-			$max[$col] ||= 1;
-			$max[$col] = length $templates[$row * $option{columns} + $col] if length $templates[$row * $option{columns} + $col] > $max[$col];
-		}
-	}
+    for my $row ( 0 .. $files_per_col - 1 ) {
+        for my $col ( 0 .. $option{columns} - 1 ) {
+            next if !$templates[$row * $option{columns} + $col];
+            push @{$columns[$col]}, $templates[$row * $option{columns} + $col];
+            $max[$col] ||= 1;
+            $max[$col] = length $templates[$row * $option{columns} + $col] if length $templates[$row * $option{columns} + $col] > $max[$col];
+        }
+    }
 
-	for my $row ( 0 .. $files_per_col -1 ) {
-		for my $col ( 0 .. $option{columns} - 1 ) {
-			next if !$columns[$col][$row];
-			$out .= $columns[$col][$row] . ' ' x ($max[$col] + 1 - length $columns[$col][$row]);
-		}
-		$out .= "\n";
-	}
+    for my $row ( 0 .. $files_per_col -1 ) {
+        for my $col ( 0 .. $option{columns} - 1 ) {
+            next if !$columns[$col][$row];
+            $out .= $columns[$col][$row] . ' ' x ($max[$col] + 1 - length $columns[$col][$row]);
+        }
+        $out .= "\n";
+    }
 
-	return $out;
+    return $out;
 }
 
 sub help {
-	my ($self) = @_;
+    my ($self) = @_;
 
-	return <<"HELP";
+    return <<"HELP";
 $0 list [filter]
 
 filter   An optional regular expression to show only templates that match.

@@ -20,21 +20,21 @@ our @EXPORT_OK   = qw//;
 our %EXPORT_TAGS = ();
 
 sub process {
-	my ($self, $cmd, %options) = @_;
+    my ($self, $cmd, %options) = @_;
 
-	my $conf = $cmd->config();
+    my $conf = $cmd->config();
 
-	if ($options{verbose}) {
-		print {*STDERR} "Default config is $cmd->{config_default}\n";
-	}
+    if ($options{verbose}) {
+        print {*STDERR} "Default config is $cmd->{config_default}\n";
+    }
 
-	return Dump $conf;
+    return Dump $conf;
 }
 
 sub help {
-	my ($self) = @_;
+    my ($self) = @_;
 
-	return <<"HELP";
+    return <<"HELP";
 $0 conf [options]
 
 Options

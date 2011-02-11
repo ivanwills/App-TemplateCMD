@@ -22,38 +22,38 @@ our %EXPORT_TAGS = ();
 
 sub process {
 
-	my ( $self, $cmd, %option ) = @_;
-	my $out;
-	my $config = $cmd->config;
+    my ( $self, $cmd, %option ) = @_;
+    my $out;
+    my $config = $cmd->config;
 
-	my $command = shift @{ $option{files} };
-	my $module;
+    my $command = shift @{ $option{files} };
+    my $module;
 
-	if ($command) {
-		$module = eval { $cmd->load_cmd($command) };
-	}
-	if ($module) {
-		$out  = $module->help() if $module->can('help');
-		$out .= $module->HELP() if $module->can('HELP');
+    if ($command) {
+        $module = eval { $cmd->load_cmd($command) };
+    }
+    if ($module) {
+        $out  = $module->help() if $module->can('help');
+        $out .= $module->HELP() if $module->can('HELP');
 
-		$out ||= "No help found for $command\n";
-	}
-	elsif ( $self->can($command) && $command ne 'process' ) {
-		$out = $self->$command();
-	}
-	else {
+        $out ||= "No help found for $command\n";
+    }
+    elsif ( $self->can($command) && $command ne 'process' ) {
+        $out = $self->$command();
+    }
+    else {
 
-		my @cmds = sort $self->commands();
-		my $cmds = '';
+        my @cmds = sort $self->commands();
+        my $cmds = '';
 
-		for my $name (@cmds) {
-			my @aliases = sort {length $b <=> length $a} grep { $config->{aliases}{$_} eq lc $name } keys %{ $config->{aliases} };
-			$cmds .= '    ' . lc $name;
-			$cmds .= ' (' . ( join ', ', @aliases ) . ')' if @aliases;
-			$cmds .= "\n";
-		}
+        for my $name (@cmds) {
+            my @aliases = sort {length $b <=> length $a} grep { $config->{aliases}{$_} eq lc $name } keys %{ $config->{aliases} };
+            $cmds .= '    ' . lc $name;
+            $cmds .= ' (' . ( join ', ', @aliases ) . ')' if @aliases;
+            $cmds .= "\n";
+        }
 
-		$out = <<"OUT";
+        $out = <<"OUT";
 usage: templatecmd <command> [options] [args]
 App::TemplateCMD command-line template system, version $App::TemplateCMD::VERSION.
 Type 'templatecmd help <command>' for help on a specific command.
@@ -65,38 +65,38 @@ $cmds
 App::TemplateCMD is a command-line interface to Perl's Template Toolkit (TT) templating
 system. For help with creating TT templates see 'perldoc Template'
 OUT
-	}
+    }
 
-	return $out;
+    return $out;
 }
 
 sub commands {
-	my ($self) = @_;
+    my ($self) = @_;
 
-	my @cmds;
-	my $cmd_path = 'App/TemplateCMD/Command';
+    my @cmds;
+    my $cmd_path = 'App/TemplateCMD/Command';
 
-	for my $path (@INC) {
-		my @modules = glob("$path/$cmd_path/*.pm");
-		for my $module (@modules) {
-			$module =~ s{^ $path / $cmd_path / (.*) [.]pm $}{$1}xms;
-			push @cmds, $module;
-		}
-	}
+    for my $path (@INC) {
+        my @modules = glob("$path/$cmd_path/*.pm");
+        for my $module (@modules) {
+            $module =~ s{^ $path / $cmd_path / (.*) [.]pm $}{$1}xms;
+            push @cmds, $module;
+        }
+    }
 
-	return uniq @cmds;
+    return uniq @cmds;
 }
 
 sub help {
-	my ($self) = @_;
+    my ($self) = @_;
 
-	return <<"HELP";
+    return <<"HELP";
 
 HELP
 }
 
 sub templates {
-	return <<"HELP";
+    return <<"HELP";
 Templates
 
 App::TemplateCMD uses Template Toolkit as its templateing engine the individual

@@ -21,27 +21,27 @@ our %EXPORT_TAGS = ();
 
 sub process {
 
-	my ( $self, $cmd, %option ) = @_;
-	my $template = shift @{$option{files}};
+    my ( $self, $cmd, %option ) = @_;
+    my $template = shift @{$option{files}};
 
-	my ($data, $provider, $error, $templates) = $self->get_template($template, $cmd);
-	die "Could not find the template $template\n" if !$data->{text};
+    my ($data, $provider, $error, $templates) = $self->get_template($template, $cmd);
+    die "Could not find the template $template\n" if !$data->{text};
 
-	my @vars = $data->{text} =~ /\[[%]-? (?!\#) \s* ([A-Z]+) \s* (.+?) \s* -?[%]\]/gxms;
-	my %vars;
-	for ( my $i = 0; $i < @vars; $i += 2 ) {
-		$vars{$vars[$i]}{ $vars[$i+1] } = 1;
-	}
+    my @vars = $data->{text} =~ /\[[%]-? (?!\#) \s* ([A-Z]+) \s* (.+?) \s* -?[%]\]/gxms;
+    my %vars;
+    for ( my $i = 0; $i < @vars; $i += 2 ) {
+        $vars{$vars[$i]}{ $vars[$i+1] } = 1;
+    }
 
-	my $includes = join "\n    ", sort keys %{ $vars{INCLUDE} };
-	my $vars     = join "\n    ", uniq sort grep {$_!~/^(?: END | CASE )$/xms} $data->{text} =~ /\[ [%] -? (?!\#) \s* (\w+?) \s* -?[%]\]/gxms;
-	my $description = join "\n",  $data->{text} =~ /\[[%]\#= (.*?) -?[%]\]/gxms;
+    my $includes = join "\n    ", sort keys %{ $vars{INCLUDE} };
+    my $vars     = join "\n    ", uniq sort grep {$_!~/^(?: END | CASE )$/xms} $data->{text} =~ /\[ [%] -? (?!\#) \s* (\w+?) \s* -?[%]\]/gxms;
+    my $description = join "\n",  $data->{text} =~ /\[[%]\#= (.*?) -?[%]\]/gxms;
 
-	$includes    ||= '(none)';
-	$vars        ||= '(none)';
-	$description &&= "\n$description\n";
+    $includes    ||= '(none)';
+    $vars        ||= '(none)';
+    $description &&= "\n$description\n";
 
-	return <<"DESCRIPTION";
+    return <<"DESCRIPTION";
 Details for '$template'
 Location:
     $provider
@@ -56,9 +56,9 @@ DESCRIPTION
 }
 
 sub help {
-	my ($self) = @_;
+    my ($self) = @_;
 
-	return <<"HELP";
+    return <<"HELP";
 $0 describe template
 
 This command gives full details of a template, the variables it uses and

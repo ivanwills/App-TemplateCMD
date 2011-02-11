@@ -15,7 +15,7 @@ our @EXPORT_OK   = qw//;
 our %EXPORT_TAGS = ();
 
 sub get_data {
-	return *__PACKAGE__::DATA;
+    return *__PACKAGE__::DATA;
 }
 
 1;
@@ -123,14 +123,14 @@ __db/table.sql__
 -- DROP TABLE [% table %];
 
 CREATE TABLE [% table %] (
-	[% table %]_id          SERIAL PRIMARY KEY,
-	[% table %]_created     TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-	[% table %]_type_id     INTEGER REFERENCES [% table %]_type  ([% table %]_type_id ) NOT NULL,
-	[% table %]_state_id    INTEGER REFERENCES [% table %]_state ([% table %]_state_id) NOT NULL,
-	[% table %]             VARCHAR NOT NULL UNIQUE,
-	[% table %]_description VARCHAR,
+    [% table %]_id          SERIAL PRIMARY KEY,
+    [% table %]_created     TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    [% table %]_type_id     INTEGER REFERENCES [% table %]_type  ([% table %]_type_id ) NOT NULL,
+    [% table %]_state_id    INTEGER REFERENCES [% table %]_state ([% table %]_state_id) NOT NULL,
+    [% table %]             VARCHAR NOT NULL UNIQUE,
+    [% table %]_description VARCHAR,
 [% FOREACH column = columns -%]
-	[% column %][% i = column.length %][% WHILE i <= 11 + table.length %][% i = i + 1 %] [% END %] VARCHAR,
+    [% column %][% i = column.length %][% WHILE i <= 11 + table.length %][% i = i + 1 %] [% END %] VARCHAR,
 [% END -%]
 );
 
@@ -156,23 +156,23 @@ __db/table/dia.sql__
 
 CREATE TABLE [% table %] (
 [% FOREACH column = columns -%]
-	[% column %][% i = column.length %][% WHILE i <= 11 + table.length %][% i = i + 1 %] [% END %] [%
-		IF column == table _ '_id'
-		%]SERIAL PRIMARY KEY,[%
-		ELSIF column == table _ '_created'
-		%]TIMESTAMP WITH TIME ZONE DEFAULT NOW(),[%
-		ELSIF column == table _ '_type_id'
-		%]INTEGER REFERENCES [% table %]_type  ([% table %]_type_id ) NOT NULL,[%
-		ELSIF column == table _ '_state_id'
-		%]INTEGER REFERENCES [% table %]_state ([% table %]_state_id) NOT NULL,[%
-		ELSIF column == table
-		%]VARCHAR NOT NULL UNIQUE,[%
-		ELSIF column.search('_id$')
-		%][% tables = column.match('^(\w+)_id$')
-		%]INTEGER REFERENCES [% tables.1 %] ([% column %]),[%
-		ELSE
-		%]VARCHAR,[%
-		END %]
+    [% column %][% i = column.length %][% WHILE i <= 11 + table.length %][% i = i + 1 %] [% END %] [%
+        IF column == table _ '_id'
+        %]SERIAL PRIMARY KEY,[%
+        ELSIF column == table _ '_created'
+        %]TIMESTAMP WITH TIME ZONE DEFAULT NOW(),[%
+        ELSIF column == table _ '_type_id'
+        %]INTEGER REFERENCES [% table %]_type  ([% table %]_type_id ) NOT NULL,[%
+        ELSIF column == table _ '_state_id'
+        %]INTEGER REFERENCES [% table %]_state ([% table %]_state_id) NOT NULL,[%
+        ELSIF column == table
+        %]VARCHAR NOT NULL UNIQUE,[%
+        ELSIF column.search('_id$')
+        %][% tables = column.match('^(\w+)_id$')
+        %]INTEGER REFERENCES [% tables.1 %] ([% column %]),[%
+        ELSE
+        %]VARCHAR,[%
+        END %]
 [% END -%]
 );
 
@@ -184,36 +184,36 @@ INSERT INTO [% table %] VALUES ([% FOREACH column = columns %], [% IF column == 
 __html.html__
 [% UNLESS title %][% title = 'Untitled Document' %][% END -%]
 <!DOCTYPE html
-	PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-	 "http://www.w3.org/TR/xhtml1/DTD/html4.01-transitional.dtd">
+    PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/html4.01-transitional.dtd">
 <html>
-	<head>
-		<title>[% title %]</title>
-		<meta http-equiv="Content-Type"     content="text/html; charset=utf-8">
-		<meta http-equiv="Content-Language" content="en-au">
-		<meta name="ROBOTS"      content="INDEX,FOLLOW"/>
-		<meta name="author"      content="[% contact.fullname %]">
-		<meta name="copyright"   content="Copyright (c) [% year %] [% contact.fullname %], All Rights Reserved">
-		<meta name="description" content="">
-		<meta name="keywords"    content="">
-		<link href="/css/styles.css" rel="stylesheet" type="text/css" media="screen, print" />
-		<style type="text/css">
-		<!--/* <![CDATA[ */
+    <head>
+        <title>[% title %]</title>
+        <meta http-equiv="Content-Type"     content="text/html; charset=utf-8">
+        <meta http-equiv="Content-Language" content="en-au">
+        <meta name="ROBOTS"      content="INDEX,FOLLOW"/>
+        <meta name="author"      content="[% contact.fullname %]">
+        <meta name="copyright"   content="Copyright (c) [% year %] [% contact.fullname %], All Rights Reserved">
+        <meta name="description" content="">
+        <meta name="keywords"    content="">
+        <link href="/css/styles.css" rel="stylesheet" type="text/css" media="screen, print" />
+        <style type="text/css">
+        <!--/* <![CDATA[ */
 
-		/* ]]> */-->
-		</style>
-		<script type="text/javascript" src="/js/jquery.js"></script>
-		<script type="text/javascript" src="/js/code.js"></script>
-		<script type="text/javascript">
-		<!--/* <![CDATA[ */
+        /* ]]> */-->
+        </style>
+        <script type="text/javascript" src="/js/jquery.js"></script>
+        <script type="text/javascript" src="/js/code.js"></script>
+        <script type="text/javascript">
+        <!--/* <![CDATA[ */
 
-		/* ]]> */-->
-		</script>
-	</head>
-	<body>
+        /* ]]> */-->
+        </script>
+    </head>
+    <body>
 
 
-	</body>
+    </body>
 </html>
 __html/form.html__
 [%- UNLESS method %][% method = 'post'   %][% END -%]
@@ -221,19 +221,19 @@ __html/form.html__
 [%- UNLESS legend %][% legend = 'legend' %][% END -%]
 <form method="[% method %]" action="[% action %]">
 
-	<fieldset>
-		<legend>[% legend %]</legend>
-		<div>
-			<label for="input-name">label</label>
-			<input type="text" name="input-name" id="input-name" value="text"/>
-		</div>
-	</fieldset>
+    <fieldset>
+        <legend>[% legend %]</legend>
+        <div>
+            <label for="input-name">label</label>
+            <input type="text" name="input-name" id="input-name" value="text"/>
+        </div>
+    </fieldset>
 
-	<fieldset>
-		<div>
-			<input type="submit" value="Submit"/>
-		</div>
-	</fieldset>
+    <fieldset>
+        <div>
+            <input type="submit" value="Submit"/>
+        </div>
+    </fieldset>
 
 </form>
 __html/script.html__
@@ -248,7 +248,7 @@ __html/script/jquery.html__
 
 $(document).ready( function() {
 
-	var obj = $('#id');
+    var obj = $('#id');
 
 });
 
@@ -263,24 +263,24 @@ __html/style.html__
 </style>
 __html/table.html__
 <table>
-	<thead>
-		<tr>
-			<th></th>
-			<th></th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			<td></td>
-			<td></td>
-		</tr>
-	</tbody>
-	<tfoot>
-		<tr>
-			<td></td>
-			<td></td>
-		</tr>
-	</tfoot>
+    <thead>
+        <tr>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td></td>
+            <td></td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td></td>
+            <td></td>
+        </tr>
+    </tfoot>
 </table>
 __javadoc/file.tmpl__
 /**
@@ -330,7 +330,7 @@ __js/class.js__
 [% INCLUDE js/jdoc/func.js description => 'object creator' %]
 function [% class %]( [% FOREACH param = params %][% param %], [% END %] ) {
 
-	if ( arguments.length > 0 ) this.init( '[% class %]', [% FOREACH param = params %][% param %], [% END %] );
+    if ( arguments.length > 0 ) this.init( '[% class %]', [% FOREACH param = params %][% param %], [% END %] );
 }
 
 /**
@@ -341,10 +341,10 @@ function [% class %]( [% FOREACH param = params %][% param %], [% END %] ) {
  */
 [% class %].prototype.init = function( class_name, [% FOREACH param = params %][% param %], [% END %] ) {
 
-	// init the parent class
-	[% class %].superclass.init.call( this, class_name );
+    // init the parent class
+    [% class %].superclass.init.call( this, class_name );
 
-	this.bodyid = bodyid;
+    this.bodyid = bodyid;
 }
 [% FOREACH method = functions %]
 
@@ -490,15 +490,15 @@ our $VERSION = version->new('0.0.1');
 my ($name)   = $PROGRAM_NAME =~ m{^.*/(.*?)$}mxs;
 
 my %option = (
-	out     => undef,
-	verbose => 0,
-	man     => 0,
-	help    => 0,
-	VERSION => 0,
+    out     => undef,
+    verbose => 0,
+    man     => 0,
+    help    => 0,
+    VERSION => 0,
 );
 
 if ( !@ARGV ) {
-	pod2usage( -verbose => 1 );
+    pod2usage( -verbose => 1 );
 }
 
 main();
@@ -506,32 +506,32 @@ exit 0;
 
 sub main {
 
-	Getopt::Long::Configure('bundling');
-	GetOptions(
-		\%option,
-		'out|o=s',
-		'verbose|v+',
-		'man',
-		'help',
-		'VERSION!',
-	) or pod2usage(2);
-	#my $file = join ' ', @ARGV;
+    Getopt::Long::Configure('bundling');
+    GetOptions(
+        \%option,
+        'out|o=s',
+        'verbose|v+',
+        'man',
+        'help',
+        'VERSION!',
+    ) or pod2usage(2);
+    #my $file = join ' ', @ARGV;
 
-	if ( $option{'VERSION'} ) {
-		print "$name Version = $VERSION\n";
-		exit 1;
-	}
-	elsif ( $option{'man'} ) {
-		pod2usage( -verbose => 2 );
-	}
-	elsif ( $option{'help'} ) {
-		pod2usage( -verbose => 1 );
-	}
+    if ( $option{'VERSION'} ) {
+        print "$name Version = $VERSION\n";
+        exit 1;
+    }
+    elsif ( $option{'man'} ) {
+        pod2usage( -verbose => 2 );
+    }
+    elsif ( $option{'help'} ) {
+        pod2usage( -verbose => 1 );
+    }
 
-	# do stuff here
+    # do stuff here
 
 
-	return;
+    return;
 }
 
  =__DATA__
@@ -557,20 +557,20 @@ __perl/AUTOLOAD.pl__
 
 sub AUTOLOAD {
 
-	# localise the $AUTOLOAD variable
-	local $AUTOLOAD;
+    # localise the $AUTOLOAD variable
+    local $AUTOLOAD;
 
-	# ignore the method if it is the DESTROY method
-	return if $AUTOLOAD =~ /DESTROY$/;
+    # ignore the method if it is the DESTROY method
+    return if $AUTOLOAD =~ /DESTROY$/;
 
-	# make sure that this is being called as a method
-	croak( "AUTOLOAD(): This function is not being called by a ref: $AUTOLOAD( ".join (', ', @_)." )\n" ) unless ref $_[0];
+    # make sure that this is being called as a method
+    croak( "AUTOLOAD(): This function is not being called by a ref: $AUTOLOAD( ".join (', ', @_)." )\n" ) unless ref $_[0];
 
-	# get the object
-	my $self = shift;
+    # get the object
+    my $self = shift;
 
-	# get the function name sans package name
-	my ($method) = $AUTOLOAD =~ /::([^:]+)$/;
+    # get the function name sans package name
+    my ($method) = $AUTOLOAD =~ /::([^:]+)$/;
 
 }
 __perl/exception.pl__
@@ -613,12 +613,12 @@ our @EXPORT = qw//;
 our @EXPORT_OK = qw//;
 
 use Exception::Class (
-	[% module %] => {
-		isa			=> '',
-		description	=> 'An exception class',
-		fields		=> qw//,
-		alias		=> '',
-	},
+    [% module %] => {
+        isa			=> '',
+        description	=> 'An exception class',
+        fields		=> qw//,
+        alias		=> '',
+    },
 );
 
 1;
@@ -667,14 +667,14 @@ our @EXPORT_OK = qw//;
 [% INCLUDE perl/pod.pl return => mod -%]
 
 sub new {
-	my $caller = shift;
-	my $class  = (ref $caller) ? ref $caller : $caller;
-	my %param  = @_;
-	my $self   = \%param;
+    my $caller = shift;
+    my $class  = (ref $caller) ? ref $caller : $caller;
+    my %param  = @_;
+    my $self   = \%param;
 
-	bless $self, $class;
+    bless $self, $class;
 
-	return $self;
+    return $self;
 }
 
 
@@ -687,26 +687,26 @@ __perl/find.pl__
 [% INCLUDE perl/pod.pl vars => [ 'dir', vars ]-%]
 
 sub [% sub %] {
-	my ( $dir, [% FOREACH var = vars %]$[% var %], [% END %] ) = @_;
+    my ( $dir, [% FOREACH var = vars %]$[% var %], [% END %] ) = @_;
 
-	opendir DIR, $dir or warn "Unable to open the directory $dir: $!\n" and return;
-	my @files = readdir DIR;
-	close DIR;
+    opendir DIR, $dir or warn "Unable to open the directory $dir: $!\n" and return;
+    my @files = readdir DIR;
+    close DIR;
 
-	foreach my $file ( @files ) {
-		next if $file =~ /^\.\.?$/;	# ignore the directories . and ..
-		if ( -d "$dir/$file" ) {
+    foreach my $file ( @files ) {
+        next if $file =~ /^\.\.?$/;	# ignore the directories . and ..
+        if ( -d "$dir/$file" ) {
 
-			# recurse to sub directories
-			find_files( "$$dir/$file", [% FOREACH var = vars %]$[% var %], [% END %] );
-		}
-		else {
+            # recurse to sub directories
+            find_files( "$$dir/$file", [% FOREACH var = vars %]$[% var %], [% END %] );
+        }
+        else {
 
-			# process the file
-			;
-		}
-	}
-	return ;
+            # process the file
+            ;
+        }
+    }
+    return ;
 }
 __perl/if.pl__
 if (  ) {
@@ -753,14 +753,14 @@ our %EXPORT_TAGS = ();
 
 [% IF !moose -%]
 sub new {
-	my $caller = shift;
-	my $class  = ref $caller ? ref $caller : $caller;
-	my %param  = @_;
-	my $self   = \%param;
+    my $caller = shift;
+    my $class  = ref $caller ? ref $caller : $caller;
+    my %param  = @_;
+    my $self   = \%param;
 
-	bless $self, $class;
+    bless $self, $class;
 
-	return $self;
+    return $self;
 }
 [%- END %]
 
@@ -824,24 +824,24 @@ our %EXPORT_TAGS = ();
 sub [% matches.0 %] {
 
 [% IF matches.0 == 'new' -%]
-	my ($caller, %param) = @_;
-	my $class = ref $caller ? ref $caller : $caller;
-	my $self  = \%param;
+    my ($caller, %param) = @_;
+    my $class = ref $caller ? ref $caller : $caller;
+    my $self  = \%param;
 
-	[%- FOREACH param = matches.1.split(',') %]
-	carp "Missing [% param %]" if !$param{'[% param %]'};
-	[%- END %]
+    [%- FOREACH param = matches.1.split(',') %]
+    carp "Missing [% param %]" if !$param{'[% param %]'};
+    [%- END %]
 
-	bless $self, $class;
+    bless $self, $class;
 [%- ELSE %]
-	my ( $self, %args ) = @_;
+    my ( $self, %args ) = @_;
 
-	[%- FOREACH param = matches.1.split(',') %]
-	carp "Missing [% param %]" if !$args{'[% param %]'};
-	[%- END %]
+    [%- FOREACH param = matches.1.split(',') %]
+    carp "Missing [% param %]" if !$args{'[% param %]'};
+    [%- END %]
 [%- END %]
 
-	return;
+    return;
 }
 
 [% END %]
@@ -925,28 +925,28 @@ our @EXPORT = qw//;
 our @EXPORT_OK = qw//;
 
 use Glib::Object::Subclass (
-	[% super %],
-	signals		=> {
-		signal	=> {} or \&sub,
-	},
-	properties	=> [
-		Glib::ParamSpec->init(
-			'', 	# name
-			'', 	# nickname/label?
-			'', 	# description
-			0,		# min
-			'inf',	# max
-			0,		# default
-			[qw/readable writable/],	# flags
-		),
-	],
+    [% super %],
+    signals		=> {
+        signal	=> {} or \&sub,
+    },
+    properties	=> [
+        Glib::ParamSpec->init(
+            '', 	# name
+            '', 	# nickname/label?
+            '', 	# description
+            0,		# min
+            'inf',	# max
+            0,		# default
+            [qw/readable writable/],	# flags
+        ),
+    ],
 );
 
 [% INCLUDE perl/pod.pl return => module -%]
 
 # effectively serves as new
 sub INIT_INSTANCE {
-	my $self = shift;
+    my $self = shift;
 
 }
 
@@ -1102,7 +1102,7 @@ __perl/sub.pl__
 [% INCLUDE perl/pod.pl -%]
 
 sub [% sub %] {
-	my ( [% FOREACH var = vars %]$[% var %], [% END %] ) = @_;
+    my ( [% FOREACH var = vars %]$[% var %], [% END %] ) = @_;
 
 }
 __perl/sub/class.pl__
@@ -1111,9 +1111,9 @@ __perl/sub/class.pl__
 [% INCLUDE perl/pod.pl -%]
 
 sub [% sub %] {
-	my $caller = shift;
-	my $class = (ref $caller) ? ref $caller : $caller;
-	my ( [% FOREACH var = vars %]$[% var %], [% END %] ) = @_;
+    my $caller = shift;
+    my $class = (ref $caller) ? ref $caller : $caller;
+    my ( [% FOREACH var = vars %]$[% var %], [% END %] ) = @_;
 
 }
 __perl/sub/method.pl__
@@ -1122,11 +1122,11 @@ __perl/sub/method.pl__
 [% INCLUDE perl/pod.pl -%]
 
 sub [% sub %] {
-	my ( $self, %args ) = @_;
-	my ( [% FOREACH var = vars %]$[% var %], [% END %] ) = @_;
-	#my $dbh  = $self->{dbh};
-	#my $q    = $self->{cgi};
-	#my $set  = $self->{set};
+    my ( $self, %args ) = @_;
+    my ( [% FOREACH var = vars %]$[% var %], [% END %] ) = @_;
+    #my $dbh  = $self->{dbh};
+    #my $q    = $self->{cgi};
+    #my $set  = $self->{set};
 
 }
 __perl/sub/object.pl__
@@ -1135,11 +1135,11 @@ __perl/sub/object.pl__
 [% INCLUDE perl/pod.pl -%]
 
 sub [% sub %] {
-	my ( $self, %args ) = @_;
-	my ( [% FOREACH var = vars %]$[% var %], [% END %] ) = @_;
-	#my $dbh  = $self->{dbh};
-	#my $q    = $self->{cgi};
-	#my $set  = $self->{set};
+    my ( $self, %args ) = @_;
+    my ( [% FOREACH var = vars %]$[% var %], [% END %] ) = @_;
+    #my $dbh  = $self->{dbh};
+    #my $q    = $self->{cgi};
+    #my $set  = $self->{set};
 
 }
 __perl/test.pl__
@@ -1186,7 +1186,7 @@ use Test::More tests => 1 + 1;
 use Test::NoWarnings;
 
 BEGIN {
-	use_ok( '[% module %]' );
+    use_ok( '[% module %]' );
 }
 
 diag( "Testing [% module %] $[% module %]::VERSION, Perl $], $^X" );
@@ -1321,10 +1321,10 @@ use strict;
 use warnings;
 
 if ( not $ENV{TEST_AUTHOR} ) {
-	require Test::More;
-	Test::More->import;
-	my $msg = 'Author test.  Set TEST_AUTHOR environment variable to a true value to run.';
-	plan( skip_all => $msg );
+    require Test::More;
+    Test::More->import;
+    my $msg = 'Author test.  Set TEST_AUTHOR environment variable to a true value to run.';
+    plan( skip_all => $msg );
 }
 
 eval { require Test::Kwalitee; Test::Kwalitee->import() };
@@ -1387,11 +1387,11 @@ eval { require Test::Spelling; Test::Spelling->import() };
 # now check that the spell command is installed
 my $found;
 for my $dir ( split /:/, $ENV{PATH} ) {
-	next if !-d $dir;
-	next if !-x "$dir/spell";
+    next if !-d $dir;
+    next if !-x "$dir/spell";
 
-	$found = 1;
-	last;
+    $found = 1;
+    last;
 }
 
 plan skip_all => "Test::Spelling required for testing POD spelling" if $@;
@@ -1437,11 +1437,11 @@ __php/class.php__
  */
 class [% class %][% IF extends %] extends [% extends %][% END %][% IF implements %] implements [% implements %][% END %] {
 
-	__construct () {
-	}
+    __construct () {
+    }
 
-	__toString () {
-	}
+    __toString () {
+    }
 }
 
 ?>
@@ -1460,22 +1460,22 @@ __w3c/dtd/HTML/4.01/transitional__
    "http://www.w3.org/TR/html4/loose.dtd">
 __w3c/dtd/MathML/1.01__
 <!DOCTYPE math SYSTEM
-	"http://www.w3.org/Math/DTD/mathml1/mathml.dtd">
+    "http://www.w3.org/Math/DTD/mathml1/mathml.dtd">
 __w3c/dtd/MathML/2.0__
 <!DOCTYPE math PUBLIC "-//W3C//DTD MathML 2.0//EN"
-	"http://www.w3.org/TR/MathML2/dtd/mathml2.dtd">
+    "http://www.w3.org/TR/MathML2/dtd/mathml2.dtd">
 __w3c/dtd/SVG/1.0__
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
-	"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+    "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
 __w3c/dtd/SVG/1.1/basic__
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1 Basic//EN"
-	"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-basic.dtd">
+    "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-basic.dtd">
 __w3c/dtd/SVG/1.1/full__
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
-	"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+    "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 __w3c/dtd/SVG/1.1/tiny__
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1 Tiny//EN"
-	"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-tiny.dtd">
+    "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-tiny.dtd">
 __w3c/dtd/XHTML/1.0/basic__
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML Basic 1.0//EN"
     "http://www.w3.org/TR/xhtml-basic/xhtml-basic10.dtd">
@@ -1505,36 +1505,36 @@ __xhtml.html__
 [% UNLESS title %][% title = 'Untitled Document' %][% END -%]
 [% INCLUDE x3c/xml.xml %]
 <!DOCTYPE html
-	PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-	 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
-	<head>
-		<title>[% title %]</title>
-		<meta http-equiv="Content-Type"     content="text/html; charset=utf-8" />
-		<meta http-equiv="Content-Language" content="en-au" />
-		<meta name="ROBOTS"      content="INDEX,FOLLOW" />
-		<meta name="author"      content="[% contact.fullname %]" />
-		<meta name="copyright"   content="Copyright (c) [% year %] [% contact.fullname %], All Rights Reserved" />
-		<meta name="description" content="" />
-		<meta name="keywords"    content="" />
-		<link href="/css/styles.css" rel="stylesheet" type="text/css" media="screen, print" />
-		<style type="text/css">
-		<!--/* <![CDATA[ */
+    <head>
+        <title>[% title %]</title>
+        <meta http-equiv="Content-Type"     content="text/html; charset=utf-8" />
+        <meta http-equiv="Content-Language" content="en-au" />
+        <meta name="ROBOTS"      content="INDEX,FOLLOW" />
+        <meta name="author"      content="[% contact.fullname %]" />
+        <meta name="copyright"   content="Copyright (c) [% year %] [% contact.fullname %], All Rights Reserved" />
+        <meta name="description" content="" />
+        <meta name="keywords"    content="" />
+        <link href="/css/styles.css" rel="stylesheet" type="text/css" media="screen, print" />
+        <style type="text/css">
+        <!--/* <![CDATA[ */
 
-		/* ]]> */-->
-		</style>
-		<script type="text/javascript" src="/js/jquery.js"></script>
-		<script type="text/javascript" src="/js/code.js"></script>
-		<script type="text/javascript">
-		<!--/* <![CDATA[ */
+        /* ]]> */-->
+        </style>
+        <script type="text/javascript" src="/js/jquery.js"></script>
+        <script type="text/javascript" src="/js/code.js"></script>
+        <script type="text/javascript">
+        <!--/* <![CDATA[ */
 
-		/* ]]> */-->
-		</script>
-	</head>
-	<body>
+        /* ]]> */-->
+        </script>
+    </head>
+    <body>
 
 
-	</body>
+    </body>
 </html>
 __xml/cdata.xml__
 <![CDATA[

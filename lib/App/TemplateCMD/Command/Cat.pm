@@ -19,19 +19,19 @@ our @EXPORT_OK   = qw//;
 our %EXPORT_TAGS = ();
 
 sub process {
-	my ($self, $cmd, %option) = @_;
+    my ($self, $cmd, %option) = @_;
 
-	my ($data) = $self->get_template($option{files}[0], $cmd);
+    my ($data) = $self->get_template($option{files}[0], $cmd);
 
-	$data->{text} =~ s/^\0=__/__/gxms;
+    $data->{text} =~ s/^\0=__/__/gxms;
 
-	return $data->{text};
+    return $data->{text};
 }
 
 sub help {
-	my ($self) = @_;
+    my ($self) = @_;
 
-	return <<"HELP";
+    return <<"HELP";
 $0 cat template
 
 Prints out he contents of a template.

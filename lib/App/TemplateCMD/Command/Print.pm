@@ -23,33 +23,33 @@ our @EXPORT_OK   = qw//;
 our %EXPORT_TAGS = ();
 
 sub process {
-	my ($self, $cmd, %option) = @_;
+    my ($self, $cmd, %option) = @_;
 
-	my $template = shift @{$option{files}};
-	my $args     = { %{ $cmd->config || {} }, %option, %{ $option{args} || {} } };
+    my $template = shift @{$option{files}};
+    my $args     = { %{ $cmd->config || {} }, %option, %{ $option{args} || {} } };
 
-	my $out = '';
-	$cmd->{template}->process( $template, $args, \$out );
+    my $out = '';
+    $cmd->{template}->process( $template, $args, \$out );
 
-	if (!$out) {
-		my @files = uniq sort map {$_->{file}} $cmd->list_templates();
+    if (!$out) {
+        my @files = uniq sort map {$_->{file}} $cmd->list_templates();
 
-		my @templates = grep { m{^$template [.] .+ $}xms } @files;
+        my @templates = grep { m{^$template [.] .+ $}xms } @files;
 
-		if (@templates) {
-			$cmd->{template}->process( $templates[0], $args, \$out );
-		}
-	}
+        if (@templates) {
+            $cmd->{template}->process( $templates[0], $args, \$out );
+        }
+    }
 
-	$out =~ s/^\0=__/__/gxms if $out;
+    $out =~ s/^\0=__/__/gxms if $out;
 
-	return $out;
+    return $out;
 }
 
 sub help {
-	my ($self) = @_;
+    my ($self) = @_;
 
-	return <<"HELP";
+    return <<"HELP";
 $0 print [options] template
 
  -a --args=str   Specify arguments to pass on to the template that is to be displayed

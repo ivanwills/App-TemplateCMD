@@ -31,345 +31,345 @@ our %EXPORT_TAGS = ();
 Readonly my $CONFIG_NAME => 'template-cmd.yml';
 
 sub new {
-	my $caller = shift;
-	my $class  = ref $caller ? ref $caller : $caller;
-	my %param  = @_;
-	my $self   = \%param;
+    my $caller = shift;
+    my $class  = ref $caller ? ref $caller : $caller;
+    my %param  = @_;
+    my $self   = \%param;
 
-	bless $self, $class;
+    bless $self, $class;
 
-	# Find the available commands
-	$self->{cmds} = { map {lc $_ => $_} $self->get_modules('App::TemplateCMD::Command') };
+    # Find the available commands
+    $self->{cmds} = { map {lc $_ => $_} $self->get_modules('App::TemplateCMD::Command') };
 
-	# read the configuration files
-	$self->config();
+    # read the configuration files
+    $self->config();
 
-	return $self;
+    return $self;
 }
 
 sub get_modules {
-	my ($self, $base) = @_;
-	$base =~ s{::}{/}gxms;
+    my ($self, $base) = @_;
+    $base =~ s{::}{/}gxms;
 
-	my %modules;
+    my %modules;
 
-	for my $dir (grep {-d $_} map { "$_/$base/" } @INC) {
-		find(
-			sub {
-				my ($name) = $File::Find::name =~ m{^ $dir ( [\w/]+ ) .pm $}xms;
-				return if !$name;
+    for my $dir (grep {-d $_} map { "$_/$base/" } @INC) {
+        find(
+            sub {
+                my ($name) = $File::Find::name =~ m{^ $dir ( [\w/]+ ) .pm $}xms;
+                return if !$name;
 
-				$modules{$name}++;
-			},
-			$dir
-		);
-	}
+                $modules{$name}++;
+            },
+            $dir
+        );
+    }
 
-	return keys %modules;
+    return keys %modules;
 }
 
 sub process {
 
-	my ($self, @argv) = @_;
+    my ($self, @argv) = @_;
 
-	my $cmd = shift @argv;
+    my $cmd = shift @argv;
 
-	if ( !$cmd || !grep { $_ eq $cmd } keys %{$self->{'cmds'}} ) {
-		if ($cmd) {
-			$self->unknown_cmd($cmd);
-		}
+    if ( !$cmd || !grep { $_ eq $cmd } keys %{$self->{'cmds'}} ) {
+        if ($cmd) {
+            $self->unknown_cmd($cmd);
+        }
 
-		unshift @argv, $cmd;
-		$cmd = 'help';
-	}
+        unshift @argv, $cmd;
+        $cmd = 'help';
+    }
 
-	my $module  = $self->load_cmd($cmd);
-	my %default = $module->default($self);
-	my @args    = (
-		'out|o=s',
-		'args|a=s%',
-		'verbose|v!',
-		'path|p=s',
-		$module->args($self),
-	);
+    my $module  = $self->load_cmd($cmd);
+    my %default = $module->default($self);
+    my @args    = (
+        'out|o=s',
+        'args|a=s%',
+        'verbose|v!',
+        'path|p=s',
+        $module->args($self),
+    );
 
-	{
-		local @ARGV = @argv;
-		Getopt::Long::Configure('bundling');
-		GetOptions( \%default, @args ) or $module = 'App::TemplateCMD::Command::Help';
-		$default{files} = [ @ARGV ];
-	}
+    {
+        local @ARGV = @argv;
+        Getopt::Long::Configure('bundling');
+        GetOptions( \%default, @args ) or $module = 'App::TemplateCMD::Command::Help';
+        $default{files} = [ @ARGV ];
+    }
 
-	my $conf = $self->add_args(\%default);
-	my $out;
+    my $conf = $self->add_args(\%default);
+    my $out;
 
-	# find any modules under App::TemplateCMD::Templates
-	my $default = 'App::TemplateCMD::Templates';
-	my @template_modules;
+    # find any modules under App::TemplateCMD::Templates
+    my $default = 'App::TemplateCMD::Templates';
+    my @template_modules;
 
-	for my $module ( $self->get_modules($default) ) {
-		$module =~ s{/}{::}gxms;
-		push @template_modules, $default . '::' . $module;
-	}
-	$self->{template_modules} = [ $default, @template_modules ];
+    for my $module ( $self->get_modules($default) ) {
+        $module =~ s{/}{::}gxms;
+        push @template_modules, $default . '::' . $module;
+    }
+    $self->{template_modules} = [ $default, @template_modules ];
 
-	my $path = $conf->{path};
-	if ( $default{path} ) {
-		$path = "$default{path}:$path";
-	}
-	$path =~ s(~/)($ENV{HOME}/)gxms;
+    my $path = $conf->{path};
+    if ( $default{path} ) {
+        $path = "$default{path}:$path";
+    }
+    $path =~ s(~/)($ENV{HOME}/)gxms;
 
-	$self->{providers} = [
-		Template::Provider->new({ INCLUDE_PATH => $path }),
-		Template::Provider::FromDATA->new({ CLASSES => $self->{template_modules} }),
-	];
+    $self->{providers} = [
+        Template::Provider->new({ INCLUDE_PATH => $path }),
+        Template::Provider::FromDATA->new({ CLASSES => $self->{template_modules} }),
+    ];
 
-	$self->{template} = Template->new({
-		LOAD_TEMPLATES => $self->{providers},
-		EVAL_PERL      => 1,
-	});
+    $self->{template} = Template->new({
+        LOAD_TEMPLATES => $self->{providers},
+        EVAL_PERL      => 1,
+    });
 
-	if ( $default{'out'} ) {
-		open $out, '>', $default{out} or die "Could not open the output file '$default{out}': $OS_ERROR\n";
-	}
-	else {
-		$out = *STDOUT;
-	}
+    if ( $default{'out'} ) {
+        open $out, '>', $default{out} or die "Could not open the output file '$default{out}': $OS_ERROR\n";
+    }
+    else {
+        $out = *STDOUT;
+    }
 
-	print {$out} $module->process($self, %default);
+    print {$out} $module->process($self, %default);
 
-	return;
+    return;
 }
 
 sub add_args {
-	my ($self, $default) = @_;
-	my @files;
+    my ($self, $default) = @_;
+    my @files;
 
-	my $args  = $default->{args}  || {};
-	my $files = $default->{files} || [];
+    my $args  = $default->{args}  || {};
+    my $files = $default->{files} || [];
 
-	# add any args not prefixed by -a[rgs]
-	for my $file (@{$files}) {
-		if ($file =~ /=/ ) {
+    # add any args not prefixed by -a[rgs]
+    for my $file (@{$files}) {
+        if ($file =~ /=/ ) {
 
-			# merge the argument on to the args hash
-			my ($arg, $value) = split /=/, $file, 2;
-			$default->{args}->{$arg} = $value;
-		}
-		else {
+            # merge the argument on to the args hash
+            my ($arg, $value) = split /=/, $file, 2;
+            $default->{args}->{$arg} = $value;
+        }
+        else {
 
-			# store the "real" file
-			push @files, $file;
-		}
-	}
+            # store the "real" file
+            push @files, $file;
+        }
+    }
 
-	for my $value (values %{$args}) {
-		$value = $value =~ /^( q[wqr]?(\W) ) .* ( \2 )$/xms? [ eval($value)  ]    ## no critic
-		       : $value =~ /^(    \{       ) .* ( \} )$/xms?   eval($value)       ## no critic
-		       : $value =~ /^(    \[       ) .* ( \] )$/xms?   eval($value)       ## no critic
-		       : $value =~ /^(      ,      )(.*)      $/xms? [ split /,/xms, $2 ]
-		       :                                             $value;
-	}
+    for my $value (values %{$args}) {
+        $value = $value =~ /^( q[wqr]?(\W) ) .* ( \2 )$/xms? [ eval($value)  ]    ## no critic
+               : $value =~ /^(    \{       ) .* ( \} )$/xms?   eval($value)       ## no critic
+               : $value =~ /^(    \[       ) .* ( \] )$/xms?   eval($value)       ## no critic
+               : $value =~ /^(      ,      )(.*)      $/xms? [ split /,/xms, $2 ]
+               :                                             $value;
+    }
 
-	# replace the files with the list with out args
-	$default->{files} = \@files;
+    # replace the files with the list with out args
+    $default->{files} = \@files;
 
-	# merge the args with the config and save
-	return $self->{config} = $self->conf_join($self->config(), $args);
+    # merge the args with the config and save
+    return $self->{config} = $self->conf_join($self->config(), $args);
 }
 
 sub config {
 
-	my ($self, %option) = @_;
+    my ($self, %option) = @_;
 
-	return $self->{'config'} if $self->{'config'};
+    return $self->{'config'} if $self->{'config'};
 
-	my $conf = {
-		path    => '~/template-cmd:~/.template-cmd/:~/.template-cmd-local:/usr/local/template-cmd/src/',
-		aliases => {
-			ls  => 'list',
-			des => 'describe',
-		},
-		contact => {
-			fullname => $ENV{USER},
-			name     => $ENV{USER},
-			email    => "$ENV{USER}@" . ($ENV{HOST} ? $ENV{HOST} : 'localhost'),
-			address  => '123 Timbuc Too',
-		},
-		company => {
-			name     => '',
-			address  => '',
-		},
-	};
+    my $conf = {
+        path    => '~/template-cmd:~/.template-cmd/:~/.template-cmd-local:/usr/local/template-cmd/src/',
+        aliases => {
+            ls  => 'list',
+            des => 'describe',
+        },
+        contact => {
+            fullname => $ENV{USER},
+            name     => $ENV{USER},
+            email    => "$ENV{USER}@" . ($ENV{HOST} ? $ENV{HOST} : 'localhost'),
+            address  => '123 Timbuc Too',
+        },
+        company => {
+            name     => '',
+            address  => '',
+        },
+    };
 
-	$self->{configs} = [];
-	$self->{config_default} = "$ENV{HOME}/.$CONFIG_NAME";
+    $self->{configs} = [];
+    $self->{config_default} = "$ENV{HOME}/.$CONFIG_NAME";
 
-	if ( -f "/etc/$CONFIG_NAME" ) {
-		my $second = LoadFile("/etc/$CONFIG_NAME");
-		$conf = $self->conf_join($conf, $second);
-		push @{$self->{configs}}, "/etc/$CONFIG_NAME";
-	}
-	if ( $option{'conf'} && -f $option{'conf'} ) {
-		my $second = LoadFile($option{'conf'});
-		$conf = $self->conf_join($conf, $second);
-		push @{$self->{configs}}, $option{'conf'};
-	}
-	elsif ( -f "$ENV{HOME}/.$CONFIG_NAME" ) {
-		my $second = LoadFile("$ENV{HOME}/.$CONFIG_NAME");
-		$conf = $self->conf_join($conf, $second);
-		push @{$self->{configs}}, "$ENV{HOME}/.$CONFIG_NAME";
-	}
-	$conf = $self->conf_join($conf, \%option);
+    if ( -f "/etc/$CONFIG_NAME" ) {
+        my $second = LoadFile("/etc/$CONFIG_NAME");
+        $conf = $self->conf_join($conf, $second);
+        push @{$self->{configs}}, "/etc/$CONFIG_NAME";
+    }
+    if ( $option{'conf'} && -f $option{'conf'} ) {
+        my $second = LoadFile($option{'conf'});
+        $conf = $self->conf_join($conf, $second);
+        push @{$self->{configs}}, $option{'conf'};
+    }
+    elsif ( -f "$ENV{HOME}/.$CONFIG_NAME" ) {
+        my $second = LoadFile("$ENV{HOME}/.$CONFIG_NAME");
+        $conf = $self->conf_join($conf, $second);
+        push @{$self->{configs}}, "$ENV{HOME}/.$CONFIG_NAME";
+    }
+    $conf = $self->conf_join($conf, \%option);
 
-	# set up some internal config options
-	if ($ENV{'TEMPLATE_CMD_PATH'}) {
-		$conf->{'path'} .= $ENV{'TEMPLATE_CMD_PATH'};
-	}
+    # set up some internal config options
+    if ($ENV{'TEMPLATE_CMD_PATH'}) {
+        $conf->{'path'} .= $ENV{'TEMPLATE_CMD_PATH'};
+    }
 
-	# set up the aliases
-	if ($conf->{'aliases'}) {
-		for my $alias (keys %{ $conf->{aliases} }) {
-			$self->{'cmds'}{$alias} = ucfirst $conf->{aliases}{$alias};
-		}
-	}
+    # set up the aliases
+    if ($conf->{'aliases'}) {
+        for my $alias (keys %{ $conf->{aliases} }) {
+            $self->{'cmds'}{$alias} = ucfirst $conf->{aliases}{$alias};
+        }
+    }
 
-	# set up temporial variables (Note that these are always the values to
-	# use and over ride what ever is set in the configuration files)
-	my ( $sec, $min, $hour, $mday, $mon, $year, $wday, $yday, $isdst ) = localtime;
-	$mon++;
-	$year += 1900;
+    # set up temporial variables (Note that these are always the values to
+    # use and over ride what ever is set in the configuration files)
+    my ( $sec, $min, $hour, $mday, $mon, $year, $wday, $yday, $isdst ) = localtime;
+    $mon++;
+    $year += 1900;
 
-	$conf->{date} = "$year-" . ( $mon < 10 ? '0' : '' ) . "$mon-" . ( $mday < 10 ? '0' : '' ) . $mday;
-	$conf->{time} = ( $hour < 10 ? '0' : '' ) . "$hour:" . ( $min < 10 ? '0' : '' ) . "$min:" . ( $sec < 10 ? '0' : '' ) . $sec;
-	$conf->{year} = $year;
-	$conf->{user} = $ENV{USER};
-	$conf->{path} =~ s/~/$ENV{HOME}/gxms;
-	$conf->{path} =~ s{/:}{:}gxms;
+    $conf->{date} = "$year-" . ( $mon < 10 ? '0' : '' ) . "$mon-" . ( $mday < 10 ? '0' : '' ) . $mday;
+    $conf->{time} = ( $hour < 10 ? '0' : '' ) . "$hour:" . ( $min < 10 ? '0' : '' ) . "$min:" . ( $sec < 10 ? '0' : '' ) . $sec;
+    $conf->{year} = $year;
+    $conf->{user} = $ENV{USER};
+    $conf->{path} =~ s/~/$ENV{HOME}/gxms;
+    $conf->{path} =~ s{/:}{:}gxms;
 
-	# return and cache the configuration item
-	return $self->{'config'} = $conf;
+    # return and cache the configuration item
+    return $self->{'config'} = $conf;
 }
 
 sub conf_join {
 
-	my ($self, $conf1, $conf2, $t) = @_;
-	my %conf = %{$conf1};
-	warn '-'x10, Dumper $conf1, $conf2 if $t;
+    my ($self, $conf1, $conf2, $t) = @_;
+    my %conf = %{$conf1};
+    warn '-'x10, Dumper $conf1, $conf2 if $t;
 
-	for my $key ( keys %{$conf2} ) {
-		if ( ref $conf2->{$key} eq 'HASH' && ref $conf{$key} eq 'HASH' ) {
-			warn 'merging' if $t;
-			$conf{$key} = $self->conf_join($conf{$key}, $conf2->{$key});
-		}
-		else {
-			warn "replacing: $key" if $t;
-			$conf{$key} = $conf2->{$key};
-		}
-	}
+    for my $key ( keys %{$conf2} ) {
+        if ( ref $conf2->{$key} eq 'HASH' && ref $conf{$key} eq 'HASH' ) {
+            warn 'merging' if $t;
+            $conf{$key} = $self->conf_join($conf{$key}, $conf2->{$key});
+        }
+        else {
+            warn "replacing: $key" if $t;
+            $conf{$key} = $conf2->{$key};
+        }
+    }
 
-	return \%conf;
+    return \%conf;
 }
 
 sub load_cmd {
 
-	my ($self, $cmd) = @_;
+    my ($self, $cmd) = @_;
 
-	if (!$cmd) {
-		carp 'No command passed!';
-		return;
-	}
+    if (!$cmd) {
+        carp 'No command passed!';
+        return;
+    }
 
-	# check if we have already loaded the command module
-	if ( $self->{'loaded'}{$cmd} ) {
-		return $self->{'loaded'}{$cmd};
-	}
+    # check if we have already loaded the command module
+    if ( $self->{'loaded'}{$cmd} ) {
+        return $self->{'loaded'}{$cmd};
+    }
 
-	if (!$self->{cmds}{$cmd}) {
-		$self->unknown_cmd($cmd);
-	}
+    if (!$self->{cmds}{$cmd}) {
+        $self->unknown_cmd($cmd);
+    }
 
-	# construct the command module's file name and require that
-	my $file   = "App/TemplateCMD/Command/$self->{cmds}{$cmd}.pm";
-	my $module = "App::TemplateCMD::Command::$self->{cmds}{$cmd}";
-	eval { require $file };
+    # construct the command module's file name and require that
+    my $file   = "App/TemplateCMD/Command/$self->{cmds}{$cmd}.pm";
+    my $module = "App::TemplateCMD::Command::$self->{cmds}{$cmd}";
+    eval { require $file };
 
-	# check if there were any errors
-	if ($EVAL_ERROR) {
-		die "Could not load the command $cmd: $EVAL_ERROR\n$file\n$module\n";
-	}
+    # check if there were any errors
+    if ($EVAL_ERROR) {
+        die "Could not load the command $cmd: $EVAL_ERROR\n$file\n$module\n";
+    }
 
-	# return success
-	return $self->{'loaded'}{$cmd} = $module;
+    # return success
+    return $self->{'loaded'}{$cmd} = $module;
 }
 
 sub list_templates {
-	my ($self) = @_;
+    my ($self) = @_;
 
-	my $path = $self->config->{path};
-	my @path = grep {-d $_} split /:/, $path;
+    my $path = $self->config->{path};
+    my @path = grep {-d $_} split /:/, $path;
 
-	my @files;
+    my @files;
 
-	for my $dir (@path) {
-		next if !-d $dir;
-		$dir =~ s{/$}{}xms;
+    for my $dir (@path) {
+        next if !-d $dir;
+        $dir =~ s{/$}{}xms;
 
-		find(
-			sub {
-				return if -d $_;
-				my $file = $File::Find::name;
-				$file =~ s{^$dir/}{}xms;
-				push @files, { path => $dir, file => $file };
-			},
-			$dir
-		);
-	}
+        find(
+            sub {
+                return if -d $_;
+                my $file = $File::Find::name;
+                $file =~ s{^$dir/}{}xms;
+                push @files, { path => $dir, file => $file };
+            },
+            $dir
+        );
+    }
 
-	$self->{providers}[0]->_load('__');
-	if ( $self->{providers}[0]->can('cache') ) {
-		push @files, map {{ file => $_ }} keys %{ $self->{providers}[0]->cache->{templates} };
-	}
+    $self->{providers}[0]->_load('__');
+    if ( $self->{providers}[0]->can('cache') ) {
+        push @files, map {{ file => $_ }} keys %{ $self->{providers}[0]->cache->{templates} };
+    }
 
-	for my $module (@{ $self->{template_modules} }) {
-		my $file = $module;
-		$file =~ s{::}{/}gxms;
-		$file .= '.pm';
-		require $file;
+    for my $module (@{ $self->{template_modules} }) {
+        my $file = $module;
+        $file =~ s{::}{/}gxms;
+        $file .= '.pm';
+        require $file;
 
-		my $fh;
-		{
-			no strict 'refs';            ## no critic
-			$fh = \*{"${module}\::DATA"};
-		}
-		my $lines = 0;
+        my $fh;
+        {
+            no strict 'refs';            ## no critic
+            $fh = \*{"${module}\::DATA"};
+        }
+        my $lines = 0;
 
-		LINE:
-		while ( my $line = <$fh> ) {
-			$lines++;
-			my ($template) = $line =~ /^__(.+)__\r?\n/xms;
-			next LINE if !$template;
-			push @files, { path => $module, file => $template };
-		}
+        LINE:
+        while ( my $line = <$fh> ) {
+            $lines++;
+            my ($template) = $line =~ /^__(.+)__\r?\n/xms;
+            next LINE if !$template;
+            push @files, { path => $module, file => $template };
+        }
 
-		# if no lines read check the provider cache
-		if ( !$lines ) {
-			my $cache = $self->{providers}[1]->{cache}{templates};
-			push @files, map {{ file => $_ }} keys %{ $cache };
-		}
-	}
+        # if no lines read check the provider cache
+        if ( !$lines ) {
+            my $cache = $self->{providers}[1]->{cache}{templates};
+            push @files, map {{ file => $_ }} keys %{ $cache };
+        }
+    }
 
-	return @files;
+    return @files;
 }
 
 sub unknown_cmd {
 
-	my ($self, $cmd) = @_;
+    my ($self, $cmd) = @_;
 
-	my $program = $0;
-	$program =~ s{^.*/}{}xms;
+    my $program = $0;
+    $program =~ s{^.*/}{}xms;
 
-	die <<"DIE";
+    die <<"DIE";
 There is no command named $cmd
 For help on commands try '$program help'
 DIE
