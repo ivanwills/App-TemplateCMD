@@ -12,17 +12,17 @@ use Getopt::Long;
 use Pod::Usage;
 use Data::Dumper qw/Dumper/;
 use English qw/ -no_match_vars /;
-use Path::Class qw/dir/;
+use Path::Class;
 
 our $VERSION = 0.001;
 my ($name)   = $PROGRAM_NAME =~ m{^.*/(.*?)$}mxs;
 
 my %option = (
-	dir     => '',
-	verbose => 0,
-	man     => 0,
-	help    => 0,
-	VERSION => 0,
+    dir     => '',
+    verbose => 0,
+    man     => 0,
+    help    => 0,
+    VERSION => 0,
 );
 
 main();
@@ -30,75 +30,101 @@ exit 0;
 
 sub main {
 
-	Getopt::Long::Configure('bundling');
-	GetOptions(
-		\%option,
-		'dir|d=s',
-		'module|m=s',
-		'force|f!',
-		'verbose|v+',
-		'man',
-		'help',
-		'VERSION!',
-	) or pod2usage(2);
+    Getopt::Long::Configure('bundling');
+    GetOptions(
+        \%option,
+        'dir|d=s',
+        'module|m=s',
+        'force|f!',
+        'verbose|v+',
+        'man',
+        'help',
+        'VERSION!',
+    ) or pod2usage(2);
 
-	if ( $option{'VERSION'} ) {
-		print "$name Version = $VERSION\n";
-		exit 1;
-	}
-	elsif ( $option{'man'} ) {
-		pod2usage( -verbose => 2 );
-	}
-	elsif ( $option{'help'} || !$option{dir} ) {
-		pod2usage( -verbose => 1 );
-	}
+    if ( $option{'VERSION'} ) {
+        print "$name Version = $VERSION\n";
+        exit 1;
+    }
+    elsif ( $option{'man'} ) {
+        pod2usage( -verbose => 2 );
+    }
+    elsif ( $option{'help'} || !$option{dir} ) {
+        pod2usage( -verbose => 1 );
+    }
 
-	# do stuff here
-	my $data = '';
-	my $dir = dir $option{dir};
-	my @files = $dir->children;
-	while (my $file = shift @files) {
-		if (-d $file) {
-			push @files, $file->children;
-		}
-		else {
-			my $template = $file->slurp;
-			$template =~ s/^__/\0__/gxms;
-			$template .= "\n" if $template !~ /\n\Z/xms;
-			my $name = "__${file}__\n";
-			$name =~ s{$dir/?}{};
-			$data .= $name.$template;
-		}
-	}
+    # do stuff here
+    my $data = '';
+    my $dir = dir $option{dir};
+    my @files = sort $dir->children;
+    my @templates;
+    while (my $file = shift @files) {
+        if (-d $file) {
+            push @files, sort $file->children;
+        }
+        else {
+            push @templates, $file;
+            my $template = $file->slurp;
+            $template =~ s/^__/\0__/gxms;
+            $template .= "\n" if $template !~ /\n\Z/xms;
+            my $name = "__${file}__\n";
+            $name =~ s{$dir/?}{};
+            $data .= $name.$template;
+        }
+    }
 
-	print $data;
+    if ( $option{module} ) {
+        my $file = file($option{module});
+        if ( !-f $file ) {
+            my $mod = $option{module};
+            $mod =~ s{::}{/}gxms;
+            $mod .= '.pm';
+            $file = -f $mod ? file($mod) : file('lib', $mod);
+            die "Could not find '$option{module}' to update!\n" if !-f $file;
+        }
+        my $content = $file->slurp;
+        my ($head, $template) = split /^__DATA__$/xms, $content;
 
-	return;
+        if ( $head =~ /^=head2 \s+ Templates\r?\n.*?^=back$/xms ) {
+            my $templates = join "\n\n=item *\n\n", @templates;
+            $head =~ s/^=head2 \s+ Templates\r?\n.*?^=back$/=head2 Templates\n\n=over 4\n\n=item *\n\n$templates\n\n=back/xms;
+        }
+
+        my $fh = $file->openw;
+        print {$fh} $head, "__DATA__\n", $data;
+        close $fh;
+    }
+    else {
+        print $data;
+    }
+
+    return;
 }
 
 __DATA__
 
 =head1 NAME
 
-lsrel - Not sure
+dir2data - Takes a directory of templates and creates a perl file __DATA__
+section compatible with Template::Provider::FromDATA
 
 =head1 VERSION
 
-This documentation refers to lsrel version 0.1.
+This documentation refers to dir2data version 0.1.
 
 =head1 SYNOPSIS
 
-   lsrel [--verbose] [file] [dir1 [dir2] ...]
-   lsrel [option] --file=file [dir1 [dir2] ...]
-   lsrel [option]
+   dir2data [--verbose] --dir [dir] [--module lib/App/TemplateCMD/Templates.pm]
 
  OPTIONS:
-  -f --file=str      other option
+  -d --dir=str       The directory containing templates
+  -m --module=str    The module to wright to (just overwrights the __DATA__
+                     section of the file)
 
   -v --verbose       Show more detailed option
      --version       Prints the version information
      --help          Prints this help information
-     --man           Prints the full documentation for lsrel
+     --man           Prints the full documentation for dir2data
 
 =head1 DESCRIPTION
 
@@ -126,7 +152,7 @@ Ivan Wills - (ivanw@benon.com)
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (c) 2008 Manaccom Corporation Ltd. (8 Camford St, Milton, QLD, 4064).
+Copyright (c) 2011 Ivan Wills (14 Mullion Close, Hornsby Heights, NSW, Australia 2077).
 All rights reserved.
 
 This module is free software; you can redistribute it and/or modify it under
