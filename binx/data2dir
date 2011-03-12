@@ -18,11 +18,11 @@ our $VERSION = 0.001;
 my ($name)   = $PROGRAM_NAME =~ m{^.*/(.*?)$}mxs;
 
 my %option = (
-	dir     => '',
-	verbose => 0,
-	man     => 0,
-	help    => 0,
-	VERSION => 0,
+    dir     => '',
+    verbose => 0,
+    man     => 0,
+    help    => 0,
+    VERSION => 0,
 );
 
 main();
@@ -30,92 +30,92 @@ exit 0;
 
 sub main {
 
-	Getopt::Long::Configure('bundling');
-	GetOptions(
-		\%option,
-		'dir|d=s',
-		'module|m=s',
-		'force|f!',
-		'verbose|v+',
-		'man',
-		'help',
-		'VERSION!',
-	) or pod2usage(2);
+    Getopt::Long::Configure('bundling');
+    GetOptions(
+        \%option,
+        'dir|d=s',
+        'module|m=s',
+        'force|f!',
+        'verbose|v+',
+        'man',
+        'help',
+        'VERSION!',
+    ) or pod2usage(2);
 
-	if ( $option{'VERSION'} ) {
-		print "$name Version = $VERSION\n";
-		exit 1;
-	}
-	elsif ( $option{'man'} ) {
-		pod2usage( -verbose => 2 );
-	}
-	elsif ( $option{'help'} || !$option{module} ) {
-		pod2usage( -verbose => 1 );
-	}
+    if ( $option{'VERSION'} ) {
+        print "$name Version = $VERSION\n";
+        exit 1;
+    }
+    elsif ( $option{'man'} ) {
+        pod2usage( -verbose => 2 );
+    }
+    elsif ( $option{'help'} || !$option{module} ) {
+        pod2usage( -verbose => 1 );
+    }
 
-	# do stuff here
-	if ($option{dir} && $option{dir} !~ m{/$}) {
-		$option{dir} .= '/';
-	}
+    # do stuff here
+    if ($option{dir} && $option{dir} !~ m{/$}) {
+        $option{dir} .= '/';
+    }
 
-	my $file = $option{module};
-	$file =~ s{::}{/}gxms;
-	$file .= '.pm';
-	require $file;
+    my $file = $option{module};
+    $file =~ s{::}{/}gxms;
+    $file .= '.pm';
+    require $file;
 
-	my $fh;
-	my $data;
-	{
-		no strict 'refs';
-		$fh  = \*{"$option{module}::DATA"};
-	}
-	{
-		local $/;
-		$data = <$fh>;
-	}
-	my @templates = split /^__([^_\n]+)__\n/xms, $data;
-	if (@templates % 2) {
-		shift @templates;
-	}
-	my %templates = @templates;
+    my $fh;
+    my $data;
+    {
+        no strict 'refs';
+        $fh  = \*{"$option{module}::DATA"};
+    }
+    {
+        local $/;
+        $data = <$fh>;
+    }
+    my @templates = split /^__([^_\n]+)__\n/xms, $data;
+    if (@templates % 2) {
+        shift @templates;
+    }
+    my %templates = @templates;
 
-	for my $template ( sort keys %templates ) {
-		my $file = file( $option{dir} . $template );
+    for my $template ( sort keys %templates ) {
+        my $file = file( $option{dir} . $template );
 
-		if (!-e $file || $option{force}) {
-			$file->parent->mkpath;
-			my $fh = $file->open('w');
-			$templates{$template} =~ s/^\0__/__/gxms;
-			print {$fh} $templates{$template};
-		}
-	}
+        if (!-e $file || $option{force}) {
+            $file->parent->mkpath;
+            my $fh = $file->open('w');
+            $templates{$template} =~ s/^\0__/__/gxms;
+            print {$fh} $templates{$template};
+        }
+    }
 
-	return;
+    return;
 }
 
 __DATA__
 
 =head1 NAME
 
-lsrel - Not sure
+data2dir - Not sure
 
 =head1 VERSION
 
-This documentation refers to lsrel version 0.1.
+This documentation refers to data2dir version 0.1.
 
 =head1 SYNOPSIS
 
-   lsrel [--verbose] [file] [dir1 [dir2] ...]
-   lsrel [option] --file=file [dir1 [dir2] ...]
-   lsrel [option]
+   data2dir [--verbose] -m App::TemplateCMD::Templates -d dir
 
  OPTIONS:
-  -f --file=str      other option
+  -m --module=str    The module whos __DATA__ section is to be read to
+                     retreive templates
+  -d --dir=str       The directory write out the templates to
 
   -v --verbose       Show more detailed option
      --version       Prints the version information
      --help          Prints this help information
-     --man           Prints the full documentation for lsrel
+     --man           Prints the full documentation for data2dir
 
 =head1 DESCRIPTION
 
@@ -143,7 +143,7 @@ Ivan Wills - (ivanw@benon.com)
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (c) 2008 Manaccom Corporation Ltd. (8 Camford St, Milton, QLD, 4064).
+Copyright (c) 2011 Ivan Wills (14 Mullion Close, Hornsby Heights, NSW, Australia 2077).
 All rights reserved.
 
 This module is free software; you can redistribute it and/or modify it under
