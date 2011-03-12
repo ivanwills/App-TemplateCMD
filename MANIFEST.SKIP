@@ -47,8 +47,8 @@
 #   Mac OSX SMB mount metadata files
 \B\._
 
-# Avoid vim temporary file
-.*\.sw[po]$
+# Avoid vim temporary files
+.*\.sw[ponx]$
 
 # This generated file
 \bMYMETA.yml$
@@ -61,3 +61,7 @@ Debian_CPANTS.txt
 
 # Avoid archives of this distribution
 \bApp-TemplateCMD-[\d\.\_]+
+
+.vimtagsdisplay
+tags
+templates

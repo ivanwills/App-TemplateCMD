@@ -35,3 +35,5 @@ t/App-TemplateCMD-Command-Print.t
 t/App-TemplateCMD-Command.t
 t/App-TemplateCMD-Templates.t
 t/App-TemplateCMD.t
+binx/data2dir
+binx/dir2data
