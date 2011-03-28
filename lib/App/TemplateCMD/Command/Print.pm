@@ -16,6 +16,7 @@ use English qw/ -no_match_vars /;
 use Template;
 use Template::Provider;
 use Template::Provider::FromDATA;
+use IPC::Open2;
 use base qw/App::TemplateCMD::Command/;
 
 our $VERSION     = version->new('0.1.0');
@@ -42,6 +43,36 @@ sub process {
     }
 
     $out =~ s/^\0=__/__/gxms if $out;
+
+    if ( $option{args}{tidy} ) {
+        if ( $option{args}{tidy} eq 'perl' ) {
+            eval { require Perl::Tidy };
+            if ($EVAL_ERROR) {
+                warn "Perl::Tidy is not installed, carn't tidy perl code\n";
+            }
+            else {
+                my $tidied;
+                eval {
+                    local @ARGV;
+                    Perl::Tidy::perltidy( source => \$out, destination => \$tidied );
+                    $out = $tidied;
+                };
+                if ($EVAL_ERROR) {
+                    warn "perltidy errored with: $EVAL_ERROR\n";
+                }
+            }
+        }
+        else {
+            warn "$option{args}{tidy}tidy";
+            my $pid = open2( my $fh_out, my $fh_in, "$option{args}{tidy}tidy" );
+            sleep 1;
+            print {$fh_in} $out;
+            sleep 1;
+            $out = <$fh_out>;
+            waitpid( $pid, 0 );
+            warn "exit status: " . $? >> 8;
+        }
+    }
 
     return $out;
 }
