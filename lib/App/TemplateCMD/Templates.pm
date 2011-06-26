@@ -865,7 +865,7 @@ function [% class %]( [% FOREACH param = params %][% param %], [% END %] ) {
 }
 
 /**
- *	@param	class_name:	The name of the class instanciating this object.
+ *	@param	class_name:	The name of the class instantiating this object.
 [% INCLUDE js/jdoc/params.js -%]
  *
  *	The [% class %] object initialiser
@@ -1866,7 +1866,7 @@ __perl/package/MANIFEST.SKIP__
 \bblibdirs$
 ^MANIFEST\.SKIP$
 
-# Avoid VMS specific Makmaker generated files
+# Avoid VMS specific Makemaker generated files
 \bDescrip.MMS$
 \bDESCRIP.MMS$
 \bdescrip.mms$

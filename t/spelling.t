@@ -35,5 +35,22 @@ add_stopwords(qw/
     perlcriticrc
     svg
     github
+    CPAN
+    MERCHANTIBILITY
+    Makemaker
+    OSX
+    README
+    SMB
+    TIMESTAMP
+    VARCHAR
+    Xoo
+    bugtracker
+    gpl
+    initialiser
+    metadata
+    param
+    params
+    pm
+    yml
 /);
 all_pod_files_spelling_ok();
