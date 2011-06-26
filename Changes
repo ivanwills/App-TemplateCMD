@@ -1,7 +1,21 @@
 Revision history for App-TemplateCMD
 
-0.1.0   2010-03-
-        
+0.1.0   2011-06-26
+        Fixed problem with test when Test::Kwalitee isn't installed
+        Added extracting module name form output file name
+        Added tidy option to try to tidy up outputted templates baised on the users preferences
+        More ignore sorting
+        Updated the templates
+        Updated POD
+        Implemented updating a modules data section
+        Added missing files
+        Changed the indentation from tabs to spaces
+        Added default ignores
+        Cleaned Build.PL
+        added repo and bug tracker
+        Changed path handling to remove trailing slashes
+        Fixed up the build command so that can now build a directory of templates
+        Added helper scripts for handling conversion of templates between DATA and files
 
 0.0.4   2010-02-16
         Added missing required modules
