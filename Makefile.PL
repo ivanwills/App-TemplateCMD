@@ -10,6 +10,7 @@ WriteMakefile
                            'Clone' => '0.17',
                            'Data::Merger' => 0,
                            'List::MoreUtils' => 0,
+                           'Path::Class' => 0,
                            'Readonly' => 0,
                            'Template' => '2.14',
                            'Template::Provider::FromDATA' => '0.08',

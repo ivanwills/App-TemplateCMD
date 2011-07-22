@@ -16,7 +16,7 @@ name: App-TemplateCMD
 provides:
   App::TemplateCMD:
     file: lib/App/TemplateCMD.pm
-    version: v0.1.0
+    version: v0.1.1
   App::TemplateCMD::Command:
     file: lib/App/TemplateCMD/Command.pm
     version: v0.1.0
@@ -49,6 +49,7 @@ requires:
   Clone: 0.17
   Data::Merger: 0
   List::MoreUtils: 0
+  Path::Class: 0
   Readonly: 0
   Template: 2.14
   Template::Provider::FromDATA: 0.08
@@ -59,4 +60,4 @@ resources:
   bugtracker: http://rt.cpan.org/NoAuth/Bugs.html?Dist=App-TemplateCMD
   license: http://dev.perl.org/licenses/
   repository: http://github.com/ivanwills/App-TemplateCMD
-version: v0.1.0
+version: v0.1.1
