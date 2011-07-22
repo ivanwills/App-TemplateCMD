@@ -1,5 +1,8 @@
 Revision history for App-TemplateCMD
 
+0.1.1   2011-07-23
+        Fixed missing Class::Path dependency
+
 0.1.0   2011-06-26
         Fixed problem with test when Test::Kwalitee isn't installed
         Added extracting module name form output file name
