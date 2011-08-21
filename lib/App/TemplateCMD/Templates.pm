@@ -623,7 +623,7 @@ __php.php__
 ?>
 __xhtml.html__
 [% UNLESS title %][% title = 'Untitled Document' %][% END -%]
-[% INCLUDE x3c/xml.xml %]
+[% INCLUDE w3c/xml.xml %]
 <!DOCTYPE html
 	PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 	 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
