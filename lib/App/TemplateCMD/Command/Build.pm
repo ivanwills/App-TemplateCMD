@@ -34,8 +34,9 @@ sub process {
 
     my $structure = Load($out);
 
-    for my $template (keys %{ $structure }) {
-        my $file = file $structure->{$template}{file};
+    for my $file (keys %{ $structure }) {
+        my $template = $structure->{$file}{template};
+        my $file = file $file;
 
         if ( !-e $file || $option{force} ) {
             $file->parent->mkpath();
@@ -44,8 +45,9 @@ sub process {
         # process the template
         my $out = $print->process(
             $cmd,
+            file => $file,
             %{ $args },
-            %{ $structure->{$template} },
+            %{ $structure->{$file} },
             files => [$template]
         );
         my $fh = $file->openw;
