@@ -4,6 +4,7 @@ LICENSE
 MANIFEST
 MANIFEST.SKIP
 META.yml
+META.json
 Makefile.PL
 README
 lib/App/TemplateCMD.pm
@@ -38,4 +39,3 @@ t/App-TemplateCMD-Templates.t
 t/App-TemplateCMD.t
 binx/data2dir
 binx/dir2data
-META.json
