@@ -1,0 +1,57 @@
+[% module = module || 'module' -%]
+[% file     = module -%]
+[% IF file.match('::') -%]
+[%     file = file.replace('::', '/') -%]
+[% END -%]
+[% file = file _ '.pm' -%]
+[% package  = module -%]
+[% IF package.match('::') -%]
+[%     package = package.replace('::', '-') -%]
+[% END -%]
+---
+perl/package:
+    file: [% package %]/lib/[% file %]
+    arg:
+    module: [% module %]
+perl/test/00-load.t:
+    file: [% package %]/t/00-load.t
+    module: [% module %]
+perl/test/boilerplate.t:
+    file: [% package %]/t/boilerplate.t
+    module: [% module %]
+perl/test/critic.t:
+    file: [% package %]/t/critic.t
+    module: [% module %]
+perl/test/dia.t:
+    file: [% package %]/t/dia.t
+    module: [% module %]
+perl/test/kwalitee.t:
+    file: [% package %]/t/kwalitee.t
+    module: [% module %]
+perl/test/pod-coverage.t:
+    file: [% package %]/t/pod-coverage.t
+    module: [% module %]
+perl/test/pod.t:
+    file: [% package %]/t/pod.t
+    module: [% module %]
+perl/test/spelling.t:
+    file: [% package %]/t/spelling.t
+    module: [% module %]
+perl/package/Build.PL:
+    file: [% package %]/Build.PL
+    module: [% module %]
+perl/package/Changes:
+    file: [% package %]/Changes
+    module: [% module %]
+perl/package/LICENSE:
+    file: [% package %]/LICENSE
+    module: [% module %]
+perl/package/MANIFEST:
+    file: [% package %]/MANIFEST
+    module: [% module %]
+perl/package/MANIFEST.SKIP:
+    file: [% package %]/MANIFEST.SKIP
+    module: [% module %]
+perl/package/README:
+    file: [% package %]/README
+    module: [% module %]

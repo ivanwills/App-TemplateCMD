@@ -1,0 +1,27 @@
+[% module = module || 'module' -%]
+[% file     = module -%]
+[% IF file.match('::') -%]
+[%     file = file.replace('::', '/') -%]
+[% END -%]
+[% file = file _ '.pm' -%]
+[% package  = module -%]
+[% IF package.match('::') -%]
+[%     package = package.replace('::', '-') -%]
+[% END -%]
+Build.PL
+Changes
+LICENSE
+MANIFEST
+MANIFEST.SKIP
+META.yml
+Makefile.PL
+README
+lib/[% file %]
+t/00-load.t
+t/boilerplate.t
+t/critic.t
+t/kwalitee.t
+t/pod-coverage.t
+t/pod.t
+t/perlcriticrc
+t/spelling.t
