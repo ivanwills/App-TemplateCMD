@@ -1,5 +1,15 @@
 Revision history for App-TemplateCMD
 
+0.5.0   2012-05-13
+        Removed DATA templates
+        Changed to using share_dir to distribute templates
+        Added templates (moved from DATA section)
+        Changed the build to command to be keyed on file name rather than template name
+        Added manifest testing
+        Updated test to improve catching thrown errors
+        Added version of manifest.t from module-starter
+        Fixed bad template name
+
 0.1.1   2011-07-23
         Fixed missing Class::Path dependency
 
