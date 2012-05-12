@@ -18,8 +18,8 @@ use YAML qw/Dump LoadFile/;
 use Readonly;
 use Template;
 use Template::Provider;
-use Template::Provider::FromDATA;
 use Data::Merger qw/merger/;
+use File::ShareDir qw/dist_dir/;
 use base qw/Exporter/;
 
 our $VERSION     = version->new('0.1.1');
@@ -121,7 +121,6 @@ sub process {
 
     $self->{providers} = [
         Template::Provider->new({ INCLUDE_PATH => $path }),
-        Template::Provider::FromDATA->new({ CLASSES => $self->{template_modules} }),
     ];
 
     $self->{template} = Template->new({
@@ -185,7 +184,7 @@ sub config {
     return $self->{'config'} if $self->{'config'};
 
     my $conf = {
-        path    => '~/template-cmd:~/.template-cmd/:~/.template-cmd-local:/usr/local/template-cmd/src/',
+        path    => '~/template-cmd:~/.template-cmd/:~/.template-cmd-local:/usr/local/template-cmd/src/:' . dist_dir('App-TemplateCMD'),
         aliases => {
             ls  => 'list',
             des => 'describe',
@@ -326,38 +325,38 @@ sub list_templates {
         );
     }
 
-    $self->{providers}[0]->_load('__');
-    if ( $self->{providers}[0]->can('cache') ) {
-        push @files, map {{ file => $_ }} keys %{ $self->{providers}[0]->cache->{templates} };
-    }
+    #$self->{providers}[0]->_load('__');
+    #if ( $self->{providers}[0]->can('cache') ) {
+    #    push @files, map {{ file => $_ }} keys %{ $self->{providers}[0]->cache->{templates} };
+    #}
 
-    for my $module (@{ $self->{template_modules} }) {
-        my $file = $module;
-        $file =~ s{::}{/}gxms;
-        $file .= '.pm';
-        require $file;
+    #for my $module (@{ $self->{template_modules} }) {
+    #    my $file = $module;
+    #    $file =~ s{::}{/}gxms;
+    #    $file .= '.pm';
+    #    require $file;
 
-        my $fh;
-        {
-            no strict 'refs';            ## no critic
-            $fh = \*{"${module}\::DATA"};
-        }
-        my $lines = 0;
+    #    my $fh;
+    #    {
+    #        no strict 'refs';            ## no critic
+    #        $fh = \*{"${module}\::DATA"};
+    #    }
+    #    my $lines = 0;
 
-        LINE:
-        while ( my $line = <$fh> ) {
-            $lines++;
-            my ($template) = $line =~ /^__(.+)__\r?\n/xms;
-            next LINE if !$template;
-            push @files, { path => $module, file => $template };
-        }
+    #    LINE:
+    #    while ( my $line = <$fh> ) {
+    #        $lines++;
+    #        my ($template) = $line =~ /^__(.+)__\r?\n/xms;
+    #        next LINE if !$template;
+    #        push @files, { path => $module, file => $template };
+    #    }
 
-        # if no lines read check the provider cache
-        if ( !$lines ) {
-            my $cache = $self->{providers}[1]->{cache}{templates};
-            push @files, map {{ file => $_ }} keys %{ $cache };
-        }
-    }
+    #    # if no lines read check the provider cache
+    #    if ( !$lines ) {
+    #        my $cache = $self->{providers}[1]->{cache}{templates};
+    #        push @files, map {{ file => $_ }} keys %{ $cache };
+    #    }
+    #}
 
     return @files;
 }

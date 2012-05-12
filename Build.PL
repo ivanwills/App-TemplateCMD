@@ -24,6 +24,11 @@ my $builder = Module::Build->new(
         'Test::More'       => 0,
         'Test::NoWarnings' => 0,
     },
+    share_dir => {
+        dist => [
+            'templates',
+        ],
+    },
     add_to_cleanup     => [ 'App-TemplateCMD-*' ],
     create_makefile_pl => 'traditional',
     create_license     => 1,

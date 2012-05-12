@@ -31,13 +31,7 @@ This documentation refers to App::TemplateCMD::Templates version 0.1.0.
 =head1 SYNOPSIS
 
    use Template;
-   use Template::Provider::FromDATA;
    use App::TemplateCMD::Templates;
-
-   # Get the template provider
-   my $provider = Template::Provider::FromDATA->new({
-       CLASSES => 'App::TemplateCMD::Templates',
-   });
 
    # Create the new template object
    my $template = Template->new({

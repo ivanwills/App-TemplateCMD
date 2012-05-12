@@ -15,7 +15,6 @@ use Data::Dumper qw/Dumper/;
 use English qw/ -no_match_vars /;
 use Template;
 use Template::Provider;
-use Template::Provider::FromDATA;
 use IPC::Open2;
 use base qw/App::TemplateCMD::Command/;
 
