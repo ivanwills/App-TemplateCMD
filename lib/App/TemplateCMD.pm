@@ -103,16 +103,6 @@ sub process {
     my $conf = $self->add_args(\%default);
     my $out;
 
-    # find any modules under App::TemplateCMD::Templates
-    my $default = 'App::TemplateCMD::Templates';
-    my @template_modules;
-
-    for my $module ( $self->get_modules($default) ) {
-        $module =~ s{/}{::}gxms;
-        push @template_modules, $default . '::' . $module;
-    }
-    $self->{template_modules} = [ $default, @template_modules ];
-
     my $path = $conf->{path};
     if ( $default{path} ) {
         $path = "$default{path}:$path";
@@ -324,39 +314,6 @@ sub list_templates {
             $dir
         );
     }
-
-    #$self->{providers}[0]->_load('__');
-    #if ( $self->{providers}[0]->can('cache') ) {
-    #    push @files, map {{ file => $_ }} keys %{ $self->{providers}[0]->cache->{templates} };
-    #}
-
-    #for my $module (@{ $self->{template_modules} }) {
-    #    my $file = $module;
-    #    $file =~ s{::}{/}gxms;
-    #    $file .= '.pm';
-    #    require $file;
-
-    #    my $fh;
-    #    {
-    #        no strict 'refs';            ## no critic
-    #        $fh = \*{"${module}\::DATA"};
-    #    }
-    #    my $lines = 0;
-
-    #    LINE:
-    #    while ( my $line = <$fh> ) {
-    #        $lines++;
-    #        my ($template) = $line =~ /^__(.+)__\r?\n/xms;
-    #        next LINE if !$template;
-    #        push @files, { path => $module, file => $template };
-    #    }
-
-    #    # if no lines read check the provider cache
-    #    if ( !$lines ) {
-    #        my $cache = $self->{providers}[1]->{cache}{templates};
-    #        push @files, map {{ file => $_ }} keys %{ $cache };
-    #    }
-    #}
 
     return @files;
 }
