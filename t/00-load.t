@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 10;
+use Test::More tests => 9;
 
 BEGIN {
     use_ok( 'App::TemplateCMD'                    );
@@ -15,7 +15,6 @@ BEGIN {
     use_ok( 'App::TemplateCMD::Command::Help'     );
     use_ok( 'App::TemplateCMD::Command::List'     );
     use_ok( 'App::TemplateCMD::Command::Print'    );
-    use_ok( 'App::TemplateCMD::Templates'         );
 }
 
 diag( "Testing App::TemplateCMD $App::TemplateCMD::VERSION, Perl $], $^X" );

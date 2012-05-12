@@ -26,7 +26,6 @@ lib/App/TemplateCMD/Command/Describe.pm
 lib/App/TemplateCMD/Command/Help.pm
 lib/App/TemplateCMD/Command/List.pm
 lib/App/TemplateCMD/Command/Print.pm
-lib/App/TemplateCMD/Templates.pm
 t/App-TemplateCMD-Command-Build.t
 t/App-TemplateCMD-Command-Cat.t
 t/App-TemplateCMD-Command-Conf.t
@@ -35,7 +34,4 @@ t/App-TemplateCMD-Command-Help.t
 t/App-TemplateCMD-Command-List.t
 t/App-TemplateCMD-Command-Print.t
 t/App-TemplateCMD-Command.t
-t/App-TemplateCMD-Templates.t
 t/App-TemplateCMD.t
-binx/data2dir
-binx/dir2data
