@@ -9,7 +9,7 @@ package App::TemplateCMD::Command::Print;
 use strict;
 use warnings;
 use version;
-use Carp;
+use Carp qw/carp croak cluck confess longmess/;
 use List::MoreUtils qw/uniq/;
 use Data::Dumper qw/Dumper/;
 use English qw/ -no_match_vars /;
@@ -27,6 +27,8 @@ sub process {
 
     my $template = shift @{$option{files}};
     my $args     = { %{ $cmd->config || {} }, %option, %{ $option{args} || {} } };
+
+    confess "No template passed!\n" if !$template;
 
     my $out = '';
     $cmd->{template}->process( $template, $args, \$out );

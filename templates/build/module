@@ -9,49 +9,49 @@
 [%     package = package.replace('::', '-') -%]
 [% END -%]
 ---
-perl/package:
-    file: [% package %]/lib/[% file %]
+[% package %]/lib/[% file %]:
+    template: perl/package
     arg:
     module: [% module %]
-perl/test/00-load.t:
-    file: [% package %]/t/00-load.t
+[% package %]/t/00-load.t:
+    template: perl/test/00-load.t
     module: [% module %]
-perl/test/boilerplate.t:
-    file: [% package %]/t/boilerplate.t
+[% package %]/t/boilerplate.t:
+    template: perl/test/boilerplate.t
     module: [% module %]
-perl/test/critic.t:
-    file: [% package %]/t/critic.t
+[% package %]/t/critic.t:
+    template: perl/test/critic.t
     module: [% module %]
-perl/test/dia.t:
-    file: [% package %]/t/dia.t
+[% package %]/t/dia.t:
+    template: perl/test/dia.t
     module: [% module %]
-perl/test/kwalitee.t:
-    file: [% package %]/t/kwalitee.t
+[% package %]/t/kwalitee.t:
+    template: perl/test/kwalitee.t
     module: [% module %]
-perl/test/pod-coverage.t:
-    file: [% package %]/t/pod-coverage.t
+[% package %]/t/pod-coverage.t:
+    template: perl/test/pod-coverage.t
     module: [% module %]
-perl/test/pod.t:
-    file: [% package %]/t/pod.t
+[% package %]/t/pod.t:
+    template: perl/test/pod.t
     module: [% module %]
-perl/test/spelling.t:
-    file: [% package %]/t/spelling.t
+[% package %]/t/spelling.t:
+    template: perl/test/spelling.t
     module: [% module %]
-perl/package/Build.PL:
-    file: [% package %]/Build.PL
+[% package %]/Build.PL:
+    template: perl/package/Build.PL
     module: [% module %]
-perl/package/Changes:
-    file: [% package %]/Changes
+[% package %]/Changes:
+    template: perl/package/Changes
     module: [% module %]
-perl/package/LICENSE:
-    file: [% package %]/LICENSE
+[% package %]/LICENSE:
+    template: perl/package/LICENSE
     module: [% module %]
-perl/package/MANIFEST:
-    file: [% package %]/MANIFEST
+[% package %]/MANIFEST:
+    template: perl/package/MANIFEST
     module: [% module %]
-perl/package/MANIFEST.SKIP:
-    file: [% package %]/MANIFEST.SKIP
+[% package %]/MANIFEST.SKIP:
+    template: perl/package/MANIFEST.SKIP
     module: [% module %]
-perl/package/README:
-    file: [% package %]/README
+[% package %]/README:
+    template: perl/package/README
     module: [% module %]
