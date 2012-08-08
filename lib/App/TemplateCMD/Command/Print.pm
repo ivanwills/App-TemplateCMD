@@ -84,10 +84,17 @@ sub help {
     my ($self) = @_;
 
     return <<"HELP";
-$0 print [options] template
+$0 print [options] template [--out|-o file] [[-a|--args] key=value]
 
- -a --args=str   Specify arguments to pass on to the template that is to be displayed
- -o --out=file   Specify a file to wright the out put to
+ -a --args[=]str  Specify arguments to pass on to the template. The format of
+                  the arguments is key=value where key is the name of a template
+                  variable. Arguments can be specified without explicit using
+                  this option.
+ -o --out[=]file  Specify a file to wright the out put to
+
+Standard arguments:
+ tidy=command     Specify tidy program which will post process the output.
+                  If command equals perl the Perl::Tidy module is used directly
 
 This command processes the template for saving or inserting/appending to
 another file.
