@@ -22,9 +22,6 @@
 [% package %]/t/critic.t:
     template: perl/test/critic.t
     module: [% module %]
-[% package %]/t/dia.t:
-    template: perl/test/dia.t
-    module: [% module %]
 [% package %]/t/kwalitee.t:
     template: perl/test/kwalitee.t
     module: [% module %]
