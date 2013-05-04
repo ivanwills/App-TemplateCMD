@@ -38,7 +38,7 @@ sub process {
 
         $out ||= "No help found for $command\n";
     }
-    elsif ( $self->can($command) && $command ne 'process' ) {
+    elsif ( $command && $self->can($command) && $command ne 'process' ) {
         $out = $self->$command();
     }
     else {
