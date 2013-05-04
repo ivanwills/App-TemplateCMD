@@ -22,6 +22,8 @@
 [% package %]/t/critic.t:
     template: perl/test/critic.t
     module: [% module %]
+[% package %]/t/perlcriticrc:
+    template: blank
 [% package %]/t/kwalitee.t:
     template: perl/test/kwalitee.t
     module: [% module %]
@@ -52,3 +54,15 @@
 [% package %]/README:
     template: perl/package/README
     module: [% module %]
+[% package %]/.gitignore:
+    template: git/ignore
+    package: [% package %]
+[%- IF bin;
+    IF bin == 1;
+        bin = package.lower;
+    END;
+%]
+[% package %]/bin/[% bin %]:
+    template: perl.pl
+    module: [% module %]
+[% END -%]
