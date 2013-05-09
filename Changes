@@ -1,5 +1,24 @@
 Revision history for App-TemplateCMD
 
+0.5.1   2013-05-09
+        Changed default load test to one that finds all modules and tries to use them
+        Added manifest test to default module builds
+        Fixed file generation
+        Fixed version numbers
+        Fixed warning
+        Changed build/module to make other standard files
+        Added blank template
+        Changed to using google jquery
+        Added better documentation
+        Removed dia test as it's not really a standard test
+        Fixed reverted build code
+        Updated version for next release, added changes to change file
+        Removed DATA templates
+        Removed DATA templates
+        Updated licence code
+        Changed to using share_dir to distribute templates
+        Added templates
+
 0.5.0   2012-05-13
         Removed DATA templates
         Changed to using share_dir to distribute templates
