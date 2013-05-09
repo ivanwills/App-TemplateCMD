@@ -68,4 +68,4 @@
 [% package %]/bin/[% bin %]:
     template: perl.pl
     module: [% module %]
-[% END -%]
+[% END %]
