@@ -27,6 +27,9 @@
 [% package %]/t/kwalitee.t:
     template: perl/test/kwalitee.t
     module: [% module %]
+[% package %]/t/manifest.t:
+    template: perl/test/manifest.t
+    module: [% module %]
 [% package %]/t/pod-coverage.t:
     template: perl/test/pod-coverage.t
     module: [% module %]
