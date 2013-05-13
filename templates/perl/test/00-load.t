@@ -3,7 +3,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 1 + 1;
+use Test::More;
 use Path::Class;
 
 my $lib = file($0)->parent->parent->subdir('lib');
@@ -14,11 +14,7 @@ while ( my $file = shift @files ) {
         push @files, $file->children;
     }
     elsif ( $file =~ /[.]pm$/ ) {
-        my $module = $file;
-        $module =~ s{lib/}{};
-        $module =~ s{/}{::}g;
-        $module =~ s{[.]pm}{};
-        use_ok $module;
+        require_ok $file;
     }
 }
 
