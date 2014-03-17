@@ -118,8 +118,7 @@ __END__
 
 =head1 NAME
 
-App::TemplateCMD::Command::Help - Show help about how to use commands and
-templatecmd in general.
+App::TemplateCMD::Command::Help - Show help about how to use commands and templatecmd in general.
 
 =head1 VERSION
 

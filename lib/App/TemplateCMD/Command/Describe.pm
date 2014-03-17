@@ -72,8 +72,7 @@ __END__
 
 =head1 NAME
 
-App::TemplateCMD::Command::Describe - Command to describe a template
-(variables used, location etc)
+App::TemplateCMD::Command::Describe - Command to describe a template (variables used, location etc)
 
 =head1 VERSION
 

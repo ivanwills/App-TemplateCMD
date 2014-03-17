@@ -53,8 +53,7 @@ __END__
 
 =head1 NAME
 
-App::TemplateCMD::Command::Conf - Command to show the configuration used for
-templates.
+App::TemplateCMD::Command::Conf - Command to show the configuration used for templates.
 
 =head1 VERSION
 
