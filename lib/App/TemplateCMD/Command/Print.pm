@@ -18,7 +18,7 @@ use Template::Provider;
 use IPC::Open2;
 use base qw/App::TemplateCMD::Command/;
 
-our $VERSION     = version->new('0.1.0');
+our $VERSION     = version->new('0.5.2');
 our @EXPORT_OK   = qw//;
 our %EXPORT_TAGS = ();
 
@@ -119,7 +119,7 @@ App::TemplateCMD::Command::Print - Prints a parsed template out to screen or fil
 
 =head1 VERSION
 
-This documentation refers to App::TemplateCMD::Command::Print version 0.1.0.
+This documentation refers to App::TemplateCMD::Command::Print version 0.5.2.
 
 =head1 SYNOPSIS
 
