@@ -1,5 +1,19 @@
 Revision history for App-TemplateCMD
 
+0.5.2   2014-08-15
+        Updated dependancies (Ivan Wills)
+        Added more files to skip (Ivan Wills)
+        New templates for Test::Class::Moose (Ivan Wills)
+        Fixed abstracts to match spec per http://neilb.org/2014/02/19/compliant-abstract.html (Ivan Wills)
+        Adding tag files (Ivan Wills)
+        Improved default Moose style (Ivan Wills)
+        Added configure_requires section (Ivan Wills)
+        Added default ignore file (Ivan Wills)
+        Changed default load test to require files (fixes Windows issues) (Ivan Wills)
+        Fixed YAML syntax (Ivan Wills)
+        LICENCE updated (Ivan Wills)
+        
+
 0.5.1   2013-05-09
         Changed default load test to one that finds all modules and tries to use them
         Added manifest test to default module builds
