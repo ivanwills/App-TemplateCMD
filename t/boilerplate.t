@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 13 + 1;
+use Test::More tests => 12 + 1;
 use Test::NoWarnings;
 
 sub not_in_file_ok {
@@ -61,11 +61,10 @@ subtest 'Changes' => sub {
 module_boilerplate_ok('bin/templatecmd');
 module_boilerplate_ok('lib/App/TemplateCMD.pm');
 module_boilerplate_ok('lib/App/TemplateCMD/Command.pm');
-module_boilerplate_ok('lib/App/TemplateCMD/Command/Cat.pm');
-module_boilerplate_ok('lib/App/TemplateCMD/Command/Print.pm');
-module_boilerplate_ok('lib/App/TemplateCMD/Command/Describe.pm');
 module_boilerplate_ok('lib/App/TemplateCMD/Command/Build.pm');
+module_boilerplate_ok('lib/App/TemplateCMD/Command/Cat.pm');
+module_boilerplate_ok('lib/App/TemplateCMD/Command/Conf.pm');
+module_boilerplate_ok('lib/App/TemplateCMD/Command/Describe.pm');
 module_boilerplate_ok('lib/App/TemplateCMD/Command/Help.pm');
 module_boilerplate_ok('lib/App/TemplateCMD/Command/List.pm');
-module_boilerplate_ok('lib/App/TemplateCMD/Command/Conf.pm');
-module_boilerplate_ok('lib/App/TemplateCMD.pm');
+module_boilerplate_ok('lib/App/TemplateCMD/Command/Print.pm');
