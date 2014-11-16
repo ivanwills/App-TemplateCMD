@@ -1,5 +1,11 @@
 Revision history for App-TemplateCMD
 
+0.5.4   2014-11-16
+        Upated manifest (Ivan Wills)
+        Added explicit modules to prevent confusion (Ivan Wills)
+        Fixed version setting (Ivan Wills)
+        Updating for release of version 0.5.3 (Ivan Wills)
+
 0.5.3   2014-10-09
         New template to building module based scripts (Ivan Wills)
         Updated boilerplate test (Ivan Wills)
