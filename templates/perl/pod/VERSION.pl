@@ -1,4 +1,4 @@
-[% IF not version %][% version = '0.0.1' %][% END -%]
+[% IF not version %][% version.pod = '0.001' %][% END -%]
 =head1 VERSION
 
-This documentation refers to [% module %] version [% version %]
+This documentation refers to [% module %] version [% version.pod %]
