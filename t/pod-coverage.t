@@ -22,4 +22,13 @@ eval "use Pod::Coverage $min_pc";
 plan skip_all => "Pod::Coverage $min_pc required for testing POD coverage"
     if $@;
 
-all_pod_coverage_ok();
+pod_coverage_ok('App::TemplateCMD'                   );
+pod_coverage_ok('App::TemplateCMD::Command'          );
+pod_coverage_ok('App::TemplateCMD::Command::Cat'     );
+pod_coverage_ok('App::TemplateCMD::Command::Print'   );
+pod_coverage_ok('App::TemplateCMD::Command::Describe');
+pod_coverage_ok('App::TemplateCMD::Command::Build'   );
+pod_coverage_ok('App::TemplateCMD::Command::Help'    );
+pod_coverage_ok('App::TemplateCMD::Command::List'    );
+pod_coverage_ok('App::TemplateCMD::Command::Conf'    );
+done_testing();

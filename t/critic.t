@@ -20,4 +20,14 @@ if ( $EVAL_ERROR ) {
 
 my $rcfile = File::Spec->catfile( 't', 'perlcriticrc' );
 Test::Perl::Critic->import( -profile => $rcfile );
-all_critic_ok();
+
+critic_ok('lib/App/TemplateCMD.pm'                 );
+critic_ok('lib/App/TemplateCMD/Command.pm'         );
+critic_ok('lib/App/TemplateCMD/Command/Cat.pm'     );
+critic_ok('lib/App/TemplateCMD/Command/Print.pm'   );
+critic_ok('lib/App/TemplateCMD/Command/Describe.pm');
+critic_ok('lib/App/TemplateCMD/Command/Build.pm'   );
+critic_ok('lib/App/TemplateCMD/Command/Help.pm'    );
+critic_ok('lib/App/TemplateCMD/Command/List.pm'    );
+critic_ok('lib/App/TemplateCMD/Command/Conf.pm'    );
+done_testing();
