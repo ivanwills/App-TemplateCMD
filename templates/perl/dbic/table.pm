@@ -9,6 +9,7 @@
 [% IF not module %][% module = 'My::Schema::Result::Album' %][% END -%]
 [% IF not version %][% version.perl = '0.001' %][% END -%]
 [% IF not table %][% table = 'album' %][% END -%]
+[% IF not columns %][% columns = ['id', 'name', 'date', 'artist'] %][% END -%]
 package [% module %];
 
 # Created on: [% date %] [% time %]
