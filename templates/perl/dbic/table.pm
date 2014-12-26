@@ -30,7 +30,7 @@ __PACKAGE__->load_components("InflateColumn::DateTime", "Core");
 __PACKAGE__->table('[% table %]');
 
 __PACKAGE__->add_columns(
-[% FOREACH column = columns %]
+[%- FOREACH column = columns %]
     '[% column %]' => {
         data_type         => "integer",
         default_value     => undef,
@@ -40,7 +40,7 @@ __PACKAGE__->add_columns(
         sequence          => "url_url_id_seq",
         #original          => { data_type => "varchar" },
     },
-[% END %]
+[%- END %]
 );
 
 __PACKAGE__->set_primary_key("columns.0");
