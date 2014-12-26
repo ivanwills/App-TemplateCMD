@@ -22,7 +22,7 @@ use strict;
 use warnings;
 use base qw/DBIx::Class::Core/;
 
-__PACKAGE__->load_components("InflateColumn::DateTime", "Core");
+__PACKAGE__->load_components('InflateColumn::DateTime', 'Core');
 # or ordered columns
 #__PACKAGE__->load_components(qw/ Ordered /);
 #__PACKAGE__->position_column('rank');
@@ -32,18 +32,18 @@ __PACKAGE__->table('[% table %]');
 __PACKAGE__->add_columns(
 [%- FOREACH column = columns %]
     '[% column %]' => {
-        data_type         => "integer",
+        data_type         => 'integer',
         default_value     => undef,
         size              => undef,
         is_auto_increment => 0,
         is_nullable       => 1,
-        sequence          => "url_url_id_seq",
-        #original          => { data_type => "varchar" },
+        sequence          => 'url_url_id_seq',
+        #original          => { data_type => 'varchar' },
     },
 [%- END %]
 );
 
-__PACKAGE__->set_primary_key("columns.0");
+__PACKAGE__->set_primary_key('[% columns.0 %]');
 
 #__PACKAGE__->has_many(
 #    'accessor_name' => (
