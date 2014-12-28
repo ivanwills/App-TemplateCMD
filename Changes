@@ -1,5 +1,13 @@
 Revision history for App-TemplateCMD
 
+0.5.5   2014-12-28
+        Updating for release of version 0.5.5
+        Updated licence (Ivan Wills)
+        Changed double quotes to single quotes (Ivan Wills)
+        Cleaned up generated whitespace (Ivan Wills)
+        Added default columns (Ivan Wills)
+        DBIx::Class helpers (Ivan Wills)
+
 0.5.4   2014-11-16
         Upated manifest (Ivan Wills)
         Added explicit modules to prevent confusion (Ivan Wills)
