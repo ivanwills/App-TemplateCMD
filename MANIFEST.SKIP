@@ -69,8 +69,9 @@ Debian_CPANTS.txt
 
 # Other files of interest
 vim.sh
+vrc.yml
 tmp*
-temp*
+temp/*
 errors.err
 templates
 [.].*[.]tag$
