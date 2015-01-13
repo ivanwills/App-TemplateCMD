@@ -1,5 +1,5 @@
 [% module = module || 'module' -%]
-[% file     = module -%]
+[% file   = module -%]
 [% IF file.match('::') -%]
 [%     file = file.replace('::', '/') -%]
 [% END -%]

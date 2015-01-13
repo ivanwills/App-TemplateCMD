@@ -1,0 +1,12 @@
+[% module = module || 'module' -%]
+---
+[% module %]/gulpfile.js
+    template: npm/gulpfile.js
+[% module %]/lib/getopt-long.js
+    template: js/module.js
+[% module %]/package.json
+    template: npm/package.js
+[% module %]/README.md
+    template: npm/readme.md
+[% module %]/test/options.js
+    template: js/test.js
