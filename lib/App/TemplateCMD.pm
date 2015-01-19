@@ -22,7 +22,7 @@ use Data::Merger qw/merger/;
 use File::ShareDir qw/dist_dir/;
 use base qw/Exporter/;
 
-our $VERSION     = version->new('0.5.5');
+our $VERSION     = version->new('0.5.6');
 our @EXPORT_OK   = qw//;
 our %EXPORT_TAGS = ();
 
@@ -340,7 +340,7 @@ App::TemplateCMD - Sets up an interface to passing Template Toolkit templates
 
 =head1 VERSION
 
-This documentation refers to App::TemplateCMD version 0.5.5.
+This documentation refers to App::TemplateCMD version 0.5.6.
 
 =head1 SYNOPSIS
 
