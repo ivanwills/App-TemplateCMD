@@ -7,6 +7,7 @@
     "keywords"   : [""],
     "bin"        : {},
     "man"        : {},
+    "main"       : "index.js",
     "repository" : {
         "type": "git",
         "url" : "git://github.com/ivanwills/[% module %].git"
@@ -15,11 +16,15 @@
     "dependencies": {
     },
     "devDependencies": {
-        "assert"     : "*",
-        "gulp"       : "*",
-        "gulp-mocha" : "*",
-        "gulp-jshint": "*",
-        "gulp-util"  : "*"
+        "assert"        : "*",
+        "gulp"          : "*",
+        "gulp-istanbul" : "*",
+        "gulp-jshint"   : "*",
+        "gulp-mocha"    : "*",
+[%- IF sonar %]
+        "gulp-sonar"    : "*",
+[%- END %]
+        "gulp-util"     : "*"
     },
     "optionalDependencies": {},
     "engines": {
