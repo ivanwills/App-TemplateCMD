@@ -1,5 +1,13 @@
 Revision history for App-TemplateCMD
 
+0.5.7   2015-02-22
+        Updating for release of version 0.5.7
+        More complete gulp option (Ivan Wills)
+        Merge branch 'master' of github.com:ivanwills/App-TemplateCMD (Ivan Wills)
+        Added Moo option (Ivan Wills)
+        Added TODO file (Ivan Wills)
+        New file to produce a template for a POD document (Ivan Wills)
+
 0.5.6   2015-01-19
         Updating for release of version 0.5.6
         Added more items to the package.json file (Ivan Wills)
