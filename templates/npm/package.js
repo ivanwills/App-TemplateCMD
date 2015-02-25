@@ -17,6 +17,9 @@
     },
     "devDependencies": {
         "assert"        : "*",
+[%- IF global %]
+        "node-getopt-long": "*",
+[%- END %]
         "gulp"          : "*",
         "gulp-istanbul" : "*",
         "gulp-jshint"   : "*",
@@ -27,6 +30,15 @@
         "gulp-util"     : "*"
     },
     "optionalDependencies": {},
+[%- IF global %]
+    "preferGlobal": "true",
+    "directories": {
+        "bin": "./bin"
+    },
+[%- END %]
+    "scripts": {
+        "test": "gulp test"
+    },
     "engines": {
         "node": "*"
     }
