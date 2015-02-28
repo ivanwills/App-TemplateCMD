@@ -10,7 +10,7 @@
 [% END -%]
 ---
 [% package %]/lib/[% file %]:
-    template: perl/package
+    template: perl/package.pm
     arg:
     module: [% module %]
 [% package %]/t/00-load.t:
@@ -60,6 +60,10 @@
 [% package %]/.gitignore:
     template: git/ignore
     package: [% package %]
+[%- IF travis %]
+[% package %]/.travis.yml:
+    template: perl/travis.yml
+[%- END %]
 [%- IF bin;
     IF bin == 1;
         bin = package.lower;
