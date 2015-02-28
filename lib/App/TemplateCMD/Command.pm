@@ -20,6 +20,9 @@ our %EXPORT_TAGS = ();
 #our @EXPORT      = qw//;
 
 sub args {
+    return (
+        'path|p=s',
+    );
 }
 
 sub default {
