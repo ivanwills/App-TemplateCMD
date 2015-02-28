@@ -9,4 +9,3 @@
      --version       Prints the version information
      --help          Prints this help information
      --man           Prints the full documentation for [% module %]
-
