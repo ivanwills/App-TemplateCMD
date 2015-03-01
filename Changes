@@ -1,5 +1,14 @@
 Revision history for App-TemplateCMD
 
+0.5.8   2015-03-01
+        Updating for release of version 0.5.8
+        Added travis config as an option (Ivan Wills)
+        Added supporting setting --path to choose the default template path (Ivan Wills)
+        Some cleanup of whitespace (Ivan Wills)
+        HTML5 doc (Ivan Wills)
+        Added accedentally conjoined file (Ivan Wills)
+        Cleaned up templates with better formatting etc (Ivan Wills)
+
 0.5.7   2015-02-22
         Updating for release of version 0.5.7
         More complete gulp option (Ivan Wills)
