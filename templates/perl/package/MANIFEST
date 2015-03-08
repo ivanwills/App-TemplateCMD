@@ -8,20 +8,22 @@
 [% IF package.match('::') -%]
 [%     package = package.replace('::', '-') -%]
 [% END -%]
+[%- IF bin %]bin/[% bin %][% END %]
 Build.PL
 Changes
-LICENSE
-MANIFEST
-MANIFEST.SKIP
-META.yml
-Makefile.PL
-README
 lib/[% file %]
+LICENSE
+Makefile.PL
+MANIFEST
+META.json
+META.yml
+README
 t/00-load.t
 t/boilerplate.t
 t/critic.t
 t/kwalitee.t
+t/manifest.t
+t/perlcriticrc
 t/pod-coverage.t
 t/pod.t
-t/perlcriticrc
 t/spelling.t
