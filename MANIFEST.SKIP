@@ -76,3 +76,4 @@ errors.err
 templates
 [.].*[.]tag$
 ^MYMETA\.json$
+.travis.yml

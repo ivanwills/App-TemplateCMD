@@ -1,16 +1,15 @@
-.travis.yml
+bin/templatecmd
 Build.PL
 Changes
-lib/App/TemplateCMD.pm
-bin/templatecmd
-lib/App/TemplateCMD/Command.pm
 lib/App/TemplateCMD/Command/Build.pm
 lib/App/TemplateCMD/Command/Cat.pm
 lib/App/TemplateCMD/Command/Conf.pm
 lib/App/TemplateCMD/Command/Describe.pm
 lib/App/TemplateCMD/Command/Help.pm
 lib/App/TemplateCMD/Command/List.pm
+lib/App/TemplateCMD/Command.pm
 lib/App/TemplateCMD/Command/Print.pm
+lib/App/TemplateCMD.pm
 LICENSE
 Makefile.PL
 MANIFEST
@@ -31,6 +30,7 @@ t/boilerplate.t
 t/critic.t
 t/kwalitee.t
 t/manifest.t
+TODO.md
 t/perlcriticrc
 t/pod-coverage.t
 t/pod.t
