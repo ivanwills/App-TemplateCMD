@@ -32,7 +32,7 @@ sub process {
 
     my $out = '';
     $cmd->{template}->process( $template, $args, \$out );
-    warn  $cmd->{template}->error . "\n" if $cmd->{template}->error;
+    warn  $cmd->{template}->error . "\n" if $cmd->{template}->error && $cmd->{template}->error !~ /^file error - .*: not a file$/;
 
     if (!$out) {
         my @files = uniq sort map {$_->{file}} $cmd->list_templates();
@@ -41,7 +41,7 @@ sub process {
 
         if (@templates) {
             $cmd->{template}->process( $templates[0], $args, \$out );
-            warn  $cmd->{template}->error . "\n" if $cmd->{template}->error;
+            warn  $cmd->{template}->error . "\n" if $cmd->{template}->error && $cmd->{template}->error !~ /^file error - .*: not a file$/;
         }
     }
 
