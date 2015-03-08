@@ -25,7 +25,6 @@
 =head1 AUTHOR
 
 [% contact.fullname %] - ([% contact.email %])
-<Author name(s)>  (<contact address>)
 
 =head1 LICENSE AND COPYRIGHT
 [% INCLUDE licence.txt %]
