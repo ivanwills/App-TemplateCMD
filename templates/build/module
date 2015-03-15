@@ -19,6 +19,7 @@
 [% package %]/t/boilerplate.t:
     template: perl/test/boilerplate.t
     module: [% module %]
+    file: lib/[% file %]
 [% package %]/t/critic.t:
     template: perl/test/critic.t
     module: [% module %]
