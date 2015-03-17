@@ -7,8 +7,8 @@ BEGIN { $ENV{TESTING} = 1 }
 
 use strict;
 use warnings;
-use Test::More tests => [% tests %] + 1;
-use Test::NoWarnings;
+use Test::More;
+use Test::Warnings;
 
 my $module = '[% module %]';
 use_ok( $module );
@@ -31,3 +31,5 @@ is( $[%	obj %]->[% subroutine %](), '?', " check object method [% subroutine %](
 ok( $[% module %]::[% subroutine %](),      " check method [% subroutine %]()" );
 is( $[% module %]::[% subroutine %](), '?', " check method [% subroutine %]()" );
 [% END -%]
+
+done_testing();

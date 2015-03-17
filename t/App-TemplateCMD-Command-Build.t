@@ -1,10 +1,10 @@
 
 use strict;
 use warnings;
-use Test::More tests => 1 + 1;
-use Test::NoWarnings;
+use Test::More;
+use Test::Warnings;
 
 my $module = 'App::TemplateCMD::Command::Build';
 use_ok( $module );
 
-
+done_testing();
