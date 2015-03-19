@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 use Test::More;
-use Test::NoWarnings;
+use Test::Warnings;
 
 sub not_in_file_ok {
     my ($filename, %regex) = @_;
@@ -67,4 +67,5 @@ module_boilerplate_ok('lib/App/TemplateCMD/Command/Conf.pm');
 module_boilerplate_ok('lib/App/TemplateCMD/Command/Describe.pm');
 module_boilerplate_ok('lib/App/TemplateCMD/Command/Help.pm');
 module_boilerplate_ok('lib/App/TemplateCMD/Command/List.pm');
-done_testing();module_boilerplate_ok('lib/App/TemplateCMD/Command/Print.pm');
+module_boilerplate_ok('lib/App/TemplateCMD/Command/Print.pm');
+done_testing();
