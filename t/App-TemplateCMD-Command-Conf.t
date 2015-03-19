@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 use Test::More;
-use Test::NoWarnings;
+use Test::Warnings;
 
 my $module = 'App::TemplateCMD::Command::Conf';
 use_ok( $module );
