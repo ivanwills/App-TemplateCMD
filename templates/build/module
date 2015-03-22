@@ -1,3 +1,15 @@
+[%#
+    Perl Module Builder Configuration
+    Parameters:
+        * module (Str) - The name of the module to be built
+        * file (Str) - The main module file name (based on module if not specified)
+        * package (Str) - The name of the perl package (uses module if not specified)
+        * moose (Bool) - Make the module be a Moose module
+        * moo (Bool) - Make the module be a Moo module
+        * bin (Bool | Str) - Add a script to the bin directory (If not a string the script is based on the package name)
+        * readme ('pod', 'md') - Create the README file as a POD or Markdown rather than plain txt file
+        * travis (Bool) - Create a .travis.yml config file
+%]
 [% module = module || 'module' -%]
 [% file   = module -%]
 [% IF file.match('::') -%]
@@ -55,8 +67,8 @@
 [% package %]/MANIFEST.SKIP:
     template: perl/package/MANIFEST.SKIP
     module: [% module %]
-[% package %]/README:
-    template: perl/package/README
+[% package %]/README[% readme && '.' _ readme %]:
+    template: perl/package/README[% readme && '.' _ readme %]
     module: [% module %]
 [% package %]/.gitignore:
     template: git/ignore
