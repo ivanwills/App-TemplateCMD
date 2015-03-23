@@ -8,6 +8,10 @@
 [% IF package.match('::') -%]
 [%     package = package.replace('::', '-') -%]
 [% END -%]
+[% IF travis %]
+[![Build Status](https://travis-ci.org/ivanwills/[% package %].svg?branch=master)](https://travis-ci.org/ivanwills/[% package %]?branch=master)
+[![Coverage Status](https://coveralls.io/repos/ivanwills/[% package %]/badge.svg?branch=master)](https://coveralls.io/r/ivanwills/[% package %]?branch=master)
+[% END %]
 [% package %]
 =============
 
