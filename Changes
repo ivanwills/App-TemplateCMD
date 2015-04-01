@@ -1,5 +1,29 @@
 Revision history for App-TemplateCMD
 
+0.5.9   2015-04-01
+        Updating for release of version 0.5.9
+        Fixed readme in manifest (Ivan Wills)
+        Added specific Test::More version for the features being used (Ivan Wills)
+        Fixed POD for READMEs (Ivan Wills)
+        Changed POD test to skip templates (Ivan Wills)
+        Converted README to POD (Ivan Wills)
+        Added default build and coverage badges for markdown template (Ivan Wills)
+        Added markdown version of README (Ivan Wills)
+        POD version of README (Ivan Wills)
+        Added ability to switch README formats, Added documentation about use (Ivan Wills)
+        Fixed NoWarnings tests (Ivan Wills)
+        Fixed boilerplate test (Ivan Wills)
+        Added config for coveralls.io (Ivan Wills)
+        Removed Test::NoWarnings to be replaced by Test::Warnings (Ivan Wills)
+        Added sending the module file to boilerplate.t template (Ivan Wills)
+        Updated LICENSE (Ivan Wills)
+        Removed redundant author example (Ivan Wills)
+        Added hiding recoverable error (Ivan Wills)
+        Added missing files to manifest template and sorted (Ivan Wills)
+        Cleaned up manifest files (Ivan Wills)
+        Added new template files (Ivan Wills)
+        Added more things todo (Ivan Wills)
+
 0.5.8   2015-03-01
         Updating for release of version 0.5.8
         Added travis config as an option (Ivan Wills)
