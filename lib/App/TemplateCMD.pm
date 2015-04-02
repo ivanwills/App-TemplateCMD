@@ -18,7 +18,6 @@ use YAML qw/Dump LoadFile/;
 use Readonly;
 use Template;
 use Template::Provider;
-use Data::Merger qw/merger/;
 use File::ShareDir qw/dist_dir/;
 use base qw/Exporter/;
 

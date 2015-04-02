@@ -15,7 +15,6 @@ my $builder = Module::Build->new(
         'Template::Provider' => '2.94',
         'Class::Date'        => '1.001',
         'Clone'              => '0.17',
-        'Data::Merger'       => 0,
         'List::MoreUtils'    => 0,
         'Path::Class'        => 0,
         'Readonly'           => 0,
