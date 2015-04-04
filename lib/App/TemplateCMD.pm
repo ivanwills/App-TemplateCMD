@@ -19,6 +19,7 @@ use Readonly;
 use Template;
 use Template::Provider;
 use File::ShareDir qw/dist_dir/;
+use JSON qw/decode_json/;
 use base qw/Exporter/;
 
 our $VERSION     = version->new('0.5.9');
@@ -142,7 +143,7 @@ sub add_args {
 
             # merge the argument on to the args hash
             my ($arg, $value) = split /=/, $file, 2;
-            $default->{args}->{$arg} = $value;
+            $default->{args}->{$arg} = eval { decode_json($value) } || $value;
         }
         else {
 

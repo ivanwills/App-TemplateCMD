@@ -26,7 +26,10 @@ sub process {
     my ($self, $cmd, %option) = @_;
 
     my $template = shift @{$option{files}};
-    my $args     = { %{ $cmd->config || {} }, %option, %{ $option{args} || {} } };
+    my $args     = $cmd->conf_join(
+        $cmd->conf_join( ( $cmd->config || {} ), ( $option{args} || {} ) ),
+        \%option
+    );
 
     confess "No template passed!\n" if !$template;
 
