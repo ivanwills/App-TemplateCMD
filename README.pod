@@ -1,7 +1,7 @@
 =begin html
 
-<a href="https://travis-ci.org/ivanwills/[% package %]?branch=master"><img src="https://travis-ci.org/ivanwills/[% package %].png?branch=master" alt="[% package %]"></a>
-<a href="https://coveralls.io/r/ivanwills/[% package %]?branch=master"><img src="https://coveralls.io/repos/ivanwills/[% package %]/badge.svg?branch=master" alt="Coverage Status" /></a>
+<a href="https://travis-ci.org/ivanwills/App-TemplateCMD?branch=master"><img src="https://travis-ci.org/ivanwills/App-TemplateCMD.png?branch=master" alt="App-TemplateCMD"></a>
+<a href="https://coveralls.io/r/ivanwills/App-TemplateCMD?branch=master"><img src="https://coveralls.io/repos/ivanwills/App-TemplateCMD/badge.svg?branch=master" alt="Coverage Status" /></a>
 
 =head1 App-TemplateCMD
 
@@ -40,6 +40,8 @@ You can also look for information at:
     Search CPAN
         http://search.cpan.org/dist/App-TemplateCMD/
 
+    Source Code
+        git://github.com/ivanwills/App-TemplateCMD.git
 
 =head1 COPYRIGHT AND LICENCE
 
