@@ -65,5 +65,8 @@ subtest 'Changes' => sub {
     );
 };
 
+[% IF bin -%]
+module_boilerplate_ok('bin/[% bin %]');
+[% END -%]
 module_boilerplate_ok('[% file %]');
 done_testing();

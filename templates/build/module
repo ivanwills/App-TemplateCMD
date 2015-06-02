@@ -20,6 +20,10 @@
 [% IF package.match('::') -%]
 [%     package = package.replace('::', '-') -%]
 [% END -%]
+[%- IF bin == 1;
+        bin = package.lower;
+    END;
+%]
 ---
 [% package %]/lib/[% file %]:
     template: perl/package.pm
@@ -77,11 +81,7 @@
 [% package %]/.travis.yml:
     template: perl/travis.yml
 [%- END %]
-[%- IF bin;
-    IF bin == 1;
-        bin = package.lower;
-    END;
-%]
+[%- IF bin %]
 [% package %]/bin/[% bin %]:
     template: perl.pl
     module: [% module %]
