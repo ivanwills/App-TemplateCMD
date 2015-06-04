@@ -1,5 +1,16 @@
 Revision history for App-TemplateCMD
 
+0.6.0   2015-06-04
+        Updating for release of version 0.6.0
+        Added missing dependencies (Ivan Wills)
+        Added adding bin file for boilerplate tests if specified (Ivan Wills)
+        Fixed changed variable name (Ivan Wills)
+        Removed unused tag (Ivan Wills)
+        Made base module name possible to specify (Ivan Wills)
+        Fixed template config in README and added Source Code reference (Ivan Wills)
+        Added ability to pass JSON values and changed the combining of those keys in print (Ivan Wills)
+        Removed unused dependency (Ivan Wills)
+
 0.5.9   2015-04-01
         Updating for release of version 0.5.9
         Fixed readme in manifest (Ivan Wills)
