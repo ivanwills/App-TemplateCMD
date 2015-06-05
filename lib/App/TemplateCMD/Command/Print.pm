@@ -36,8 +36,6 @@ sub process {
     my $out = '';
     $cmd->{template}->process( $template, $args, \$out );
     warn  $cmd->{template}->error . "\n" if $cmd->{template}->error && $cmd->{template}->error !~ /^file error - .*: not a file$/;
-    $Data::Dumper::Indent = 1;
-    print Dumper $cmd->{template};
 
     if (!$out) {
         my @files = uniq sort map {$_->{file}} $cmd->list_templates();
