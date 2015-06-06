@@ -1,7 +1,11 @@
 Revision history for App-TemplateCMD
 
+0.6.1   2015-06-06
+        Updating for release of version 0.6.1
+        Removed accedentally left in debugging code (Ivan Wills)
+
 0.6.0   2015-06-04
-        Updating for release of version 0.6.0
+        Updating for release of version 0.6.0 (Ivan Wills)
         Added missing dependencies (Ivan Wills)
         Added adding bin file for boilerplate tests if specified (Ivan Wills)
         Fixed changed variable name (Ivan Wills)
