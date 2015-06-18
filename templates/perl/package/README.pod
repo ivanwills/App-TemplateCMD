@@ -9,10 +9,14 @@
 [%     package = package.replace('::', '-') -%]
 [% END -%]
 [% IF travis -%]
+=pod
+
 =begin html
 
 <a href="https://travis-ci.org/ivanwills/[% package %]?branch=master"><img src="https://travis-ci.org/ivanwills/[% package %].png?branch=master" alt="[% package %]"></a>
 <a href="https://coveralls.io/r/ivanwills/[% package %]?branch=master"><img src="https://coveralls.io/repos/ivanwills/[% package %]/badge.svg?branch=master" alt="Coverage Status" /></a>
+
+=end html
 
 [% END -%]
 =head1 [% module %]
@@ -71,3 +75,4 @@ by the Free Software Foundation; or the Artistic License.
 
 See http://dev.perl.org/licenses/ for more information.
 
+=cut
