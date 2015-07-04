@@ -1,5 +1,9 @@
 Revision history for App-TemplateCMD
 
+0.6.2   2015-07-04
+        Updating for release of version 0.6.2
+        Fixed POD (Ivan Wills)
+
 0.6.1   2015-06-06
         Updating for release of version 0.6.1
         Removed accedentally left in debugging code (Ivan Wills)
