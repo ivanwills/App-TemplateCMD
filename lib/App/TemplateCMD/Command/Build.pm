@@ -16,7 +16,7 @@ use English qw/ -no_match_vars /;
 use Template;
 use Template::Provider;
 use YAML qw/Load/;
-use Path::Class qw/file/;
+use Path::Tiny;
 use base qw/App::TemplateCMD::Command/;
 
 our $VERSION     = version->new('0.6.2');
@@ -36,7 +36,7 @@ sub process {
 
     for my $file (keys %{ $structure }) {
         my $template = $structure->{$file}{template};
-        my $file = file $file;
+        my $file = path($file);
 
         if ( !-e $file || $option{force} ) {
             $file->parent->mkpath();

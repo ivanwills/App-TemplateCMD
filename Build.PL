@@ -17,7 +17,7 @@ my $builder = Module::Build->new(
         'Clone'              => '0.17',
         'JSON'               => 0,
         'List::MoreUtils'    => 0,
-        'Path::Class'        => 0,
+        'Path::Path'         => 0,
         'Readonly'           => 0,
         'YAML'               => 0,
     },
