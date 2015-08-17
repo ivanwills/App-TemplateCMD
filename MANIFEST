@@ -11,7 +11,6 @@ lib/App/TemplateCMD/Command.pm
 lib/App/TemplateCMD/Command/Print.pm
 lib/App/TemplateCMD.pm
 LICENSE
-Makefile.PL
 MANIFEST
 META.json
 META.yml
