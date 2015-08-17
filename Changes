@@ -1,5 +1,9 @@
 Revision history for App-TemplateCMD
 
+0.6.5   2015-08-17
+        Updating for release of version 0.6.5
+        Removed creation of makefile (Ivan Wills)
+
 0.6.4   2015-07-07
         Updating for release of version 0.6.4
         Fixed typo in Path::Tiny (Ivan Wills)
