@@ -1,5 +1,13 @@
 Revision history for App-TemplateCMD
 
+0.6.6   2016-03-14
+        Updating for release of version 0.6.6
+        Updated date (Ivan Wills)
+        VTide and editor configs (Ivan Wills)
+        Dancer2 based templates (Ivan Wills)
+        Added more things todo (Ivan Wills)
+        Removed generation/use of Makefile.PL (Ivan Wills)
+
 0.6.5   2015-08-17
         Updating for release of version 0.6.5
         Removed creation of makefile (Ivan Wills)
