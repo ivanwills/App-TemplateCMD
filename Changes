@@ -1,5 +1,11 @@
 Revision history for App-TemplateCMD
 
+0.6.7   2017-04-23
+        Updating for release of version 0.6.7
+        Update date (Ivan Wills)
+        Added perl 5.24 to travis build (Ivan Wills)
+        New template for creating gulp plugins (Ivan Wills)
+
 0.6.6   2016-03-14
         Updating for release of version 0.6.6
         Updated date (Ivan Wills)
