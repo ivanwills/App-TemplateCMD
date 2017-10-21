@@ -1,17 +1,31 @@
---- 
-count: 4
-default: 
+---
+count: 8
+default:
   restart: 0
-  wait: 0
-editor: 
-  files: 
-    eg: 
-      - some-file.eg
+  wait: 1
+editor:
+  files:
+    base:
+      - lib/App/TemplateCMD.pm
+      - lib/App/TemplateCMD/Command.pm
+      - lib/App/TemplateCMD/Command/Conf.pm
+    main:
+      - lib/App/TemplateCMD/Command/Print.pm
+      - lib/App/TemplateCMD/Command/Build.pm
+      - lib/App/TemplateCMD/Command/List.pm
+    other:
+      - lib/App/TemplateCMD/Command/Cat.pm
+      - lib/App/TemplateCMD/Command/Describe.pm
+      - lib/App/TemplateCMD/Command/Help.pm
+    bin:
+      - bin/templatecmd
 name: tmplcmd
-terminals: 
-  2: []
-
-  3: []
-
-  4: []
-
+terminals:
+  2:
+    edit: base
+  3:
+    edit: main
+  4:
+    edit: other
+  5:
+    edit: bin
