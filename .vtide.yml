@@ -28,4 +28,5 @@ terminals:
   4:
     edit: other
   5:
+    restart: 1
     edit: bin
