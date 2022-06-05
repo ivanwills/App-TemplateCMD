@@ -5,7 +5,7 @@
 import fs from 'fs';
 import ngl from 'node-getopt-long';
 
-const package = JSON.parse(fs.readFileSync(file, 'utf8'));
+const pkg = JSON.parse(fs.readFileSync(`${process.cwd()}/package.json`, 'utf8'));
 
 const options = ngl.options([
   ['output|o=s', 'Format the output either text or json (Default text)'],
@@ -21,7 +21,7 @@ const options = ngl.options([
   }]
 ], {
   name: '[% file %]',
-  command: package.version,
+  command: pkg.version,
   helpPrefix: `
     before text
   `,
